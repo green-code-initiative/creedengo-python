@@ -60,8 +60,8 @@
 
         <mockito.version>5.14.1</mockito.version>
 
-        <!-- temporary version waiting for real automatic release in ecocode repository -->
-        <ecocode-rules-specifications.version>1.6.4</ecocode-rules-specifications.version>
+        <!-- temporary version waiting for real automatic release in creedengo repository -->
+        <creedengo-rules-specifications.version>1.6.4</creedengo-rules-specifications.version>
 
     </properties>
 
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ecocode-rules-specifications</artifactId>
-            <version>${ecocode-rules-specifications.version}</version>
+            <version>${creedengo-rules-specifications.version}</version>
             <classifier>python</classifier>
         </dependency>
 

@@ -1,12 +1,12 @@
-EcoCode-python
+creedengo-python
 ===========
 
-_ecoCode_ is a collective project aiming to reduce environmental footprint of software at the code level. The goal of
+_creedengo_ is a collective project aiming to reduce environmental footprint of software at the code level. The goal of
 the project is to provide a list of static code analyzers to highlight code structures that may have a negative
 ecological impact: energy and resources over-consumption, "fatware", shortening terminals' lifespan, etc.
 
-_ecoCode_ is based on evolving catalogs
-of [good practices](https://github.com/green-code-initiative/ecoCode/blob/main/docs/rules), for various technologies.
+_creedengo_ is based on evolving catalogs
+of [good practices](https://github.com/green-code-initiative/creedengo/blob/main/docs/rules), for various technologies.
 This
 SonarQube plugin then implements these catalogs as rules for scanning your Python projects.
 
@@ -14,14 +14,14 @@ SonarQube plugin then implements these catalogs as rules for scanning your Pytho
 > refer to the contribution section.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/green-code-initiative/ecoCode-common/blob/main/doc/CODE_OF_CONDUCT.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/green-code-initiative/creedengo-common/blob/main/doc/CODE_OF_CONDUCT.md)
 
 🌿 SonarQube Plugins
 -------------------
 
-This plugin is part of the ecoCode project.\
+This plugin is part of the creedengo project.\
 You can find a list of all our other plugins in
-the [ecoCode repository](https://github.com/green-code-initiative/ecoCode#-sonarqube-plugins)
+the [creedengo repository](https://github.com/green-code-initiative/creedengo#-sonarqube-plugins)
 
 🚀 Getting Started
 ------------------
@@ -31,34 +31,34 @@ You can give a try with a one command docker :
 ```sh
 docker run -ti --rm \
        -p 9000:9000 \
-       --name sonarqube-ecocode-python ghcr.io/green-code-initiative/sonarqube-ecocode-python:latest
+       --name sonarqube-creedengo-python ghcr.io/green-code-initiative/sonarqube-creedengo-python:latest
 ```
 
 or (with logs and data locally stored) :
 
 ```sh
 docker run -ti --rm \
-       -v sq_ecocode_logs:/opt/sonarqube/logs \
-       -v sq_ecocode_data:/opt/sonarqube/data \
+       -v sq_creedengo_logs:/opt/sonarqube/logs \
+       -v sq_creedengo_data:/opt/sonarqube/data \
        -p 9000:9000 \
-       --name sonarqube-ecocode-python ghcr.io/green-code-initiative/sonarqube-ecocode-python:latest
+       --name sonarqube-creedengo-python ghcr.io/green-code-initiative/sonarqube-creedengo-python:latest
 ```
 
-... and configure local SonarQube (security config and quality profile : see [configuration](https://github.com/green-code-initiative/ecoCode-common/blob/main/doc/INSTALL.md#configuration-sonarqube) for more details).
+... and configure local SonarQube (security config and quality profile : see [configuration](https://github.com/green-code-initiative/creedengo-common/blob/main/doc/INSTALL.md#configuration-sonarqube) for more details).
 
-To install other `ecocode` plugins, you can also :
+To install other `creedengo` plugins, you can also :
 
 - download each plugin separatly and copy the plugin (jar file) to `$SONAR_INSTALL_DIR/extensions/plugins` and restart SonarQube.
-- install different ecocode plugins with Marketplace (inside admin panel of SonarQube)
+- install different creedengo plugins with Marketplace (inside admin panel of SonarQube)
 
-Then you can use Python test project repository to test the environment : see README.md of [Python test project](https://github.com/green-code-initiative/ecoCode-python-test-project)
+Then you can use Python test project repository to test the environment : see README.md of [Python test project](https://github.com/green-code-initiative/creedengo-python-test-project)
 
-Finally, you can directly use a [all-in-one docker-compose](https://github.com/green-code-initiative/ecoCode-common/blob/main/doc/INSTALL.md#start-sonarqube-if-first-time)
+Finally, you can directly use a [all-in-one docker-compose](https://github.com/green-code-initiative/creedengo-common/blob/main/doc/INSTALL.md#start-sonarqube-if-first-time)
 
 🛒 Distribution
 ------------------
 
-Ready to use binaries are available [from GitHub](https://github.com/green-code-initiative/ecoCode-python/releases).
+Ready to use binaries are available [from GitHub](https://github.com/green-code-initiative/creedengo-python/releases).
 
 🧩 Compatibility
 ------------------
@@ -69,17 +69,17 @@ Ready to use binaries are available [from GitHub](https://github.com/green-code-
 | 1.4.+          | 9.4.+ LTS to 10.4.1 | 11 / 17      |
 
 > Compatibility table of versions lower than 1.4.+ are available from the
-> main [ecoCode repository](https://github.com/green-code-initiative/ecoCode#-plugins-version-compatibility).
+> main [creedengo repository](https://github.com/green-code-initiative/creedengo#-plugins-version-compatibility).
 
 🤝 Contribution
 ---------------
 
-check [ecoCode repository](https://github.com/green-code-initiative/ecoCode#-contribution)
+check [creedengo repository](https://github.com/green-code-initiative/creedengo#-contribution)
 
 🤓 Main contributors
 --------------------
 
-check [ecoCode repository](https://github.com/green-code-initiative/ecoCode#-main-contributors)
+check [creedengo repository](https://github.com/green-code-initiative/creedengo#-main-contributors)
 
 Links
 -----

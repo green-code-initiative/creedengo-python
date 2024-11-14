@@ -3,7 +3,7 @@ TODOS dev DDC
 
 actions vues en séance weekly-meeting :
 
-- ecoCode-android : nettoyer packages (suite au release)
+- creedengo-android : nettoyer packages (suite au release)
 - teams : nettoyer anciennes équipes
 
 actions vues perso :
