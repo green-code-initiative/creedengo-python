@@ -3,6 +3,7 @@
 !.gitignore
 !.gitattributes
 !.github/
+!.default.docker.env
 
 # Ignore generated files
 target
