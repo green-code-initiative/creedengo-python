@@ -1,6 +1,6 @@
 /*
- * ecoCode - Python language - Provides rules to reduce the environmental footprint of your Python programs
- * Copyright © 2023 Green Code Initiative (https://www.ecocode.io)
+ * creedengo - Python language - Provides rules to reduce the environmental footprint of your Python programs
+ * Copyright © 2023 Green Code Initiative (https://green-code-initiative.org)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,9 +51,9 @@ class PythonRuleRepositoryTest {
     @Test
     @DisplayName("Test repository metadata")
     void testMetadata() {
-        assertThat(repository.name()).isEqualTo("ecoCode");
+        assertThat(repository.name()).isEqualTo("creedengo");
         assertThat(repository.language()).isEqualTo("py");
-        assertThat(repository.key()).isEqualTo("ecocode-python");
+        assertThat(repository.key()).isEqualTo("creedengo-python");
     }
 
     @Test

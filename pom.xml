@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.ecocode</groupId>
-    <artifactId>ecocode-python-plugin</artifactId>
+    <groupId>io.creedengo</groupId>
+    <artifactId>creedengo-python-plugin</artifactId>
     <version>1.5.1-SNAPSHOT</version>
     <packaging>sonar-plugin</packaging>
 
-    <name>ecoCode - Python language</name>
+    <name>creedengo - Python language</name>
     <description>Provides rules to reduce the environmental footprint of your Python programs</description>
     <inceptionYear>2023</inceptionYear>
-    <url>https://github.com/green-code-initiative/ecoCode-python</url>
+    <url>https://github.com/green-code-initiative/creedengo-python</url>
 
     <organization>
         <name>green-code-initiative</name>
@@ -24,14 +24,14 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:https://github.com/green-code-initiative/ecocode-python</connection>
-        <developerConnection>scm:git:https://github.com/green-code-initiative/ecocode-python</developerConnection>
-        <url>https://github.com/green-code-initiative/ecocode-python</url>
+        <connection>scm:git:https://github.com/green-code-initiative/creedengo-python</connection>
+        <developerConnection>scm:git:https://github.com/green-code-initiative/creedengo-python</developerConnection>
+        <url>https://github.com/green-code-initiative/creedengo-python</url>
         <tag>HEAD</tag>
     </scm>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/green-code-initiative/ecoCode-python/issues</url>
+        <url>https://github.com/green-code-initiative/creedengo-python/issues</url>
     </issueManagement>
 
     <properties>
@@ -68,7 +68,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ecocode-rules-specifications</artifactId>
+            <artifactId>creedengo-rules-specifications</artifactId>
             <version>${creedengo-rules-specifications.version}</version>
             <classifier>python</classifier>
         </dependency>
@@ -172,7 +172,7 @@
                 <version>1.23.0.740</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <pluginKey>ecocodepython</pluginKey>
+                    <pluginKey>creedengopython</pluginKey>
                     <pluginClass>fr.greencodeinitiative.python.PythonPlugin</pluginClass>
                     <sonarLintSupported>true</sonarLintSupported>
                     <pluginApiMinVersion>${sonarqube.version}</pluginApiMinVersion>
@@ -221,7 +221,7 @@
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>io.ecocode:ecocode-rules-specifications:*</artifact>
+                                    <artifact>io.creedengo:creedengo-rules-specifications:*</artifact>
                                     <excludes>
                                         <exclude>META-INF/**</exclude>
                                     </excludes>
@@ -256,7 +256,7 @@
                 <configuration>
                     <properties>
                         <owner>Green Code Initiative</owner>
-                        <email>https://www.ecocode.io</email>
+                        <email>https://green-code-initiative.org</email>
                     </properties>
                     <licenseSets>
                         <licenseSet>
