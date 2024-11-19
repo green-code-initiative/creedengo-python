@@ -58,7 +58,7 @@
 
         <sonar.skipDependenciesPackaging>true</sonar.skipDependenciesPackaging>
 
-        <mockito.version>5.14.1</mockito.version>
+        <mockito.version>5.14.2</mockito.version>
 
         <!-- temporary version waiting for real automatic release in creedengo repository -->
         <ecocode-rules-specifications.version>1.6.4</ecocode-rules-specifications.version>
