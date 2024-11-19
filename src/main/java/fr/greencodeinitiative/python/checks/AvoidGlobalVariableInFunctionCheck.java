@@ -1,6 +1,6 @@
 /*
- * ecoCode - Python language - Provides rules to reduce the environmental footprint of your Python programs
- * Copyright © 2023 Green Code Initiative (https://www.ecocode.io)
+ * creedengo - Python language - Provides rules to reduce the environmental footprint of your Python programs
+ * Copyright © 2023 Green Code Initiative (https://green-code-initiative.org)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

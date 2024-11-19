@@ -1,6 +1,6 @@
 /*
- * ecoCode - Python language - Provides rules to reduce the environmental footprint of your Python programs
- * Copyright © 2023 Green Code Initiative (https://www.ecocode.io)
+ * creedengo - Python language - Provides rules to reduce the environmental footprint of your Python programs
+ * Copyright © 2023 Green Code Initiative (https://green-code-initiative.org)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ import org.sonar.plugins.python.api.tree.Tree;
 import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
 
 /**
- * FUNCTIONAL DESCRIPTION : please see ASCIIDOC description file of this rule (inside `ecocode-rules-spcifications`)
+ * FUNCTIONAL DESCRIPTION : please see ASCIIDOC description file of this rule (inside `creedengo-rules-spcifications`)
  * TECHNICAL CHOICES :
  * - Kind.IF_STATEMENT, Kind.ELSE_STATEMENT, Kind.ELSEIF_STATEMENT not used because it isn't possible
  * to keep parent references to check later if variables already used or not in parent tree
