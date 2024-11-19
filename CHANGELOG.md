@@ -63,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - [#14](https://github.com/green-code-initiative/creedengo-python/issues/14) Correction of error with deprecated EC34 rule
-- Update creedengo-rules-specifications to 1.4.7
+- Update ecocode-rules-specifications to 1.4.7
 
 ## [1.4.1] - 2024-01-05
 
@@ -79,7 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   specific use case ("file not found" specific)
 - [#7](https://github.com/green-code-initiative/creedengo-python/issues/7) Add build number to manifest
 - [#123](https://github.com/green-code-initiative/creedengo/issues/123) Improve unit tests for EC7 rule
-- Update creedengo-rules-specifications to 1.4.6
+- Update ecocode-rules-specifications to 1.4.6
 - README.md upgrade : docker test environment
 - [#10](https://github.com/green-code-initiative/creedengo-python/issues/10) Correction of NullPointException in EC2 rule
 
@@ -92,7 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Python rules moved from `creedengo` repository to current repository
+- Python rules moved from `ecocode` repository to current repository
 - [#142](https://github.com/green-code-initiative/creedengo/issues/142) new Python rule : Multiple if-else statement +
   refactoring implementation
 - [#205](https://github.com/green-code-initiative/creedengo/issues/205) compatibility with SonarQube 10.1

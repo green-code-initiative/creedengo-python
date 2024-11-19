@@ -51,9 +51,9 @@ class PythonRuleRepositoryTest {
     @Test
     @DisplayName("Test repository metadata")
     void testMetadata() {
-        assertThat(repository.name()).isEqualTo("creedengo");
+        assertThat(repository.name()).isEqualTo("ecocode");
         assertThat(repository.language()).isEqualTo("py");
-        assertThat(repository.key()).isEqualTo("creedengo-python");
+        assertThat(repository.key()).isEqualTo("ecocode-python");
     }
 
     @Test

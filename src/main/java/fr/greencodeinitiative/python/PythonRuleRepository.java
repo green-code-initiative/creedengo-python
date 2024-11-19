@@ -44,9 +44,9 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
     );
 
     public static final String LANGUAGE = "py";
-    public static final String NAME = "creedengo";
-    public static final String RESOURCE_BASE_PATH = "io/creedengo/rules/python";
-    public static final String REPOSITORY_KEY = "creedengo-python";
+    public static final String NAME = "ecocode";
+    public static final String RESOURCE_BASE_PATH = "io/ecocode/rules/python";
+    public static final String REPOSITORY_KEY = "ecocode-python";
 
     private final SonarRuntime sonarRuntime;
 

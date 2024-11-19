@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.creedengo</groupId>
+    <groupId>io.ecocode</groupId>
     <artifactId>creedengo-python-plugin</artifactId>
     <version>1.5.1-SNAPSHOT</version>
     <packaging>sonar-plugin</packaging>
@@ -61,15 +61,15 @@
         <mockito.version>5.14.1</mockito.version>
 
         <!-- temporary version waiting for real automatic release in creedengo repository -->
-        <creedengo-rules-specifications.version>1.6.4</creedengo-rules-specifications.version>
+        <ecocode-rules-specifications.version>1.6.4</ecocode-rules-specifications.version>
 
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>creedengo-rules-specifications</artifactId>
-            <version>${creedengo-rules-specifications.version}</version>
+            <artifactId>ecocode-rules-specifications</artifactId>
+            <version>${ecocode-rules-specifications.version}</version>
             <classifier>python</classifier>
         </dependency>
 
@@ -221,7 +221,7 @@
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>io.creedengo:creedengo-rules-specifications:*</artifact>
+                                    <artifact>io.ecocode:ecocode-rules-specifications:*</artifact>
                                     <excludes>
                                         <exclude>META-INF/**</exclude>
                                     </excludes>
