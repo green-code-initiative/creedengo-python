@@ -36,7 +36,7 @@ import org.sonar.plugins.python.api.tree.QualifiedExpression;
 import org.sonar.plugins.python.api.tree.Tree;
 import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
 
-@Rule(key = "EC72")
+@Rule(key = "GCI72")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC72")
 @DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "S72")
 public class AvoidSQLRequestInLoop extends PythonSubscriptionCheck {

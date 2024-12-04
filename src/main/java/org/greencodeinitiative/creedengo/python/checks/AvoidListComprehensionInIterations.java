@@ -35,7 +35,7 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.FOR_STMT;
 import static org.sonar.plugins.python.api.tree.Tree.Kind.LIST_COMPREHENSION;
 import static org.sonar.plugins.python.api.tree.Tree.Kind.REGULAR_ARGUMENT;
 
-@Rule(key = "EC404")
+@Rule(key = "GCI404")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC404")
 public class AvoidListComprehensionInIterations extends PythonSubscriptionCheck {
 

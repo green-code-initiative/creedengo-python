@@ -26,7 +26,7 @@ import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
 
 import static org.sonar.plugins.python.api.tree.Tree.Kind.CALL_EXPR;
 
-@Rule(key = "EC35")
+@Rule(key = "GCI35")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC35")
 @DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "S34")
 public class AvoidTryCatchWithFileOpenedCheck extends PythonSubscriptionCheck {

@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-@Rule(key = "EC74")
+@Rule(key = "GCI74")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC74")
 @DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "S74")
 public class AvoidFullSQLRequest extends PythonSubscriptionCheck {

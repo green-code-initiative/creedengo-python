@@ -28,7 +28,7 @@ import org.sonar.plugins.python.api.tree.RegularArgument;
 import org.sonar.plugins.python.api.tree.Tree;
 import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
 
-@Rule(key = "EC89")
+@Rule(key = "GCI89")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC89")
 public class AvoidUnlimitedCache extends PythonSubscriptionCheck {
 

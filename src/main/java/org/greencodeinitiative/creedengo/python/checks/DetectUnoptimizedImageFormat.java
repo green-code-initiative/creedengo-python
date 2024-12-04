@@ -27,7 +27,7 @@ import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Rule(key = "EC203")
+@Rule(key = "GCI203")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC203")
 public class DetectUnoptimizedImageFormat extends PythonSubscriptionCheck {
 

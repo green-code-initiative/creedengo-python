@@ -61,15 +61,15 @@
         <mockito.version>5.14.1</mockito.version>
 
         <!-- temporary version waiting for real automatic release in creedengo repository -->
-        <ecocode-rules-specifications.version>1.6.5</ecocode-rules-specifications.version>
+        <creedengo-rules-specifications.version>main-SNAPSHOT</creedengo-rules-specifications.version>
 
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>io.ecocode</groupId>
-            <artifactId>ecocode-rules-specifications</artifactId>
-            <version>${ecocode-rules-specifications.version}</version>
+            <groupId>org.green-code-initiative</groupId>
+            <artifactId>creedengo-rules-specifications</artifactId>
+            <version>${creedengo-rules-specifications.version}</version>
             <classifier>python</classifier>
         </dependency>
 

@@ -26,7 +26,7 @@ import org.sonar.plugins.python.api.SubscriptionContext;
 import org.sonar.plugins.python.api.tree.*;
 import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
 
-@Rule(key = "EC10")
+@Rule(key = "GCI10")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC10")
 public class AvoidUnoptimizedVectorImagesCheck extends PythonSubscriptionCheck {
 

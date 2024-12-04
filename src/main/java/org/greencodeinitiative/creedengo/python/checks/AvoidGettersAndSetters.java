@@ -33,7 +33,7 @@ import org.sonar.plugins.python.api.tree.StatementList;
 import org.sonar.plugins.python.api.tree.Tree;
 import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
 
-@Rule(key = "EC7")
+@Rule(key = "GCI7")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC7")
 @DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "D7")
 public class AvoidGettersAndSetters extends PythonSubscriptionCheck {

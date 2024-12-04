@@ -78,7 +78,7 @@ import org.sonar.plugins.python.api.tree.YieldExpression;
 import org.sonar.plugins.python.api.tree.YieldStatement;
 import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
 
-@Rule(key = "EC4")
+@Rule(key = "GCI4")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC4")
 @DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "D4")
 public class AvoidGlobalVariableInFunctionCheck extends PythonSubscriptionCheck {

@@ -44,7 +44,7 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
  * - an "ELSE" statement is considered as a second IF statement using the same variables used on previous
  * - IF and ELSEIF statements are considered as an IF statement
  */
-@Rule(key = "EC2")
+@Rule(key = "GCI2")
 @DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC2")
 public class AvoidMultipleIfElseStatementCheck extends PythonSubscriptionCheck {
 
