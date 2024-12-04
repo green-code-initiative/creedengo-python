@@ -60,7 +60,7 @@
 
         <mockito.version>5.14.1</mockito.version>
 
-        <!-- temporary version waiting for real automatic release in creedengo repository -->
+        <!-- temporary version waiting for a real automatic release in creedengo repository -->
         <creedengo-rules-specifications.version>main-SNAPSHOT</creedengo-rules-specifications.version>
 
     </properties>
