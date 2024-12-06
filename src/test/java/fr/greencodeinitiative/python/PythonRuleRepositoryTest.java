@@ -51,9 +51,9 @@ class PythonRuleRepositoryTest {
     @Test
     @DisplayName("Test repository metadata")
     void testMetadata() {
-        assertThat(repository.name()).isEqualTo("ecoCode");
+        assertThat(repository.name()).isEqualTo("creedengo");
         assertThat(repository.language()).isEqualTo("py");
-        assertThat(repository.key()).isEqualTo("ecocode-python");
+        assertThat(repository.key()).isEqualTo("gci-python");
     }
 
     @Test
@@ -69,11 +69,11 @@ class PythonRuleRepositoryTest {
     }
 
     @Test
-    @DisplayName("All rule keys must be prefixed by 'EC'")
+    @DisplayName("All rule keys must be prefixed by 'GCI'")
     void testRuleKeyPrefix() {
         SoftAssertions assertions = new SoftAssertions();
         repository.rules().forEach(
-                rule -> assertions.assertThat(rule.key()).startsWith("EC")
+                rule -> assertions.assertThat(rule.key()).startsWith("GCI")
         );
         assertions.assertAll();
     }

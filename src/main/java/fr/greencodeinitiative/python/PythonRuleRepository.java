@@ -44,9 +44,9 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
     );
 
     public static final String LANGUAGE = "py";
-    public static final String NAME = "ecoCode";
-    public static final String RESOURCE_BASE_PATH = "io/ecocode/rules/python";
-    public static final String REPOSITORY_KEY = "ecocode-python";
+    public static final String NAME = "creendengo";
+    public static final String RESOURCE_BASE_PATH = "org/green-code-initiative/rules/python";
+    public static final String REPOSITORY_KEY = "gci-python";
 
     private final SonarRuntime sonarRuntime;
 
