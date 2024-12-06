@@ -25,7 +25,7 @@ import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
 import org.sonar.plugins.python.api.tree.*;
 
-@Rule(key = "EC10")
+@Rule(key = "GCI10")
 public class AvoidUnoptimizedVectorImagesCheck extends PythonSubscriptionCheck {
 
     public static final String DESCRIPTION = "Avoid using unoptimized vector images";

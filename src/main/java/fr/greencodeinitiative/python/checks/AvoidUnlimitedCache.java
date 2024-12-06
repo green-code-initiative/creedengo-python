@@ -27,7 +27,7 @@ import org.sonar.plugins.python.api.tree.Name;
 import org.sonar.plugins.python.api.tree.RegularArgument;
 import org.sonar.plugins.python.api.tree.Tree;
 
-@Rule(key = "EC89")
+@Rule(key = "GCI89")
 public class AvoidUnlimitedCache extends PythonSubscriptionCheck {
 
     public static final String DESCRIPTION = "Do not set cache size to unlimited";

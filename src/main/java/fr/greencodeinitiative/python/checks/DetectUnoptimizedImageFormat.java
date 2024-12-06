@@ -26,10 +26,10 @@ import org.sonar.plugins.python.api.tree.Tree;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Rule(key = "EC203")
+@Rule(key = "GCI203")
 public class DetectUnoptimizedImageFormat extends PythonSubscriptionCheck {
 
-    protected static final String RULE_KEY = "EC203";
+    protected static final String RULE_KEY = "GCI203";
     protected static final String MESSAGERULE = "Detect unoptimized image format";
     protected static final String MESSAGEERROR = "If possible, the utilisation of svg image format (or <svg/> html tag) is recommended over other image format.";
     protected static final Pattern IMGEXTENSION = Pattern.compile("\\.(bmp|ico|tiff|webp|png|jpg|jpeg|jfif|pjpeg|pjp|gif|avif|apng)");

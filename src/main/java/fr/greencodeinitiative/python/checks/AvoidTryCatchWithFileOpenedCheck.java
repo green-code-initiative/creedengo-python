@@ -26,9 +26,9 @@ import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
 
 import static org.sonar.plugins.python.api.tree.Tree.Kind.CALL_EXPR;
 
-@Rule(key = "EC35")
+@Rule(key = "GCI35")
 @DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "S34")
-@DeprecatedRuleKey(ruleKey = "EC34")
+@DeprecatedRuleKey(ruleKey = "GCI34")
 public class AvoidTryCatchWithFileOpenedCheck extends PythonSubscriptionCheck {
 
     public static final String DESCRIPTION = "Avoid the use of try-catch with a file open in try block";
