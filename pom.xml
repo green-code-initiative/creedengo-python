@@ -61,7 +61,7 @@
         <mockito.version>5.14.1</mockito.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
-        <creedengo-rules-specifications.version>0.0.3</creedengo-rules-specifications.version>
+        <creedengo-rules-specifications.version>0.0.4</creedengo-rules-specifications.version>
 
     </properties>
 
@@ -221,7 +221,7 @@
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>io.ecocode:ecocode-rules-specifications:*</artifact>
+                                    <artifact>org.green-code-initiative:creedengo-rules-specifications:*</artifact>
                                     <excludes>
                                         <exclude>META-INF/**</exclude>
                                     </excludes>
