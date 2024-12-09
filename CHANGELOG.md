@@ -11,11 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- [#43](https://github.com/green-code-initiative/creedengo-python/pull/43) Migration from `ecocode-python` to `creedengo-python`
-
 ### Deleted
+
+## [1.0.0] - 2024-12-09
+
+### Changed
+
+- [#43](https://github.com/green-code-initiative/creedengo-python/pull/43) Migration from `ecocode-python` to `creedengo-python`
 
 ## Comparison list
 
 [unreleased](https://github.com/green-code-initiative/creedengo-python/compare/1.0.0...HEAD)
-[1.1.0](https://github.com/green-code-initiative/creedengo-python/releases/tag/1.0.0)
+[1.0.0](https://github.com/green-code-initiative/creedengo-python/releases/tag/1.0.0)
