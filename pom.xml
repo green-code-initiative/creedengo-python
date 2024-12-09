@@ -50,7 +50,7 @@
         <sonarqube.version>9.4.0.54424</sonarqube.version>
         <sonar-analyzer-commons.version>2.13.0.3004</sonar-analyzer-commons.version>
 
-        <sonarpython.version>4.6.0.12071</sonarpython.version>
+        <sonarpython.version>4.23.0.17664</sonarpython.version>
         <!-- version with compatibility problem with mockito (even if last version of Mockito) -->
         <!--        <sonarpython.version>4.7.0.12181</sonarpython.version>-->
         <!-- version with compatibility problem : classes not found -->
