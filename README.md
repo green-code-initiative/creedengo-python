@@ -5,7 +5,7 @@ _creedengo_ is a collective project aiming to reduce environmental footprint of 
 the project is to provide a list of static code analyzers to highlight code structures that may have a negative
 ecological impact: energy and resources over-consumption, "fatware", shortening terminals' lifespan, etc.
 
-_ecoCode_ is based on evolving catalogs
+_creedengo_ is based on evolving catalogs
 of [good practices](https://github.com/green-code-initiative/ecoCode/blob/main/docs/rules), for various technologies.
 This
 SonarQube plugin then implements these catalogs as rules for scanning your Python projects.
@@ -69,17 +69,17 @@ Ready to use binaries are available [from GitHub](https://github.com/green-code-
 | 1.4.+          | 9.4.+ LTS to 10.4.1 | 11 / 17      |
 
 > Compatibility table of versions lower than 1.4.+ are available from the
-> main [ecoCode repository](https://github.com/green-code-initiative/ecoCode#-plugins-version-compatibility).
+> main [creedengo repository](https://github.com/green-code-initiative/ecoCode#-plugins-version-compatibility).
 
 🤝 Contribution
 ---------------
 
-check [ecoCode repository](https://github.com/green-code-initiative/ecoCode#-contribution)
+check [creedengo repository](https://github.com/green-code-initiative/ecoCode#-contribution)
 
 🤓 Main contributors
 --------------------
 
-check [ecoCode repository](https://github.com/green-code-initiative/ecoCode#-main-contributors)
+check [creedengo repository](https://github.com/green-code-initiative/ecoCode#-main-contributors)
 
 Links
 -----
