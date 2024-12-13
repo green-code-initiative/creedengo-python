@@ -62,7 +62,7 @@ jobs:
         id: export_jar_files
         uses: actions/upload-artifact@v3
         with:
-          name: ecocode-plugins
+          name: creedengo-plugins
           path: lib
       - name: Export LAST_TAG
         id: export_last_tag
@@ -80,7 +80,7 @@ jobs:
         id: import_jar_files
         uses: actions/download-artifact@v3
         with:
-          name: ecocode-plugins
+          name: creedengo-plugins
           path: lib
       - name: Upload Release Asset - Python Plugin
         id: upload-release-asset
@@ -89,6 +89,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{needs.build.outputs.upload_url}}
-          asset_path: lib/ecocode-python-plugin-${{ needs.build.outputs.last_tag }}.jar
-          asset_name: ecocode-python-plugin-${{ needs.build.outputs.last_tag }}.jar
+          asset_path: lib/creedengo-python-plugin-${{ needs.build.outputs.last_tag }}.jar
+          asset_name: creedengo-python-plugin-${{ needs.build.outputs.last_tag }}.jar
           asset_content_type: application/zip
