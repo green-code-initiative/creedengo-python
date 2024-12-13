@@ -1,9 +1,9 @@
-name: sonarqube_ecocode_python
+name: sonarqube_creedengo_python
 
 services:
   sonar:
     build: .
-    container_name: sonar_ecocode_python
+    container_name: sonar_creedengo_python
     ports:
       - ":9000"
     networks:
@@ -28,7 +28,7 @@ services:
 
   db:
     image: postgres:12
-    container_name: postgresql_ecocode_python
+    container_name: postgresql_creedengo_python
     networks:
       - sonarnet
     volumes:

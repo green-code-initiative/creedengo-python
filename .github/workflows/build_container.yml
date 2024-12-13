@@ -13,9 +13,9 @@ on:
   #     - main
 
 env:
-  IMAGE_NAME: sonarqube-ecocode-python
+  IMAGE_NAME: sonarqube-creedengo-python
   IMAGES: |
-    ghcr.io/${{ github.repository_owner }}/sonarqube-ecocode-python
+    ghcr.io/${{ github.repository_owner }}/sonarqube-creedengo-python
 
 jobs:
   Build:
