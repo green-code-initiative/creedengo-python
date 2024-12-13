@@ -11,9 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- [#43](https://github.com/green-code-initiative/creedengo-python/pull/43) Strong renaming plugin from `ecocode-python` to `creedengo-python` (and maven groupid from `io.ecocode` to `io.greencodeinitiative`)
-
 ### Deleted
+
+## [2.0.0] - 2024-12-12
+
+### Changed
+
+- [#43](https://github.com/green-code-initiative/creedengo-python/pull/43) Strong renaming plugin from `ecocode-python` to `creedengo-python` (and maven groupid from `io.ecocode` to `org.green-code-initiative`)
 
 ## [1.5.0] - 2024-10-04
 
@@ -101,7 +105,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Comparison list
 
-[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/1.5.0...HEAD)
+[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.0.0...HEAD)
+[2.0.0](https://github.com/green-code-initiative/creedengo-python/compare/1.4.4...2.0.0)
 [1.5.0](https://github.com/green-code-initiative/creedengo-python/compare/1.4.4...1.5.0)
 [1.4.4](https://github.com/green-code-initiative/creedengo-python/compare/1.4.3...1.4.4)
 [1.4.3](https://github.com/green-code-initiative/creedengo-python/compare/1.4.2...1.4.3)
