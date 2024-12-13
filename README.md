@@ -44,7 +44,7 @@ docker run -ti --rm \
        --name sonarqube-creedengo-python ghcr.io/green-code-initiative/sonarqube-creedengo-python:latest
 ```
 
-... and configure local SonarQube (security config and quality profile : see [configuration](https://github.com/green-code-initiative/creedengo-common/blob/main/doc/INSTALL.md#configuration-sonarqube) for more details).
+... and configure local SonarQube (security config and quality profile : see [configuration](https://github.com/green-code-initiative/creedengo-common/blob/main/doc/HOWTO.md#howto-install-sonarqube-dev-environment) for more details).
 
 To install other `creedengo` plugins, you can also :
 
@@ -52,8 +52,6 @@ To install other `creedengo` plugins, you can also :
 - install different creedengo plugins with Marketplace (inside admin panel of SonarQube)
 
 Then you can use Python test project repository to test the environment : see README.md of [Python test project](https://github.com/green-code-initiative/creedengo-python-test-project)
-
-Finally, you can directly use a [all-in-one docker-compose](https://github.com/green-code-initiative/creedengo-common/blob/main/doc/INSTALL.md#start-sonarqube-if-first-time)
 
 🛒 Distribution
 ------------------
