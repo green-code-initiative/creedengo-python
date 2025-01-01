@@ -58,7 +58,7 @@
 
         <sonar.skipDependenciesPackaging>true</sonar.skipDependenciesPackaging>
 
-        <mockito.version>5.14.1</mockito.version>
+        <mockito.version>5.14.2</mockito.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
         <creedengo-rules-specifications.version>2.0.0</creedengo-rules-specifications.version>
@@ -130,7 +130,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.2</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
