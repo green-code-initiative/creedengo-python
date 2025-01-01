@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- [#42](https://github.com/green-code-initiative/creedengo-python/issues/42) Correction of dead link
+
 ### Deleted
 
 ## [2.0.0] - 2024-12-12
