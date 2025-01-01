@@ -1,10 +1,10 @@
-def displayMessage(argument1):
-    print(argument) 
+def display_message(argument1):
+    print(argument1)
 
-displayMessage('   sElEcT * fRoM myTable') # Noncompliant {{Don't use the query SELECT * FROM}}
-displayMessage('   sElEcT user fRoM myTable')
+display_message('   sElEcT * fRoM myTable') # Noncompliant {{Don't use the query SELECT * FROM}}
+display_message('   sElEcT user fRoM myTable')
   
 requestNonCompiliant = '   SeLeCt * FrOm myTable' # Noncompliant {{Don't use the query SELECT * FROM}}
 requestCompiliant = '   SeLeCt user FrOm myTable' 
-displayMessage(requestNonCompiliant)
-displayMessage(requestCompiliant)
+display_message(requestNonCompiliant)
+display_message(requestCompiliant)
