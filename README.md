@@ -61,11 +61,11 @@ Ready to use binaries are available [from GitHub](https://github.com/green-code-
 🧩 Compatibility
 ------------------
 
-| Plugin version | SonarQube version   | Java version |
-|----------------|---------------------|--------------|
-| 1.4.+          | 9.4.+ LTS to 10.4.1 | 11 / 17      |
-| 1.5.+          | 9.9.+ LTS to 10.7.0 | 11 / 17      |
-| 2.0.+          | 9.9.+ LTS to 10.7.0 | 11 / 17      |
+| Plugin version | SonarQube version    | Java version |
+|----------------|----------------------|--------------|
+| 1.4.+          | 9.4.+ LTS to 10.4.1  | 11 / 17      |
+| 1.5.+          | 9.9.+ LTS to 10.7.0  | 11 / 17      |
+| 2.0.+          | 9.9.+ LTS to 24.12.0 | 11 / 17      |
 
 > Compatibility table of versions lower than 1.4.+ are available from the
 > main [creedengo repository](https://github.com/green-code-initiative/creedengo-rules-specifications#-plugins-version-compatibility).
