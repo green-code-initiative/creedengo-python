@@ -11,12 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+### Deleted
+
+## [2.0.1] - 2025-03-14
+
+### Changed
+
 - [#42](https://github.com/green-code-initiative/creedengo-python/issues/42) Correction of dead link
 - update some libraries versions / TU corrections / README.md correction (compatibility)
 - update sonarqube version to 25.3.0
 - upgrade actions/upload-artifact and actions/download-artifact from v3 to v4
-
-### Deleted
 
 ## [2.0.0] - 2024-12-12
 
@@ -110,7 +114,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Comparison list
 
-[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.0.0...HEAD)
+[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.0.1...HEAD)
+[2.0.1](https://github.com/green-code-initiative/creedengo-python/compare/2.0.0...2.0.1)
 [2.0.0](https://github.com/green-code-initiative/creedengo-python/compare/1.4.4...2.0.0)
 [1.5.0](https://github.com/green-code-initiative/creedengo-python/compare/1.4.4...1.5.0)
 [1.4.4](https://github.com/green-code-initiative/creedengo-python/compare/1.4.3...1.4.4)
