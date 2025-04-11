@@ -63,7 +63,7 @@
         <!-- version with compatibility problem : classes not found -->
         <!--        <sonarpython.version>4.22.0.16914</sonarpython.version>-->
 
-        <mockito.version>5.14.2</mockito.version>
+        <mockito.version>5.16.1</mockito.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
         <creedengo-rules-specifications.version>2.2.2</creedengo-rules-specifications.version>
