@@ -116,7 +116,7 @@
             <version>2.0.17</version>
             <!-- To keep with this scope otherwise logging system will be not ok on custom plugins -->
             <scope>provided</scope>
-    </dependency>
+        </dependency>
 
     <!-- TEST sources dependencies -->
         <dependency>
