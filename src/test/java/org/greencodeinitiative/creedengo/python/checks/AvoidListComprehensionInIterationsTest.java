@@ -23,6 +23,6 @@ import org.sonar.python.checks.utils.PythonCheckVerifier;
 public class AvoidListComprehensionInIterationsTest {
     @Test
     public void test() {
-        PythonCheckVerifier.verify("src/test/resources/checks/avoidListComprehensionInIterations.py", new AvoidListComprehensionInIterations());
+        PythonCheckVerifier.verify("src/test/resources/checks/avoidListComprehensionInIterationsTmp.py", new AvoidListComprehensionInIterations());
     }
 }
