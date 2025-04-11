@@ -39,6 +39,8 @@
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <!-- to prevent message: system modules path not set in conjunction with -source 11 -->
+        <maven.compiler.release>${java.version}</maven.compiler.release>
 
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
@@ -47,7 +49,12 @@
         <sonar.organization>green-code-initiative</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
+        <!-- Version of SonarQube for integration tests -->
         <sonarqube.version>9.4.0.54424</sonarqube.version>
+<!--        <sonarqube.version>9.9.7.96285</sonarqube.version>-->
+        <!-- Version of the SonarQube APIs used by `creedengo-java-plugin` -->
+        <sonar.plugin.api.version>9.8.0.203</sonar.plugin.api.version>
+
         <sonar-analyzer-commons.version>2.16.0.3141</sonar-analyzer-commons.version>
 
         <sonarpython.version>4.6.0.12071</sonarpython.version>
@@ -55,8 +62,6 @@
         <!--        <sonarpython.version>4.7.0.12181</sonarpython.version>-->
         <!-- version with compatibility problem : classes not found -->
         <!--        <sonarpython.version>4.22.0.16914</sonarpython.version>-->
-
-        <sonar.skipDependenciesPackaging>true</sonar.skipDependenciesPackaging>
 
         <mockito.version>5.14.2</mockito.version>
 
@@ -97,9 +102,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonarsource.sonarqube</groupId>
+            <groupId>org.sonarsource.api.plugin</groupId>
             <artifactId>sonar-plugin-api</artifactId>
-            <version>${sonarqube.version}</version>
+            <version>${sonar.plugin.api.version}</version>
             <scope>provided</scope>
         </dependency>
 
