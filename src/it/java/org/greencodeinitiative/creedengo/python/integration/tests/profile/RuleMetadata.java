@@ -15,29 +15,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.greencodeinitiative.creedengo.python;
+package org.greencodeinitiative.creedengo.python.integration.tests.profile;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.sonar.api.Plugin;
-import org.sonar.api.SonarRuntime;
+public class RuleMetadata {
+	private String key;
+	private String type;
+	private String defaultSeverity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
+	public String getKey() {
+		return key;
+	}
 
-class PythonPluginTest {
-    private Plugin.Context context;
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    @BeforeEach
-    void init() {
-        SonarRuntime sonarRuntime = mock(SonarRuntime.class);
-        context = new Plugin.Context(sonarRuntime);
-        new PythonPlugin().define(context);
-    }
+	public String getType() {
+		return type;
+	}
 
-    @Test
-    void test() {
-        assertThat(context.getExtensions()).hasSize(2);
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
+	public String getDefaultSeverity() {
+		return defaultSeverity;
+	}
+
+	public void setDefaultSeverity(String defaultSeverity) {
+		this.defaultSeverity = defaultSeverity;
+	}
+
+	@Override
+	public String toString() {
+		return "RuleMetadata{" +
+				"key='" + key + '\'' +
+				", type='" + type + '\'' +
+				", defaultSeverity='" + defaultSeverity + '\'' +
+				'}';
+	}
 }

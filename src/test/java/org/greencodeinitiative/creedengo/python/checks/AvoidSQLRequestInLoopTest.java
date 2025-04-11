@@ -24,6 +24,7 @@ public class AvoidSQLRequestInLoopTest {
     @Test
     public void test() {
         PythonCheckVerifier.verify("src/test/resources/checks/avoidSQLRequestInLoop.py", new AvoidSQLRequestInLoop());
+        PythonCheckVerifier.verify("src/test/resources/checks/avoidSQLRequestInLoopCheck.py", new AvoidSQLRequestInLoop());
         PythonCheckVerifier.verifyNoIssue("src/test/resources/checks/avoidSQLRequestInLoopNoImports.py", new AvoidSQLRequestInLoop());
     }
 }

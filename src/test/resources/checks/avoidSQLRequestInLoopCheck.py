@@ -1,5 +1,5 @@
 import mysql.connector
-
+import psycopg2
 
 class AvoidSQLRequestInLoopCheck:
     maxrows = 20
@@ -25,7 +25,7 @@ class AvoidSQLRequestInLoopCheck:
             cursor = db.cursor(dictionary=True)
 
             for i in range(0, self.maxrows):
-                cursor.execute("SELECT id, name FROM users WHERE id = %(id)s", {'id': i+1}) #Noncompliant
+                cursor.execute("SELECT id, name FROM users WHERE id = %(id)s", {'id': i+1}) # Noncompliant {{Avoid performing SQL queries within a loop}}
                 for row in cursor.fetchall():
                     print("{}: {}".format(row['id'], row['name']))
 
@@ -42,7 +42,7 @@ class AvoidSQLRequestInLoopCheck:
 
             i = 0
             while i < self.maxrows:
-                cursor.execute("SELECT id, name FROM users WHERE id = %(id)s", {'id': i+1}) #Noncompliant
+                cursor.execute("SELECT id, name FROM users WHERE id = %(id)s", {'id': i+1}) # Noncompliant {{Avoid performing SQL queries within a loop}}
                 for row in cursor.fetchall():
                     print("name: {}".format(row['name']))
                 i += 1
@@ -60,7 +60,7 @@ class AvoidSQLRequestInLoopCheck:
 
             i = 0
             while i < self.maxrows:
-                cursor.execute('UPDATE users set name=%(name)s where id=%(id)s', {'name': "anonymous", 'id': i+1})
+                cursor.execute('UPDATE users set name=%(name)s where id=%(id)s', {'name': "anonymous", 'id': i+1}) # Noncompliant {{Avoid performing SQL queries within a loop}}
                 i+=1
             db.commit()
 

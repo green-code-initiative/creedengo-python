@@ -17,7 +17,6 @@
  */
 package org.greencodeinitiative.creedengo.python.checks;
 
-
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
@@ -25,6 +24,9 @@ import org.sonar.plugins.python.api.tree.StringElement;
 import org.sonar.plugins.python.api.tree.StringLiteral;
 import org.sonar.plugins.python.api.tree.Tree;
 import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
+
+//import org.sonar.api.utils.log.Logger;
+//import org.sonar.api.utils.log.Loggers;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,11 +39,13 @@ import java.util.regex.Pattern;
 @DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "S74")
 public class AvoidFullSQLRequest extends PythonSubscriptionCheck {
 
+//    private static final Logger LOGGER = Loggers.get(AvoidFullSQLRequest.class);
+
     protected static final String MESSAGE_RULE = "Don't use the query SELECT * FROM";
 
     private static final Pattern PATTERN = Pattern.compile("(?i).*select.*\\*.*from.*");
-    private static final Map<String, Collection<Integer>> linesWithIssuesByFile = new HashMap<>();
 
+    private static final Map<String, Collection<Integer>> linesWithIssuesByFile = new HashMap<>();
 
     @Override
     public void initialize(Context context) {
@@ -54,13 +58,19 @@ public class AvoidFullSQLRequest extends PythonSubscriptionCheck {
     }
 
     public void checkIssue(StringElement stringElement, SubscriptionContext ctx) {
+//        LOGGER.info("--- DDC --- checkIssue - debut");
         if (lineAlreadyHasThisIssue(stringElement, ctx)) return;
+
+//        LOGGER.info("-- DDC -- stringElement.value() = " + stringElement.value());
+
         if (PATTERN.matcher(stringElement.value()).matches()) {
-            repport(stringElement, ctx);
+            report(stringElement, ctx);
         }
+
+//        LOGGER.info("--- DDC --- checkIssue - fin");
     }
 
-    private void repport(StringElement stringElement, SubscriptionContext ctx) {
+    private void report(StringElement stringElement, SubscriptionContext ctx) {
         if (stringElement.firstToken() != null) {
             final String classname = ctx.pythonFile().fileName();
             final int line = stringElement.firstToken().line();
