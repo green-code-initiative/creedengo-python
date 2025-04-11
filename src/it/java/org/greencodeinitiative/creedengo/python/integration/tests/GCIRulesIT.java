@@ -43,18 +43,18 @@ class GCIRulesIT extends GCIRulesBase {
 
     }
 
-//    @Test
-//    void testGCI74() {
-//
-//        String filePath = "src/avoidFullSQLRequest.py";
-//        String ruleId = "creedengo-python:GCI74";
-//        String ruleMsg = "Don't use the query SELECT * FROM";
-//        int[] startLines = new int[]{4, 7};
-//        int[] endLines = new int[]{4, 7};
-//
-//        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
-//
-//    }
+    @Test
+    void testGCI74() {
+
+        String filePath = "src/avoidFullSQLRequest.py";
+        String ruleId = "creedengo-python:GCI74";
+        String ruleMsg = "Don't use the query SELECT * FROM";
+        int[] startLines = new int[]{4, 7};
+        int[] endLines = new int[]{4, 7};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_20MIN);
+
+    }
 
     @Test
     void testGCI7_compliant() {
@@ -95,18 +95,18 @@ class GCIRulesIT extends GCIRulesBase {
 
     }
 
-//    @Test
-//    void testGCI404() {
-//
-//        String filePath = "src/avoidListComprehensionInIterations.py";
-//        String ruleId = "creedengo-python:GCI404";
-//        String ruleMsg = "Use generator comprehension instead of list comprehension in for loop declaration";
-//        int[] startLines = new int[]{2, 6, 10, 14};
-//        int[] endLines = new int[]{2, 6, 10, 14};
-//
-//        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
-//
-//    }
+    @Test
+    void testGCI404() {
+
+        String filePath = "src/avoidListComprehensionInIterations.py";
+        String ruleId = "creedengo-python:GCI404";
+        String ruleMsg = "Use generator comprehension instead of list comprehension in for loop declaration";
+        int[] startLines = new int[]{2, 6, 10};
+        int[] endLines = new int[]{2, 6, 10};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_15MIN);
+
+    }
 
     @Test
     void testGCI2_compliant() {

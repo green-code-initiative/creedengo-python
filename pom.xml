@@ -110,7 +110,15 @@
             <version>${sonar-analyzer-commons.version}</version>
         </dependency>
 
-        <!-- TEST sources dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.17</version>
+            <!-- To keep with this scope otherwise logging system will be not ok on custom plugins -->
+            <scope>provided</scope>
+    </dependency>
+
+    <!-- TEST sources dependencies -->
         <dependency>
             <groupId>org.sonarsource.python</groupId>
             <artifactId>python-checks-testkit</artifactId>
@@ -155,18 +163,6 @@
             <groupId>io.github.jycr</groupId>
             <artifactId>java-data-url-handler</artifactId>
             <version>0.0.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>2.0.13</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.5.6</version>
             <scope>test</scope>
         </dependency>
         <dependency>
