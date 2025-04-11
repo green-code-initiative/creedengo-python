@@ -83,9 +83,9 @@ class GCIRulesBase extends BuildProjectEngine {
 
 //		System.out.println("--- NB ISSUES : " + respIssues.getIssuesCount());
 //		System.out.println("--- NB ISSUES_LIST : " + respIssues.getIssuesList().size());
-        respIssues.getIssuesList().forEach(issue -> {
-            System.out.println("--- Issue --- " + issue.getRule() + " / " + issue.getLine());
-		});
+//        respIssues.getIssuesList().forEach(issue -> {
+//            System.out.println("--- Issue --- " + issue.getRule() + " / " + issue.getLine());
+//		});
 
 //        List<Issues.Issue> issues = issuesForFile(projectKey, filePath, ruleId);
         List<Issues.Issue> issues = respIssues.getIssuesList();
