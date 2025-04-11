@@ -98,7 +98,7 @@ class GCIRulesIT extends GCIRulesBase {
     @Test
     void testGCI404() {
 
-        String filePath = "src/avoidListComprehensionInIterationsTmp.py";
+        String filePath = "src/avoidListComprehensionInIterations.py";
         String ruleId = "creedengo-python:GCI404";
         String ruleMsg = "Use generator comprehension instead of list comprehension in for loop declaration";
         int[] startLines = new int[]{2, 6, 10};
