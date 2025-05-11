@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- compatibility updates for SonarQube 25.5.0
+- upgrade libraries versions
+- correction of technical problem with Integration tests (because of Maven format in technical answer to "sonar-orchestrator-junit5" library)
+
 ### Deleted
 
 ## [2.0.1] - 2025-03-14
