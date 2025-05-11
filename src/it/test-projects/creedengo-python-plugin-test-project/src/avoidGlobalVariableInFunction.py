@@ -25,7 +25,7 @@ def print_global_var_details():
     assert len(global_var) > 0, 'Failed' # Noncompliant {{Use local variable (function/class scope) instead of global variable (application scope)}}
     assert len('test') > 0, 'Failed : ' + global_var # Noncompliant {{Use local variable (function/class scope) instead of global variable (application scope)}}
     test = ''
-    test += global_var # Noncompliant
+    test += global_var # Noncompliant {{Use local variable (function/class scope) instead of global variable (application scope)}}
     test = {'test': global_var, 'global_var': 1 } # Noncompliant {{Use local variable (function/class scope) instead of global variable (application scope)}}
 
 # Compliant
