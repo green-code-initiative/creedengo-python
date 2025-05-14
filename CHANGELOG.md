@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- [GCI95] Add rule to discourage use of CSV format in favor of Parquet or Feather
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
