@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add rule GCI 103 Dictionary Items Unused. A rule specifying that dictionary iteration should consider the pertinence of the element used.
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
