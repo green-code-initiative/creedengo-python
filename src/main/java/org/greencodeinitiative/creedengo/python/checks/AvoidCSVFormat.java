@@ -31,7 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
-@Rule(key = "GCI300")
+@Rule(key = "GCI95")
 
 public class AvoidCSVFormat extends PythonSubscriptionCheck {
 
