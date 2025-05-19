@@ -30,7 +30,7 @@ import java.util.List;
 
 import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
 
-@Rule(key = "GCI302")
+@Rule(key = "GCI97")
 public class PreferAppendLeft extends PythonSubscriptionCheck {
     public static final String DESCRIPTION = "Use appendleft with deque instead of .insert(0, val) for modification at the beginning of a list";
 
