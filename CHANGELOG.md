@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add rule GCI 105 on String Concatentation. This rule maybe apply to other rule
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
