@@ -1,0 +1,22 @@
+<p>For a method having a single parameter, the types of its return value and its parameter should never be the same.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+class MyClass {
+  int doSomething(int a) { // Noncompliant
+    return 42;
+  }
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+class MyClass {
+  int doSomething() { // Compliant
+    return 42;
+  }
+  long doSomething(int a) { // Compliant
+    return 42L;
+  }
+}
+</pre>
