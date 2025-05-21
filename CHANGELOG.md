@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add rule GCI97 Prefer Append Left (a rule to prefer the use of `append` over `insert` for list, using deques)
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
