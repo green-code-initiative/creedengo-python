@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add rule GCI 104 AvoidCreatingTensorUsingNumpyOrNativePython, a rule specific to AI/ML code
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
