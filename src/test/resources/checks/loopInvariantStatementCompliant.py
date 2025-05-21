@@ -61,3 +61,26 @@ def compliant_two_abs_inside_for(data):
     for i in range(10_000):
         results.append(n + m + i)
     return results
+
+def compliant_min_inside_nested_for_and_while(data):
+    x = (1, 2, 3, 4)
+    n = min(x)  # Compliant {{Computed once outside the loop}}
+    results = []
+    for i in range(10_000):
+        j = 0
+        while j < 10_000:
+            results.append(n + i + j)
+            j += 1
+    return results
+
+# # Exemple fonction définie auparavant qui ne modifie pas la variable
+# def calcul_len(a):
+#     return len(a)
+#
+# def compliant_len_method_outside_for(data):
+#     x = (1, 2, 3, 4)
+#     n = calcul_len(x)  # Compliant {{Computed once outside the loop}}
+#     results = []
+#     for i in range(10_000):
+#         results.append(n * i)
+#     return results
