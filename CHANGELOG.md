@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- add rule GCI106 Avoid SQRT in a loop
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
