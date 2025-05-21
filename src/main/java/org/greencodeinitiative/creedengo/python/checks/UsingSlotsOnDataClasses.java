@@ -18,6 +18,7 @@
 package org.greencodeinitiative.creedengo.python.checks;
 
 import org.sonar.check.Rule;
+import org.sonar.plugins.python.api.ProjectPythonVersion;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
 import org.sonar.plugins.python.api.tree.*;
@@ -32,7 +33,9 @@ public class UsingSlotsOnDataClasses extends PythonSubscriptionCheck {
 
     @Override
     public void initialize(Context context) {
-        context.registerSyntaxNodeConsumer(Tree.Kind.DECORATOR, this::isUsingSlots);
+        if(ProjectPythonVersion.currentVersions().stream().anyMatch(version -> version.compare(3, 10) >= 0)) {
+            context.registerSyntaxNodeConsumer(Tree.Kind.DECORATOR, this::isUsingSlots);
+        }
     }
 
     private void isUsingSlots(SubscriptionContext ctx) {
