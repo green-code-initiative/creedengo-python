@@ -31,7 +31,7 @@ from torch import tensor as t_tensor, from_numpy as t_from_numpy
 
 
 compliant4 = t_from_numpy(numpy_array) # Compliant
-non_compliant4 = t_tensor(numpy_array)
+non_compliant4 = t_tensor(numpy_array) # Noncompliant {{Use torch.from_numpy() instead of torch.tensor() to create tensors from numpy arrays}}
 
 # Case 5: Direct np call as function argument
 compliant5 = tt.from_numpy(np.array([1, 2, 3]))
