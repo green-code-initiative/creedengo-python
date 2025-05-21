@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add rule GCI102 avoid non pinned memory for dataloader. This rule is specific to PyTorch and so AI
+- Add utils file
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
