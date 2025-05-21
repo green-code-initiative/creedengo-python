@@ -69,7 +69,7 @@
          <mockito.version>5.17.0</mockito.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
-        <creedengo-rules-specifications.version>main-SNAPSHOT</creedengo-rules-specifications.version>
+        <creedengo-rules-specifications.version>2.2.2</creedengo-rules-specifications.version>
 
         <!-- URL of the Maven repository where sonarqube will be downloaded -->
         <test-it.orchestrator.artifactory.url>https://repo1.maven.org/maven2</test-it.orchestrator.artifactory.url>
