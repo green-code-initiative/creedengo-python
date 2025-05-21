@@ -22,7 +22,7 @@ import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
 import org.sonar.plugins.python.api.tree.*;
 
-@Rule(key = "EC1442")
+@Rule(key = "GCI1442")
 public class UsingSlotsOnDataClasses extends PythonSubscriptionCheck {
 
     private static final String DECORATOR_DATA_CLASS = "dataclass";

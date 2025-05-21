@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- [#32](https://github.com/green-code-initiative/creedengo-challenge/issues/32) [EC1442] @dataclass(slots=True) shoud be declared on data classes
 
 ### Changed
 
