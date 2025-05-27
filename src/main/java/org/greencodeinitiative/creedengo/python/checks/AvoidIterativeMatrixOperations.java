@@ -86,18 +86,31 @@ public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
 
     }
     private boolean isOuterProductOperation(Statement statement) {
-        if (statement.is(Tree.Kind.ASSIGNMENT_STMT)) {
-            AssignmentStatement assignmentStmt = (AssignmentStatement) statement;
-            Expression lhsExpression = assignmentStmt.lhsExpressions().get(0).expressions().get(0);
-            
-            if (isDoubleSubscription(lhsExpression)) {
-                Expression rhsExpression = assignmentStmt.assignedValue();
-                if (rhsExpression.is(Tree.Kind.MULTIPLICATION)) {
-                    return isMultiplicationOfIndexedElements(rhsExpression,false);
-                }
-            }
+    if (statement.is(Tree.Kind.ASSIGNMENT_STMT)) {
+        AssignmentStatement assignmentStmt = (AssignmentStatement) statement;
+        Expression lhsExpression = assignmentStmt.lhsExpressions().get(0).expressions().get(0);
+
+        if (isDoubleSubscription(lhsExpression)) {
+            Expression rhsExpression = assignmentStmt.assignedValue();
+            return containsMultiplicationOfIndexedElements(rhsExpression, false);
         }
-        return false;}
+    }
+    return false;
+}
+
+private boolean containsMultiplicationOfIndexedElements(Expression expr, boolean matrixOps) {
+    if (isMultiplicationOfIndexedElements(expr, matrixOps)) {
+        return true;
+    }
+
+    if (expr instanceof BinaryExpression) {
+        BinaryExpression bin = (BinaryExpression) expr;
+        return containsMultiplicationOfIndexedElements(bin.leftOperand(), matrixOps)
+            || containsMultiplicationOfIndexedElements(bin.rightOperand(), matrixOps);
+    }
+
+    return false;
+}
 
         private boolean isMatrixDotProduct(ForStatement outerForStatement) {
             List<Statement> outerStatements = outerForStatement.body().statements();
