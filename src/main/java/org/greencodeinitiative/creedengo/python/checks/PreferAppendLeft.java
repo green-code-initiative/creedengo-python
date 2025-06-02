@@ -30,6 +30,7 @@ import java.util.List;
 
 import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
 
+
 @Rule(key = "GCI97")
 public class PreferAppendLeft extends PythonSubscriptionCheck {
     public static final String DESCRIPTION = "Use appendleft with deque instead of .insert(0, val) for modification at the beginning of a list";
@@ -41,21 +42,18 @@ public class PreferAppendLeft extends PythonSubscriptionCheck {
 
     private void visitCallExpression(SubscriptionContext context) {
         CallExpression callExpression = (CallExpression) context.syntaxNode();
-
         if (callExpression.callee().is(QUALIFIED_EXPR)) {
             QualifiedExpression qualifiedExpression = (QualifiedExpression) callExpression.callee();
-
-            
             
             if (qualifiedExpression.name().name().equals("insert")) {
                 List<org.sonar.plugins.python.api.tree.Argument> arguments = callExpression.arguments();
-                
-                if (arguments.size() >= 2) {// because it should be like insert(0,val) so there's two arguments
+                if (arguments.size() >= 2) {
                     Expression firstArg;
                     firstArg = ((RegularArgument) arguments.get(0)).expression();
-             
-                    if (isZeroLiteral(firstArg)) {
+                    if (firstArg.is(NUMERIC_LITERAL)) {
+                        if (isZeroLiteral(firstArg)) {
                         context.addIssue(callExpression, DESCRIPTION);
+                    }   
                     }
                 }
             }
@@ -66,7 +64,7 @@ public class PreferAppendLeft extends PythonSubscriptionCheck {
         if (expression.is(NUMERIC_LITERAL)) {
             NumericLiteral numericLiteral = (NumericLiteral) expression;
             String value = numericLiteral.valueAsString();
-            return "0".equals(value);
+            return "0".equals(value) || "0.0".equals(value) || "0.00".equals(value);
         }
         return false;
     }
