@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add rule GCI100 Disable Gradient For model eval, a rule specific to PyTorch and AI/ML
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
