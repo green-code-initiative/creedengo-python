@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add rule GCI101 Avoid Conv Bias Before Batch Normalization, a rule specific to Deeplearning
+- Add an utils file to keep all utils functions in one place
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
