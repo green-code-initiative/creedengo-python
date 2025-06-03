@@ -31,7 +31,7 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
  * Rule to enforce the use of torch.from_numpy() instead of torch.tensor() when working with NumPy arrays.
  * This optimization reduces memory usage and computational overhead by avoiding unnecessary data copying.
  */
-@Rule(key = "GCI314")
+@Rule(key = "GCI107")
 public class UseTorchFromNumpy extends PythonSubscriptionCheck {
 
     public static final String DESCRIPTION = "Use torch.from_numpy() instead of torch.tensor() to create tensors from numpy arrays";
