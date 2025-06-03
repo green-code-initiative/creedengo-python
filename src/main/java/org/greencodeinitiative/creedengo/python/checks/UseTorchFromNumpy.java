@@ -20,77 +20,81 @@ package org.greencodeinitiative.creedengo.python.checks;
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
-import org.sonar.plugins.python.api.tree.CallExpression;
-import org.sonar.plugins.python.api.tree.Expression;
-import org.sonar.plugins.python.api.tree.StringLiteral;
-import org.sonar.plugins.python.api.tree.Tree;
-import org.sonar.plugins.python.api.tree.QualifiedExpression;
-import org.sonar.plugins.python.api.tree.Argument;
-import org.sonar.plugins.python.api.tree.AssignmentStatement;
-import org.sonar.plugins.python.api.tree.RegularArgument;
+import org.sonar.plugins.python.api.tree.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
+
+/**
+ * Rule to enforce the use of torch.from_numpy() instead of torch.tensor() when working with NumPy arrays.
+ * This optimization reduces memory usage and computational overhead by avoiding unnecessary data copying.
+ */
 @Rule(key = "GCI314")
 public class UseTorchFromNumpy extends PythonSubscriptionCheck {
 
-    private final List<String> numpyArrayList = new ArrayList<>();
-
     public static final String DESCRIPTION = "Use torch.from_numpy() instead of torch.tensor() to create tensors from numpy arrays";
+    private static final String NUMPY_ARRAY_FUNCTION = "numpy.array";
+    private static final String TORCH_TENSOR_FUNCTION = "torch.tensor";
+
+    private final Set<String> numpyArrayVariables = new HashSet<>();
 
     @Override
     public void initialize(Context context) {
-        context.registerSyntaxNodeConsumer(ASSIGNMENT_STMT, this::visitAssiStmt);
+        context.registerSyntaxNodeConsumer(ASSIGNMENT_STMT, this::visitAssignmentStatement);
         context.registerSyntaxNodeConsumer(CALL_EXPR, this::visitCallExpression);
     }
 
-    private void visitAssiStmt(SubscriptionContext ctx) {
-        AssignmentStatement assignmentStmt = (AssignmentStatement) ctx.syntaxNode();
-        Expression value = assignmentStmt.assignedValue();
+    private void visitAssignmentStatement(SubscriptionContext ctx) {
+        var assignmentStmt = (AssignmentStatement) ctx.syntaxNode();
+        var value = assignmentStmt.assignedValue();
 
-        if (value.is(CALL_EXPR)) {
-            if (checkNumpyCallExpression((CallExpression) value)) {
-                String variableName = Utils.getVariableName(ctx);
-                System.out.println(("added one variable: " + variableName));
-                if (variableName != null) {
-                    numpyArrayList.add(variableName);
-                }
+        if (value.is(CALL_EXPR) && isNumpyArrayCreation((CallExpression) value)) {
+            String variableName = Utils.getVariableName(ctx);
+            if (variableName != null) {
+                numpyArrayVariables.add(variableName);
             }
         }
     }
 
-    private boolean checkNumpyCallExpression(CallExpression callExpression) {
-        Expression callee = callExpression.callee();
-
-        if (callee.is(QUALIFIED_EXPR)) {
-            return Utils.getQualifiedName(callExpression).equals("numpy.array");
-        }
-        return false;
+    private boolean isNumpyArrayCreation(CallExpression callExpression) {
+        return NUMPY_ARRAY_FUNCTION.equals(Utils.getQualifiedName(callExpression));
     }
 
     private void visitCallExpression(SubscriptionContext ctx) {
-        CallExpression callExpression = (CallExpression) ctx.syntaxNode();
-        // System.out.println("visiting call expression at line"+ callExpression.firstToken().line());
-        // System.out.println("Utils"+ Utils.getQualifiedName(callExpression));
-        // System.out.println("callExpression"+ callExpression.);
-        // System.out.println((callExpression));
+        var callExpression = (CallExpression) ctx.syntaxNode();
 
-        if (Utils.getQualifiedName(callExpression).equals("torch.tensor")) {
-            System.out.println(("detected torch.tensor() call at line: " + callExpression.firstToken().line()));
-            for (Argument arg : callExpression.arguments()) {
-                if (arg.is(REGULAR_ARGUMENT)) {
-                    RegularArgument regArg = (RegularArgument) arg;
-                    String varName = regArg.expression().toString();
+        if (!TORCH_TENSOR_FUNCTION.equals(Utils.getQualifiedName(callExpression)) && !TORCH_TENSOR_FUNCTION.equals(callExpression.callee().firstToken().value()+"."+callExpression.calleeSymbol().name()))  {
+            return;
+        }
 
-                    if (numpyArrayList.contains(varName)) {
-                        ctx.addIssue(callExpression, DESCRIPTION);
+        for (Argument arg : callExpression.arguments()) {
+            if (!arg.is(REGULAR_ARGUMENT)) {
+                continue;
+            }
 
-                    }
+            var regArg = (RegularArgument) arg;
+            var argumentExpression = regArg.expression();
+
+            // Case 1: Direct np.array call in the argument
+            if (argumentExpression.is(CALL_EXPR)) {
+                var argCallExpression = (CallExpression) argumentExpression;
+                if (isNumpyArrayCreation(argCallExpression)) {
+                    ctx.addIssue(argumentExpression, DESCRIPTION);
+                    continue;
+                }
+            }
+
+            // Case 2: Variable reference to a previously defined numpy array
+            if (argumentExpression.is(NAME)) {
+                var name = (Name) argumentExpression;
+                var variableName = name.name();
+
+                if (numpyArrayVariables.contains(variableName)) {
+                    ctx.addIssue(argumentExpression, DESCRIPTION);
                 }
             }
         }
     }
-    
 }
