@@ -30,7 +30,7 @@ import org.sonar.plugins.python.api.tree.QualifiedExpression;
 import org.sonar.plugins.python.api.tree.RegularArgument;
 import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
 
-@Rule(key = "GCI98")
+@Rule(key = "GCI96")
 public class RequireUsecolsArgument extends PythonSubscriptionCheck {
 
     public static final String DESCRIPTION = "Specify 'usecols' or 'columns' when reading a DataFrame to load only necessary columns";
