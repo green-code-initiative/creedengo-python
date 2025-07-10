@@ -29,7 +29,7 @@ import org.sonar.plugins.python.api.tree.RegularArgument;
 
 import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
 
-@Rule(key = "GCI99")
+@Rule(key = "GCI97")
 public class OptimizeSquareComputation extends PythonSubscriptionCheck {
 
     public static final String DESCRIPTION = "Use x*x instead of x**2 or math.pow(x,2) to calculate the square of a value";
