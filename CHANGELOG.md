@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add rule GCI98 Require Usecols Argument in Pandas Read Functions
+- Add rule GCI96 Require Usecols Argument in Pandas Read Functions
+- Add rule GCI96 units tests
+- Add rule GCI96 integration tests
 
 ### Changed
 
