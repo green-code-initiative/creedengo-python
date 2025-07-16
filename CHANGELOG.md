@@ -10,8 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add rule GCI97 Optimize square computation (scalar vs vectorized method)
-- Add rule GCI97 units tests
-- Add rule GCI97 integration tests
 
 ### Changed
 
