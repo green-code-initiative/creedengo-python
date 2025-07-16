@@ -41,7 +41,7 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
             AvoidListComprehensionInIterations.class,
             DetectUnoptimizedImageFormat.class,
             AvoidMultipleIfElseStatementCheck.class,
-            RequireUsecolsArgument.class
+            PandasRequireUsecolsArgument.class
     );
 
     public static final String LANGUAGE = "py";

@@ -20,10 +20,10 @@ package org.greencodeinitiative.creedengo.python.checks;
 import org.junit.Test;
 import org.sonar.python.checks.utils.PythonCheckVerifier;
 
-public class RequireUsecolsArgumentTest {
+public class PandasRequireUsecolsArgumentTest {
 
     @Test
     public void test() {
-        PythonCheckVerifier.verify("src/test/resources/checks/requireUsecolsArgument.py", new RequireUsecolsArgument());
+        PythonCheckVerifier.verify("src/test/resources/checks/pandasRequireUsecolsArgument.py", new PandasRequireUsecolsArgument());
     }
 }

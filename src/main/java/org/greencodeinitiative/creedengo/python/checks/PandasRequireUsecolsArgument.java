@@ -31,9 +31,9 @@ import org.sonar.plugins.python.api.tree.RegularArgument;
 import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
 
 @Rule(key = "GCI96")
-public class RequireUsecolsArgument extends PythonSubscriptionCheck {
+public class PandasRequireUsecolsArgument extends PythonSubscriptionCheck {
 
-    public static final String DESCRIPTION = "Specify 'usecols' or 'columns' when reading a DataFrame to load only necessary columns";
+    public static final String DESCRIPTION = "Specify 'usecols' or 'columns' when reading a DataFrame using Pandas to load only necessary columns";
     private static final List<String> READ_METHODS = Arrays.asList(
             "read_csv", "read_parquet", "read_excel", "read_feather", "read_json"
     );
