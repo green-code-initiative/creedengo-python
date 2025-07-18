@@ -10,7 +10,11 @@
 		"GCI72",
 		"GCI74",
 		"GCI89",
+<<<<<<< HEAD
 		"GCI96",
+=======
+		"GCI97",
+>>>>>>> upstream/main
 		"GCI203",
 		"GCI404"
 	]

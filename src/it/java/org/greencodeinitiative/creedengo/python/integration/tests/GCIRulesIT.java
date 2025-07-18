@@ -287,4 +287,18 @@ class GCIRulesIT extends GCIRulesBase {
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
+    void testGCI97(){
+        String filePath = "src/optimizeSquareComputation.py";
+        String ruleId = "creedengo-python:GCI97";
+        String ruleMsg = "Use x*x instead of x**2 or math.pow(x,2) to calculate the square of a value";
+        int[] startLines = new int[]{
+            4, 7, 19, 20, 25, 26, 31, 38
+        };
+        int[] endLines = new int[]{
+            4, 7, 19, 20, 25, 26, 31, 38
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
+    }
+
 }
