@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+<<<<<<< HEAD
+- [#71](https://github.com/green-code-initiative/creedengo-python/pull/71) Add rule GCI96 Require Usecols Argument in Pandas Read Functions
+=======
 - [#72](https://github.com/green-code-initiative/creedengo-python/pull/72) Add rule GCI97 Optimize square computation (scalar vs vectorized method)
+>>>>>>> upstream/main
 
 ### Changed
 

@@ -274,6 +274,19 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     @Test
+    void testGCI96() {
+        String filePath = "src/pandasRequireUsecols.py";
+        String ruleId = "creedengo-python:GCI96";
+        String ruleMsg = "Specify 'usecols' or 'columns' when reading a DataFrame using Pandas to load only necessary columns";
+        int[] startLines = new int[]{
+            3, 4, 5, 6, 7, 16, 19
+        };
+        int[] endLines = new int[]{
+            3, 4, 5, 6, 7, 16, 19
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
     void testGCI97(){
         String filePath = "src/optimizeSquareComputation.py";
         String ruleId = "creedengo-python:GCI97";
