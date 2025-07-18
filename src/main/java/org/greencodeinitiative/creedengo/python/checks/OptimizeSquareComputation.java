@@ -40,7 +40,6 @@ public class OptimizeSquareComputation extends PythonSubscriptionCheck {
         context.registerSyntaxNodeConsumer(POWER, this::checkPowerOf2);  
     }
 
-   
     private boolean isNumericLiteralWithValue(Expression expr, String value) {
         if (expr.is(NUMERIC_LITERAL)) {
             NumericLiteral numericLiteral = (NumericLiteral) expr;
@@ -51,8 +50,7 @@ public class OptimizeSquareComputation extends PythonSubscriptionCheck {
 
     private void checkMathPowCall(SubscriptionContext context) {
         CallExpression callExpression = (CallExpression) context.syntaxNode();
-        
-        
+
         if (isMathPowCall(callExpression)) {
             context.addIssue(callExpression, DESCRIPTION);
         }
@@ -60,13 +58,11 @@ public class OptimizeSquareComputation extends PythonSubscriptionCheck {
     
     private boolean isMathPowCall(CallExpression callExpression) {
         Expression callee = callExpression.callee();
-        
-        
+
         if (callee.is(QUALIFIED_EXPR)) {
             QualifiedExpression qualifiedExpr = (QualifiedExpression) callee;
             String name = qualifiedExpr.name().name();
-            
-            
+
             if ("pow".equals(name)) {
                 
                 if (callExpression.arguments().size() >= 2) {
@@ -79,11 +75,9 @@ public class OptimizeSquareComputation extends PythonSubscriptionCheck {
         return false;
     }
     
-    
     private void checkPowerOf2(SubscriptionContext context) {
         BinaryExpression power = (BinaryExpression) context.syntaxNode();
-        
-        
+
         if (isNumericLiteralWithValue(power.rightOperand(), "2")) {
             context.addIssue(power, DESCRIPTION);
         }
