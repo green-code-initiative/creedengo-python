@@ -273,4 +273,50 @@ class GCIRulesIT extends GCIRulesBase {
 
     }
 
+    @Test
+    void testGCI96() {
+        String filePath = "src/pandasRequireUsecols.py";
+        String ruleId = "creedengo-python:GCI96";
+        String ruleMsg = "Specify 'usecols' or 'columns' when reading a DataFrame using Pandas to load only necessary columns";
+        int[] startLines = new int[]{
+            3, 4, 5, 6, 7, 16, 19
+        };
+        int[] endLines = new int[]{
+            3, 4, 5, 6, 7, 16, 19
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
+
+    @Test
+    void testGCI97(){
+        String filePath = "src/optimizeSquareComputation.py";
+        String ruleId = "creedengo-python:GCI97";
+        String ruleMsg = "Use x*x instead of x**2 or math.pow(x,2) to calculate the square of a value";
+        int[] startLines = new int[]{
+            4, 7, 19, 20, 25, 26, 31, 38
+        };
+        int[] endLines = new int[]{
+            4, 7, 19, 20, 25, 26, 31, 38
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
+    }
+    @Test
+    void testGCI105() {
+
+        String filePath = "src/stringConcatenation.py";
+        String ruleId = "creedengo-python:GCI105";
+        String ruleMsg = "Concatenation of strings should be done using f-strings or str.join()";
+        int[] startLines = new int[]{
+            5, 8, 10, 32, 38
+        };
+        int[] endLines = new int[]{
+            5, 8, 10, 32, 38
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
+
+    }
+
 }
