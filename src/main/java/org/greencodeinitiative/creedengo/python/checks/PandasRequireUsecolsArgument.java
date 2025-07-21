@@ -17,72 +17,61 @@
  */
 package org.greencodeinitiative.creedengo.python.checks;
 
+import java.util.Arrays;
+import java.util.List;
+import org.sonar.check.Rule;
+import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
+import org.sonar.plugins.python.api.tree.Argument;
 import org.sonar.plugins.python.api.tree.CallExpression;
-import org.sonar.plugins.python.api.tree.QualifiedExpression;
-import org.sonar.plugins.python.api.tree.StringLiteral;
 import org.sonar.plugins.python.api.tree.Tree;
 import org.sonar.plugins.python.api.tree.Expression;
-import org.sonar.check.Rule;
+import org.sonar.plugins.python.api.tree.QualifiedExpression;
+import org.sonar.plugins.python.api.tree.RegularArgument;
+import static org.sonar.plugins.python.api.tree.Tree.Kind.*;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+@Rule(key = "GCI96")
+public class PandasRequireUsecolsArgument extends PythonSubscriptionCheck {
 
-import org.sonar.plugins.python.api.PythonSubscriptionCheck;
-@Rule(key = "GCI99")
-
-public class AvoidCSVFormat extends PythonSubscriptionCheck {
-
-    public static final String DESCRIPTION = "Use Parquet or Feather format instead of CSV";
-    protected static final Pattern CSV_EXTENSION = Pattern.compile("\\.(csv)");
+    public static final String DESCRIPTION = "Specify 'usecols' or 'columns' when reading a DataFrame using Pandas to load only necessary columns";
+    private static final List<String> READ_METHODS = Arrays.asList(
+            "read_csv", "read_parquet", "read_excel", "read_feather", "read_json"
+    );
     
-    private final Set<Integer> reportedLines = new HashSet<>();
-
     @Override
     public void initialize(Context context) {
         context.registerSyntaxNodeConsumer(Tree.Kind.CALL_EXPR, this::visitCallExpression);
-        context.registerSyntaxNodeConsumer(Tree.Kind.STRING_LITERAL, this::visitNodeString);
     }
-
+    
     public void visitCallExpression(SubscriptionContext ctx) {
         CallExpression callExpression = (CallExpression) ctx.syntaxNode();
-
         Expression callee = callExpression.callee();
-
         
-
         if (callee.is(Tree.Kind.QUALIFIED_EXPR)) {
             QualifiedExpression qualifiedExpression = (QualifiedExpression) callee;
             String methodName = qualifiedExpression.name().name();
             
-            if (methodName.equals("read_csv") || methodName.equals("to_csv")) {
-                int line = callExpression.firstToken().line();
+            if (READ_METHODS.contains(methodName)) {
                 
-
-                if (!reportedLines.contains(line)) {
-                    reportedLines.add(line);
+                if (!hasColumnsSpecified(callExpression)) {
                     ctx.addIssue(callExpression.firstToken(), DESCRIPTION);
                 }
             }
         }
     }
     
-    public void visitNodeString(SubscriptionContext ctx) {
-        StringLiteral stringLiteral = (StringLiteral) ctx.syntaxNode();
-        int line = stringLiteral.firstToken().line();
-        
+    private boolean hasColumnsSpecified(CallExpression callExpression) {
+        List<Argument> arguments = callExpression.arguments();
 
-        if (reportedLines.contains(line)) {
-            return;
+        for (Argument arg : arguments) {
+            if (arg.is(REGULAR_ARGUMENT)) {
+                RegularArgument regularArg = (RegularArgument) arg;                
+                String paramName = regularArg.keywordArgument() != null ? regularArg.keywordArgument().name() : null;
+                if (paramName != null && (paramName.equals("usecols") || paramName.equals("columns"))) {
+                    return true;
+                }
+            }
         }
-        
-        String strValue = stringLiteral.trimmedQuotesValue();
-        Matcher matcher = CSV_EXTENSION.matcher(strValue);
-        if (matcher.find()) {
-            reportedLines.add(line);
-            ctx.addIssue(stringLiteral, DESCRIPTION);
-        }
+        return false;
     }
 }
