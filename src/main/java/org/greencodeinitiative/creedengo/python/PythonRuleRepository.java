@@ -41,6 +41,8 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
             AvoidListComprehensionInIterations.class,
             DetectUnoptimizedImageFormat.class,
             AvoidMultipleIfElseStatementCheck.class,
+            PandasRequireUsecolsArgument.class,
+            OptimizeSquareComputation.class,
             AvoidConvBiasBeforeBatchNorm.class
     );
 

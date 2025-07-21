@@ -9,8 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add rule GCI101 Avoid Conv Bias Before Batch Normalization, a rule specific to Deeplearning
-- Add an utils file to keep all utils functions in one place
+- Add utils file
+- [#74](https://github.com/green-code-initiative/creedengo-python/pull/74) Add rule GCI101 Avoid Conv Bias Before Batch Normalization, a rule specific to Deeplearning
+- [#71](https://github.com/green-code-initiative/creedengo-python/pull/71) Add rule GCI96 Require Usecols Argument in Pandas Read Functions
+- [#72](https://github.com/green-code-initiative/creedengo-python/pull/72) Add rule GCI97 Optimize square computation (scalar vs vectorized method)
 
 ### Changed
 
