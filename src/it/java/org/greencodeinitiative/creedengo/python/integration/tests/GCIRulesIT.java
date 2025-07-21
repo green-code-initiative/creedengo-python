@@ -273,4 +273,20 @@ class GCIRulesIT extends GCIRulesBase {
 
     }
 
+    @Test
+    void testGCI102(){
+        String filePath = "src/avoidNonPinnedMemoryForDataloaders.py";
+        String ruleId = "creedengo-python:GCI102";
+        String ruleMsg = "Use pinned memory to reduce data transfer in RAM.";
+        int[] startLines = new int[]{
+            7, 8, 9, 10, 11, 12, 13, 14
+        };
+        int[] endLines = new int[]{
+            7, 8, 9, 10, 11, 12, 13, 14
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+
+    }
+
 }
