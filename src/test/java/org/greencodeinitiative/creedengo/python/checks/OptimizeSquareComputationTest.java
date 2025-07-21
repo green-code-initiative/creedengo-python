@@ -20,10 +20,10 @@ package org.greencodeinitiative.creedengo.python.checks;
 import org.junit.Test;
 import org.sonar.python.checks.utils.PythonCheckVerifier;
 
-public class DictionaryItemsUnusedTest {
+public class OptimizeSquareComputationTest {
 
     @Test
     public void test() {
-        PythonCheckVerifier.verify("src/test/resources/checks/dictionaryItemsUnused.py", new DictionaryItemsUnused());
+        PythonCheckVerifier.verify("src/test/resources/checks/optimizeSquareComputation.py", new OptimizeSquareComputation());
     }
 }
