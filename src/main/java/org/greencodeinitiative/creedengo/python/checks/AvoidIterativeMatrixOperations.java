@@ -32,7 +32,7 @@ import org.sonar.plugins.python.api.tree.AssignmentStatement;
 
 import java.util.List;
 
-@Rule(key = "GCI96")
+@Rule(key = "GCI107")
 
 public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
     

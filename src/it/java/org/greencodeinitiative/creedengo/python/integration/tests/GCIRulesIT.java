@@ -273,4 +273,20 @@ class GCIRulesIT extends GCIRulesBase {
 
     }
 
+    @Test 
+    void testGCI107(){
+
+        String filePath = "src/avoidIterativeMatrixOperations.py";
+        String ruleId = "creedengo-python:GCI107";
+        String ruleMsg = "Avoid iterative matrix operations, use numpy dot or outer function instead";
+        int[] startLines = new int[]{
+            8, 20, 36, 46, 75, 83, 91, 106, 115
+        };
+        int[] endLines = new int[]{
+            8, 20, 36, 46, 75, 83, 91, 106, 115
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1h);
+    }
+
 }
