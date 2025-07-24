@@ -287,6 +287,8 @@ class GCIRulesIT extends GCIRulesBase {
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
+
+    @Test
     void testGCI97(){
         String filePath = "src/optimizeSquareComputation.py";
         String ruleId = "creedengo-python:GCI97";
@@ -315,6 +317,18 @@ class GCIRulesIT extends GCIRulesBase {
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
 
+    @Test
+    void testGCI106() {
+        String filePath = "src/avoidSqrtInLoop.py";
+        String ruleId = "creedengo-python:GCI106";
+        String ruleMsg = "Avoid using scalar sqrt functions in loops. Apply vectorized sqrt operations on arrays directly.";
+        int[] startLines = new int[]{
+            7, 11, 16, 21, 45, 52, 60
+        };
+        int[] endLines = new int[]{
+            7, 11, 16, 21, 45, 52, 60
+        };
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
     }
 
 }
