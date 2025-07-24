@@ -33,7 +33,6 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.NAME;
 @Rule(key = "GCI102")
 public class AvoidNonPinnedMemoryForDataloaders extends PythonSubscriptionCheck {
 
-  public static final String RULE_KEY = "P3";
   private static final String dataloaderFullyQualifiedName = "torch.utils.data.DataLoader";
   private static final int pinMemoryArgumentPosition = 7;
   private static final String pinMemoryArgumentName = "pin_memory";
@@ -44,8 +43,8 @@ public class AvoidNonPinnedMemoryForDataloaders extends PythonSubscriptionCheck 
     context.registerSyntaxNodeConsumer(Tree.Kind.CALL_EXPR, ctx -> {
       CallExpression callExpression = (CallExpression) ctx.syntaxNode();
 
-      if (Utils.getQualifiedName(callExpression).equals(dataloaderFullyQualifiedName)) {
-        RegularArgument numWorkersArgument = Utils.nthArgumentOrKeyword(pinMemoryArgumentPosition,
+      if (UtilsAST.getQualifiedName(callExpression).equals(dataloaderFullyQualifiedName)) {
+        RegularArgument numWorkersArgument = UtilsAST.nthArgumentOrKeyword(pinMemoryArgumentPosition,
           pinMemoryArgumentName,
           callExpression.arguments());
 

@@ -31,26 +31,30 @@ import javax.annotation.CheckForNull;
 import java.util.List;
 import java.util.Objects;
 
-public class Utils {
+public class UtilsAST {
+
+  private UtilsAST() {
+    // Utility class - prevent instantiation
+  }
 
   private static boolean hasKeyword(Argument argument, String keyword) {
-    if (!argument.is(new Tree.Kind[] {Tree.Kind.REGULAR_ARGUMENT})) {
+    if (!argument.is(Tree.Kind.REGULAR_ARGUMENT)) {
       return false;
     } else {
       Name keywordArgument = ((RegularArgument) argument).keywordArgument();
-      return keywordArgument != null && keywordArgument.name().equals(keyword);
+      return keywordArgument != null && keywordArgument.name() != null && keywordArgument.name().equals(keyword);
     }
   }
 
   @CheckForNull
   public static RegularArgument nthArgumentOrKeyword(int argPosition, String keyword, List<Argument> arguments) {
     for (int i = 0; i < arguments.size(); ++i) {
-      Argument argument = (Argument) arguments.get(i);
+      Argument argument = arguments.get(i);
       if (hasKeyword(argument, keyword)) {
         return (RegularArgument) argument;
       }
 
-      if (argument.is(new Tree.Kind[] {Tree.Kind.REGULAR_ARGUMENT})) {
+      if (argument.is(Tree.Kind.REGULAR_ARGUMENT)) {
         RegularArgument regularArgument = (RegularArgument) argument;
         if (regularArgument.keywordArgument() == null && argPosition == i) {
           return regularArgument;
@@ -81,12 +85,11 @@ public class Utils {
   }
 
   public static String getVariableName(SubscriptionContext context) {
-    Tree node = context.syntaxNode();
-    Tree current = node;
+    Tree current = context.syntaxNode();
     while (current != null && !current.is(Tree.Kind.ASSIGNMENT_STMT)) {
         current = current.parent();
     }
-    if (current != null && current.is(Tree.Kind.ASSIGNMENT_STMT)) {
+    if (current != null) {
       AssignmentStatement assignment = (AssignmentStatement) current;
       if (!assignment.lhsExpressions().isEmpty() && !assignment.lhsExpressions().get(0).expressions().isEmpty()) {
               Expression leftExpr = assignment.lhsExpressions().get(0).expressions().get(0);
