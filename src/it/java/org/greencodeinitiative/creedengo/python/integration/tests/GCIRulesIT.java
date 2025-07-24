@@ -287,6 +287,8 @@ class GCIRulesIT extends GCIRulesBase {
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
+
+    @Test
     void testGCI97(){
         String filePath = "src/optimizeSquareComputation.py";
         String ruleId = "creedengo-python:GCI97";
@@ -301,6 +303,7 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
     }
     
+    @Test
     void testGCI103(){
 
         String filePath = "src/dictionaryItemsUnused.py";
