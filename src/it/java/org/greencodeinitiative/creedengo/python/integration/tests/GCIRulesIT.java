@@ -309,10 +309,10 @@ class GCIRulesIT extends GCIRulesBase {
         String ruleId = "creedengo-python:GCI106";
         String ruleMsg = "Avoid using scalar sqrt functions in loops. Apply vectorized sqrt operations on arrays directly.";
         int[] startLines = new int[]{
-            7, 11, 16, 21, 45, 60
+            7, 11, 16, 21, 45, 52, 60
         };
         int[] endLines = new int[]{
-            7, 11, 16, 21, 45, 60
+            7, 11, 16, 21, 45, 52, 60
         };
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
     }
