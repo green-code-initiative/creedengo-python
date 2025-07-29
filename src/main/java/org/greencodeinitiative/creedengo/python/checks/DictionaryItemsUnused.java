@@ -72,17 +72,15 @@ public class DictionaryItemsUnused extends PythonSubscriptionCheck {
             CallExpression callExpr = (CallExpression) expr;
             if (callExpr.callee().is(Tree.Kind.QUALIFIED_EXPR)) {
                 QualifiedExpression qualExpr = (QualifiedExpression) callExpr.callee();
-                boolean isItems = "items".equals(qualExpr.name().name());
-                return isItems;
+                return "items".equals(qualExpr.name().name());
             }
         }
         return false;
     }
 
     private void trackNameUsages(Tree node, ItemsLoopInfo info) {
-        if (node instanceof Name) {
-            String name = ((Name) node).name();
-            info.markUsage(name);
+        if (node instanceof Name nodeName) {
+            info.markUsage(nodeName.name());
         }
 
         for (Tree child : node.children()) {
@@ -115,11 +113,11 @@ public class DictionaryItemsUnused extends PythonSubscriptionCheck {
             this.valueVar = valueVar;
         }
 
-        void markUsage(String var) {
-            if (var.equals(keyVar)) {
+        void markUsage(String val) {
+            if (val.equals(keyVar)) {
                 keyUsed = true;
             }
-            if (var.equals(valueVar)) {
+            if (val.equals(valueVar)) {
                 valueUsed = true;
             }
         }
