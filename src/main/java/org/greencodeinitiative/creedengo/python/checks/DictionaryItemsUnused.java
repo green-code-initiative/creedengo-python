@@ -40,11 +40,10 @@ public class DictionaryItemsUnused extends PythonSubscriptionCheck {
 
     @Override
     public void initialize(Context context) {
-        context.registerSyntaxNodeConsumer(Tree.Kind.FOR_STMT, this::checkForLoop);
-        context.registerSyntaxNodeConsumer(Tree.Kind.FOR_STMT, this::finalizeCheck);
+        context.registerSyntaxNodeConsumer(Tree.Kind.FOR_STMT, this::processForLoop);
     }
 
-    private void checkForLoop(SubscriptionContext context) {
+    private void processForLoop(SubscriptionContext context) {
         ForStatement forStmt = (ForStatement) context.syntaxNode();
 
         if (forStmt.expressions().size() == 2) {
@@ -53,15 +52,19 @@ public class DictionaryItemsUnused extends PythonSubscriptionCheck {
             Expression iterable = forStmt.testExpressions().get(0);
 
             if (isItemsCall(iterable)) {
-                String key = ((Name) keyExpr).name();
-                String value = ((Name) valueExpr).name();
+                String key = keyExpr.is(Tree.Kind.NAME) ? ((Name) keyExpr).name() : null;
+                String value = valueExpr.is(Tree.Kind.NAME) ? ((Name) valueExpr).name() : null;
 
-                ItemsLoopInfo info = new ItemsLoopInfo(key, value);
-                itemsLoops.put(forStmt, info);
+                if (key != null && value != null) {
+                    ItemsLoopInfo info = new ItemsLoopInfo(key, value);
+                    itemsLoops.put(forStmt, info);
 
-                trackNameUsages(forStmt.body(), info);
+                    trackNameUsages(forStmt.body(), info);
+                }
             }
-        } 
+        }
+
+        finalizeCheck(context);
     }
 
     private boolean isItemsCall(Expression expr) {
