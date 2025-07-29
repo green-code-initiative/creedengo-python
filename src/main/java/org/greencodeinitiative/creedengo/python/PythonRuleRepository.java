@@ -43,7 +43,8 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
             AvoidMultipleIfElseStatementCheck.class,
             PandasRequireUsecolsArgument.class,
             OptimizeSquareComputation.class,
-            AvoidSqrtInLoop.class
+            AvoidSqrtInLoop.class,
+            DictionaryItemsUnused.class
     );
 
     public static final String LANGUAGE = "py";
