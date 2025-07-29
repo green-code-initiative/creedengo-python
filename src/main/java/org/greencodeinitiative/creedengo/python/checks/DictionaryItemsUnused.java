@@ -31,7 +31,7 @@ import org.sonar.plugins.python.api.tree.QualifiedExpression;
 import org.sonar.plugins.python.api.tree.Tree;
 
 
-@Rule(key ="GCI103")
+@Rule(key = "GCI103")
 public class DictionaryItemsUnused extends PythonSubscriptionCheck {
 
     public static final String DESCRIPTION = "Use dict.keys() or dict.values() instead of dict.items() when only one part of the key-value pair is used";
