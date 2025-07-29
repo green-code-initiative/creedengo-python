@@ -9,7 +9,10 @@ text += " add this"  # Noncompliant {{Concatenation of strings should be done us
 
 text += [word for word in following_words]  # Noncompliant {{Concatenation of strings should be done using f-strings or str.join()}}
 
+text = 0
+text +=1 
 
+text = "start"
 result = " ".join([text] + following_words) 
 
 

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- [#78](https://github.com/green-code-initiative/creedengo-python/pull/78) Add rule GCI 105 on String Concatentation. This rule maybe apply to other rule
+- [#78](https://github.com/green-code-initiative/creedengo-python/pull/78) Add rule GCI 105 on String Concatenation. This rule may also apply to other rules
 - [#79](https://github.com/green-code-initiative/creedengo-python/pull/79) Add rule GCI106 Avoid SQRT in a loop
 - [#71](https://github.com/green-code-initiative/creedengo-python/pull/71) Add rule GCI96 Require Usecols Argument in Pandas Read Functions
 - [#72](https://github.com/green-code-initiative/creedengo-python/pull/72) Add rule GCI97 Optimize square computation (scalar vs vectorized method)

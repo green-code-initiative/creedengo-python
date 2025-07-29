@@ -42,38 +42,12 @@ public class StringConcatenation extends PythonSubscriptionCheck {
 
   @Override
   public void initialize(Context context) {
-    context.registerSyntaxNodeConsumer(Tree.Kind.STRING_ELEMENT, this::findStringVariable);
-
+    context.registerSyntaxNodeConsumer(Tree.Kind.ASSIGNMENT_STMT, this::trackVariableAssignments);
     context.registerSyntaxNodeConsumer(Tree.Kind.COMPOUND_ASSIGNMENT, this::checkAssignment);
 
   }
 
-  private void findStringVariable(SubscriptionContext context) {
-    Tree node = context.syntaxNode();
-    if (node.is(Tree.Kind.STRING_ELEMENT)) {
-        Tree current = node;
-        while (current != null && !current.is(Tree.Kind.ASSIGNMENT_STMT)) {
-            current = current.parent();
-        }
-        
-        if (current != null && current.is(Tree.Kind.ASSIGNMENT_STMT)) {
-            AssignmentStatement assignment = (AssignmentStatement) current;
-            
-           
-            if (!assignment.assignedValue().is(Tree.Kind.LIST_LITERAL) && 
-                !assignment.assignedValue().is(Tree.Kind.LIST_COMPREHENSION)) {
-                
-                String variableName = Utils.getVariableName(context);
-                if (variableName != null) {
-                    stringVariables.add(variableName);
-                }
-            }
-        }
-    }
-}
-
   private void checkAssignment(SubscriptionContext context) {
-
     CompoundAssignmentStatement compoundAssignment = (CompoundAssignmentStatement) context.syntaxNode();
     if (compoundAssignment.compoundAssignmentToken().value().equals("+=")) {
       Expression lhsExpression = compoundAssignment.lhsExpression();
@@ -84,8 +58,41 @@ public class StringConcatenation extends PythonSubscriptionCheck {
       }
   }}}
 
+  private void trackVariableAssignments(SubscriptionContext context) {
+    AssignmentStatement assignment = (AssignmentStatement) context.syntaxNode();
+    if (assignment.lhsExpressions().size() == 1) {
+      Expression lhs = assignment.lhsExpressions().get(0).expressions().get(0);
+      if (lhs.is(Tree.Kind.NAME)) {
+        String variableName = ((Name) lhs).name();
+        Expression assignedValue = assignment.assignedValue();
+        if (isStringAssignment(assignedValue)) {
+          if (!stringVariables.contains(variableName)) {
+            stringVariables.add(variableName);
+          }
+        } else {
+          stringVariables.remove(variableName);
+        }
+      }
+    }
+  }
 
-  
+  private boolean isStringAssignment(Expression assignedValue) {
+    return assignedValue.is(Tree.Kind.STRING_ELEMENT) ||
+           assignedValue.is(Tree.Kind.STRING_LITERAL) ||
+           containsStringElement(assignedValue);
+  }
+
+  private boolean containsStringElement(Tree node) {
+    if (node.is(Tree.Kind.STRING_ELEMENT) || node.is(Tree.Kind.STRING_LITERAL)) {
+      return true;
+    }
+    for (Tree child : node.children()) {
+      if (containsStringElement(child)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
     
 }
