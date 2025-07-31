@@ -27,7 +27,6 @@ import org.sonar.check.Rule;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
@@ -36,7 +35,7 @@ import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 public class AvoidCSVFormat extends PythonSubscriptionCheck {
 
     public static final String DESCRIPTION = "Use Parquet or Feather format instead of CSV";
-    protected static final Pattern CSV_EXTENSION = Pattern.compile("\\.csv");
+    protected static final Pattern CSV_EXTENSION = Pattern.compile("\\.csv$", Pattern.CASE_INSENSITIVE);
     private final Set<Integer> reportedLines = new HashSet<>();
 
     @Override
@@ -53,7 +52,7 @@ public class AvoidCSVFormat extends PythonSubscriptionCheck {
             QualifiedExpression qualifiedExpression = (QualifiedExpression) callee;
             String methodName = qualifiedExpression.name().name();
 
-            if (methodName.equals("read_csv") || methodName.equals("to_csv")) {
+            if ("read_csv".equals(methodName) || "to_csv".equals(methodName)) {
                 int line = callExpression.firstToken().line();
 
                 if (!reportedLines.contains(line)) {
@@ -71,10 +70,8 @@ public class AvoidCSVFormat extends PythonSubscriptionCheck {
         if (reportedLines.contains(line)) {
             return;
         }
-        String strValue = stringLiteral.trimmedQuotesValue();
-        Matcher matcher = CSV_EXTENSION.matcher(strValue);
 
-        if (matcher.find()) {
+        if (CSV_EXTENSION.matcher(stringLiteral.trimmedQuotesValue()).find()) {
             reportedLines.add(line);
             ctx.addIssue(stringLiteral, DESCRIPTION);
         }
