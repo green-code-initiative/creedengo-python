@@ -302,6 +302,23 @@ class GCIRulesIT extends GCIRulesBase {
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
     }
+    
+    @Test
+    void testGCI103(){
+
+        String filePath = "src/dictionaryItemsUnused.py";
+        String ruleId = "creedengo-python:GCI103";
+        String ruleMsg = "Use dict.keys() or dict.values() instead of dict.items() when only one part of the key-value pair is used";
+        int[] startLines = new int[]{
+            5, 8, 24, 27, 36
+        };
+        int[] endLines = new int[]{
+            5, 8, 24, 27, 36
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);  
+    }
+ 
     @Test
     void testGCI105() {
 
@@ -316,7 +333,6 @@ class GCIRulesIT extends GCIRulesBase {
         };
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
-
     }
 
     @Test
