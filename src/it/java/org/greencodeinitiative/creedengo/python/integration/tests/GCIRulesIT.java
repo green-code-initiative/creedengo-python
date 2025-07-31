@@ -318,6 +318,23 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_50MIN);
     }
     
+    @Test 
+    void testGCI100() {
+
+        String filePath = "src/disableGradientForModelEval.py";
+        String ruleId = "creedengo-python:GCI100";
+        String ruleMsg = "PyTorch : Disable gradient computation when evaluating a model to save memory and computation time";
+        int[] startLines = new int[]{
+            19, 29, 38
+        };
+        int[] endLines = new int[]{
+            19, 29, 38
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1h);
+
+    }
+  
     @Test
     void testGCI103(){
 
