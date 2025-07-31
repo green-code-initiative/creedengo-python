@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add utils file
 - [#75](https://github.com/green-code-initiative/creedengo-python/pull/75) Add rule GCI102 avoid non pinned memory for dataloader. This rule is specific to PyTorch and so AI
+- [#76](https://github.com/green-code-initiative/creedengo-python/pull/76) Add rule GCI103 Dictionary Items Unused. A rule specifying that dictionary iteration should consider the pertinence of the element used.
 - [#79](https://github.com/green-code-initiative/creedengo-python/pull/79) Add rule GCI106 Avoid SQRT in a loop
 - [#71](https://github.com/green-code-initiative/creedengo-python/pull/71) Add rule GCI96 Require Usecols Argument in Pandas Read Functions
 - [#72](https://github.com/green-code-initiative/creedengo-python/pull/72) Add rule GCI97 Optimize square computation (scalar vs vectorized method)

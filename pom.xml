@@ -50,12 +50,12 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <!-- Minimal version of the SonarQube APIs for `creedengo-python-plugin`  -->
-         <sonarqube-plugin-api-min.version>9.9.0.65466</sonarqube-plugin-api-min.version>
+        <sonarqube-plugin-api-min.version>9.9.0.65466</sonarqube-plugin-api-min.version>
 
         <!-- Version of the SonarQube APIs used by `creedengo-java-plugin` -->
-         <sonar.plugin.api.version>11.4.0.2922</sonar.plugin.api.version>
+        <sonar.plugin.api.version>11.4.0.2922</sonar.plugin.api.version>
 
-         <sonar-analyzer-commons.version>2.17.0.3322</sonar-analyzer-commons.version>
+        <sonar-analyzer-commons.version>2.17.0.3322</sonar-analyzer-commons.version>
 
         <!-- last version that all is OK -->
         <sonarpython.version>4.6.0.12071</sonarpython.version>
@@ -66,7 +66,7 @@
 <!--        <sonarpython.version>4.22.0.16914</sonarpython.version>-->
 <!--        <sonarpython.version>5.4.0.22255</sonarpython.version>-->
 
-         <mockito.version>5.17.0</mockito.version>
+        <mockito.version>5.17.0</mockito.version>
         <lombok.version>1.18.38</lombok.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
