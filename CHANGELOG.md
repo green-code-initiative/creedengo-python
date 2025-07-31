@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [#78](https://github.com/green-code-initiative/creedengo-python/pull/78) Add rule GCI105 on String Concatenation. This rule may also apply to other rules
+- [#69](https://github.com/green-code-initiative/creedengo-python/pull/69) Add rule GCI99 Avoid CSV Format
 - [#76](https://github.com/green-code-initiative/creedengo-python/pull/76) Add rule GCI103 Dictionary Items Unused. A rule specifying that dictionary iteration should consider the pertinence of the element used.
 - [#79](https://github.com/green-code-initiative/creedengo-python/pull/79) Add rule GCI106 Avoid SQRT in a loop
 - [#71](https://github.com/green-code-initiative/creedengo-python/pull/71) Add rule GCI96 Require Usecols Argument in Pandas Read Functions
