@@ -46,6 +46,7 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
             AvoidSqrtInLoop.class,
             DictionaryItemsUnused.class,
             AvoidCSVFormat.class,
+            AvoidIterativeMatrixOperations.class,
             StringConcatenation.class
     );
 
