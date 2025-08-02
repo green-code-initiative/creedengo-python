@@ -331,8 +331,7 @@ class GCIRulesIT extends GCIRulesBase {
             5, 8, 24, 27, 36
         };
 
-        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);  
-
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
     }
 
     @Test
@@ -341,12 +340,13 @@ class GCIRulesIT extends GCIRulesBase {
         String ruleId = "creedengo-python:GCI106";
         String ruleMsg = "Avoid using scalar sqrt functions in loops. Apply vectorized sqrt operations on arrays directly.";
         int[] startLines = new int[]{
-            7, 11, 16, 21, 45, 52, 60
+                7, 11, 16, 21, 45, 52, 60
         };
         int[] endLines = new int[]{
-            7, 11, 16, 21, 45, 52, 60
+                7, 11, 16, 21, 45, 52, 60
         };
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+    }
 
     @Test 
     void testGCI107(){
@@ -361,10 +361,7 @@ class GCIRulesIT extends GCIRulesBase {
             8, 20, 36, 46, 75, 83, 91, 106, 115
         };
 
-        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1h);
-      
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
-
-
 
 }

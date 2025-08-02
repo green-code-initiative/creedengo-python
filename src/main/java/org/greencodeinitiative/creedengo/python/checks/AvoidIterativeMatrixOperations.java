@@ -50,7 +50,6 @@ public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
         }
     }
 
-
     private boolean isDotProduct(ForStatement forStatement) {
         List<Statement> statements = forStatement.body().statements();
         for (Statement stmt : statements) {
@@ -86,68 +85,68 @@ public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
 
     }
     private boolean isOuterProductOperation(Statement statement) {
-    if (statement.is(Tree.Kind.ASSIGNMENT_STMT)) {
-        AssignmentStatement assignmentStmt = (AssignmentStatement) statement;
-        Expression lhsExpression = assignmentStmt.lhsExpressions().get(0).expressions().get(0);
+        if (statement.is(Tree.Kind.ASSIGNMENT_STMT)) {
+            AssignmentStatement assignmentStmt = (AssignmentStatement) statement;
+            Expression lhsExpression = assignmentStmt.lhsExpressions().get(0).expressions().get(0);
 
-        if (isDoubleSubscription(lhsExpression)) {
-            Expression rhsExpression = assignmentStmt.assignedValue();
-            return containsMultiplicationOfIndexedElements(rhsExpression, false);
+            if (isDoubleSubscription(lhsExpression)) {
+                Expression rhsExpression = assignmentStmt.assignedValue();
+                return containsMultiplicationOfIndexedElements(rhsExpression, false);
+            }
         }
-    }
-    return false;
-}
-
-private boolean containsMultiplicationOfIndexedElements(Expression expr, boolean matrixOps) {
-    if (isMultiplicationOfIndexedElements(expr, matrixOps)) {
-        return true;
+        return false;
     }
 
-    if (expr instanceof BinaryExpression) {
-        BinaryExpression bin = (BinaryExpression) expr;
-        return containsMultiplicationOfIndexedElements(bin.leftOperand(), matrixOps)
-            || containsMultiplicationOfIndexedElements(bin.rightOperand(), matrixOps);
+    private boolean containsMultiplicationOfIndexedElements(Expression expr, boolean matrixOps) {
+        if (isMultiplicationOfIndexedElements(expr, matrixOps)) {
+            return true;
+        }
+
+        if (expr instanceof BinaryExpression) {
+            BinaryExpression bin = (BinaryExpression) expr;
+            return containsMultiplicationOfIndexedElements(bin.leftOperand(), matrixOps)
+                || containsMultiplicationOfIndexedElements(bin.rightOperand(), matrixOps);
+        }
+
+        return false;
     }
 
-    return false;
-}
-
-        private boolean isMatrixDotProduct(ForStatement outerForStatement) {
-            List<Statement> outerStatements = outerForStatement.body().statements();
-            for (Statement outerStatement : outerStatements) {
-                if (outerStatement.is(Tree.Kind.FOR_STMT)) {
-                    ForStatement middleForStatement = (ForStatement) outerStatement;
-                    List<Statement> middleStatements = middleForStatement.body().statements();
-                    for (Statement middleStatement : middleStatements) {
-                        if (middleStatement.is(Tree.Kind.FOR_STMT)) {
-                            ForStatement innerForStatement = (ForStatement) middleStatement;
-                            List<Statement> innerStatements = innerForStatement.body().statements();
-                            for (Statement innermostStatement : innerStatements) {
-                                if (isMatrixDotProductOperation(innermostStatement)) {
-                                    System.out.println("Matrix dot product found");
-                                    return true;
-                                }
+    private boolean isMatrixDotProduct(ForStatement outerForStatement) {
+        List<Statement> outerStatements = outerForStatement.body().statements();
+        for (Statement outerStatement : outerStatements) {
+            if (outerStatement.is(Tree.Kind.FOR_STMT)) {
+                ForStatement middleForStatement = (ForStatement) outerStatement;
+                List<Statement> middleStatements = middleForStatement.body().statements();
+                for (Statement middleStatement : middleStatements) {
+                    if (middleStatement.is(Tree.Kind.FOR_STMT)) {
+                        ForStatement innerForStatement = (ForStatement) middleStatement;
+                        List<Statement> innerStatements = innerForStatement.body().statements();
+                        for (Statement innermostStatement : innerStatements) {
+                            if (isMatrixDotProductOperation(innermostStatement)) {
+                                System.out.println("Matrix dot product found");
+                                return true;
                             }
                         }
                     }
                 }
             }
-            return false;
         }
-    
-        private boolean isMatrixDotProductOperation(Statement statement) {
-            if (statement.is(Tree.Kind.COMPOUND_ASSIGNMENT)) {
-                CompoundAssignmentStatement compoundStatement = (CompoundAssignmentStatement) statement;
-                String operator = compoundStatement.compoundAssignmentToken().value();
-                if (operator.equals("+=")) {
-                    if (isDoubleSubscription(compoundStatement.lhsExpression())) {
-                        Expression rhsExpression = compoundStatement.rhsExpression();
-                        return isMultiplicationOfIndexedElements(rhsExpression, true);
-                    }
+        return false;
+    }
+
+    private boolean isMatrixDotProductOperation(Statement statement) {
+        if (statement.is(Tree.Kind.COMPOUND_ASSIGNMENT)) {
+            CompoundAssignmentStatement compoundStatement = (CompoundAssignmentStatement) statement;
+            String operator = compoundStatement.compoundAssignmentToken().value();
+            if (operator.equals("+=")) {
+                if (isDoubleSubscription(compoundStatement.lhsExpression())) {
+                    Expression rhsExpression = compoundStatement.rhsExpression();
+                    return isMultiplicationOfIndexedElements(rhsExpression, true);
                 }
             }
-            return false;
         }
+        return false;
+    }
 
     private boolean isMultiplicationOfIndexedElements(Expression expr, boolean matrixOps) {
         if (expr.is(Tree.Kind.MULTIPLICATION)) {
