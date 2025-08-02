@@ -10,10 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [#68](https://github.com/green-code-initiative/creedengo-python/pull/68) Add rule GCI107 avoidIterativeMatrixOperations
-- [#69](https://github.com/green-code-initiative/creedengo-python/pull/69) Add rule GCI99 Avoid CSV Format
+
+### Changed
+
+### Deleted
+
+## [2.1.0] - 2025-08-02
+
+### Added
+
+- [#69](https://github.com/green-code-initiative/creedengo-python/pull/69) Data : Add rule GCI99 Avoid CSV Format
 - [#76](https://github.com/green-code-initiative/creedengo-python/pull/76) Add rule GCI103 Dictionary Items Unused. A rule specifying that dictionary iteration should consider the pertinence of the element used.
 - [#79](https://github.com/green-code-initiative/creedengo-python/pull/79) Add rule GCI106 Avoid SQRT in a loop
-- [#71](https://github.com/green-code-initiative/creedengo-python/pull/71) Add rule GCI96 Require Usecols Argument in Pandas Read Functions
+- [#71](https://github.com/green-code-initiative/creedengo-python/pull/71) Data / AI : Add rule GCI96 Require Usecols Argument in Pandas Read Functions
 - [#72](https://github.com/green-code-initiative/creedengo-python/pull/72) Add rule GCI97 Optimize square computation (scalar vs vectorized method)
 
 ### Changed
@@ -23,8 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - correction of technical problem with Integration tests (because of Maven format in technical answer to "sonar-orchestrator-junit5" library)
 - update from jdk 11 to 17
 - Add Lombok annotation processing inside `maven-compiler` plugin, to fix compile error on Arm64 architecture
-
-### Deleted
 
 ## [2.0.1] - 2025-03-14
 
@@ -127,7 +134,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Comparison list
 
-[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.0.1...HEAD)
+[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.1.0...HEAD)
+[2.1.0](https://github.com/green-code-initiative/creedengo-python/compare/2.0.1...2.1.0)
 [2.0.1](https://github.com/green-code-initiative/creedengo-python/compare/2.0.0...2.0.1)
 [2.0.0](https://github.com/green-code-initiative/creedengo-python/compare/1.4.4...2.0.0)
 [1.5.0](https://github.com/green-code-initiative/creedengo-python/compare/1.4.4...1.5.0)
