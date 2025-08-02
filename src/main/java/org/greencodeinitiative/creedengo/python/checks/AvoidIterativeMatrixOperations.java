@@ -35,7 +35,9 @@ import java.util.List;
 @Rule(key = "GCI107")
 
 public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
-    
+
+    private static final System.Logger LOGGER = System.getLogger(AvoidIterativeMatrixOperations.class.getName());
+
     private static final String DESCRIPTION = "Avoid iterative matrix operations, use numpy dot or outer function instead";
 
     @Override
@@ -59,7 +61,7 @@ public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
                 if (assign.compoundAssignmentToken().value().equals("+=")
                     && isMultiplicationOfIndexedElements(assign.rhsExpression(),false)
                     && !isDoubleSubscription(lhsExpression)) {
-                        System.out.println("Dot product found");
+                    LOGGER.log(System.Logger.Level.INFO, "Dot product found");
                     return true;
                 }
             }
@@ -75,7 +77,7 @@ public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
                 List<Statement> innerStatements = innerForStatement.body().statements();
                 for (Statement innermostStatement : innerStatements) {
                     if (isOuterProductOperation(innermostStatement)) {
-                        System.out.println("Outer product found");
+                        LOGGER.log(System.Logger.Level.INFO, "Outer product found");
                         return true;
                     }
                 }
@@ -123,7 +125,7 @@ public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
                         List<Statement> innerStatements = innerForStatement.body().statements();
                         for (Statement innermostStatement : innerStatements) {
                             if (isMatrixDotProductOperation(innermostStatement)) {
-                                System.out.println("Matrix dot product found");
+                                LOGGER.log(System.Logger.Level.INFO, "Matrix dot product found");
                                 return true;
                             }
                         }

@@ -76,7 +76,7 @@ for i in range(len(x)): # Noncompliant {{Avoid iterative matrix operations, use 
     for j in range(len(y)):
         result[i][j] = x[i] * y[j] + 1 
 
-# Test 9: Outer product with extra operation
+# Test 10: Outer product with extra operation (substraction)
 x = [1, 2]
 y = [3, 4]
 result = [[0]*len(y) for _ in range(len(x))]
@@ -84,7 +84,7 @@ for i in range(len(x)): # Noncompliant {{Avoid iterative matrix operations, use 
     for j in range(len(y)):
         result[i][j] = x[i] * y[j] -10
 
-# Test 10: 3-level nested matrix product with aliases
+# Test 11: 3-level nested matrix product with aliases
 X = [[1, 2], [3, 4]]
 Y = [[5, 6], [7, 8]]
 Z = [[0, 0], [0, 0]]
@@ -93,13 +93,13 @@ for r in range(2): # Noncompliant {{Avoid iterative matrix operations, use numpy
         for t in range(2):
             Z[r][c] += X[r][t] * Y[t][c] 
 
-# Test 11: False positive - nested loops without multiplication
+# Test 12: False positive - nested loops without multiplication
 total = 0
 for i in range(10):
     for j in range(5):
         total += i + j  # Compliant
 
-# Test 12: Matrix dot with transpose
+# Test 13: Matrix dot with transpose
 M1 = [[1, 2], [3, 4]]
 M2 = [[5, 7], [6, 8]]
 out = [[0 for _ in range(len(M2))] for _ in range(len(M1))]
@@ -108,7 +108,7 @@ for i in range(len(M1)): # Noncompliant {{Avoid iterative matrix operations, use
         for k in range(len(M1[0])):
             out[i][j] += M1[i][k] * M2[j][k]  # Transposed multiplication
 
-# Test 13: Outer product with offset indexing (still counts)
+# Test 14: Outer product with offset indexing (still counts)
 x = [1, 2]
 y = [3, 4]
 res = [[0, 0], [0, 0]]
