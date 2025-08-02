@@ -17,15 +17,15 @@
  */
 package org.greencodeinitiative.creedengo.python.integration.tests;
 
-import org.junit.jupiter.api.Test;
-import org.sonarqube.ws.Issues;
-import org.sonarqube.ws.Measures;
+import static java.util.Optional.ofNullable;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Optional.ofNullable;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.sonarqube.ws.Issues;
+import org.sonarqube.ws.Measures;
 
 class GCIRulesIT extends GCIRulesBase {
 
@@ -304,6 +304,38 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     @Test
+    void testGCI99(){
+        String filePath = "src/avoidCSVFormat.py";
+        String ruleId = "creedengo-python:GCI99";
+        String ruleMsg = "Use Parquet or Feather format instead of CSV";
+        int[] startLines = new int[]{
+                4, 6, 10, 12, 14, 15, 17, 18, 23, 39, 47, 48
+        };
+        int[] endLines = new int[]{
+                4, 6, 10, 12, 14, 15, 17, 18, 23, 39, 47, 48
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_50MIN);
+    }
+    
+    @Test
+    void testGCI103(){
+
+        String filePath = "src/dictionaryItemsUnused.py";
+        String ruleId = "creedengo-python:GCI103";
+        String ruleMsg = "Use dict.keys() or dict.values() instead of dict.items() when only one part of the key-value pair is used";
+        int[] startLines = new int[]{
+            5, 8, 24, 27, 36
+        };
+        int[] endLines = new int[]{
+            5, 8, 24, 27, 36
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);  
+
+    }
+
+    @Test
     void testGCI106() {
         String filePath = "src/avoidSqrtInLoop.py";
         String ruleId = "creedengo-python:GCI106";
@@ -332,5 +364,7 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1h);
       
     }
+
+
 
 }
