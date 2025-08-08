@@ -347,6 +347,7 @@ class GCIRulesIT extends GCIRulesBase {
         };
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
 
     @Test
     void testGCI106() {
