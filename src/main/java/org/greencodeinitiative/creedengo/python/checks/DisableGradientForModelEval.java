@@ -34,7 +34,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-@Rule(key ="GCI100")
+@Rule(key = "GCI100")
 public class DisableGradientForModelEval extends PythonSubscriptionCheck {
     
     private static final String DESCRIPTION = "PyTorch : Disable gradient computation when evaluating a model to save memory and computation time";
