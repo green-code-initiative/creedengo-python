@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- [#73](https://github.com/green-code-initiative/creedengo-python/pull/73) Add rule GCI100 Disable Gradient For model eval, a rule specific to PyTorch and AI/ML
 - [#68](https://github.com/green-code-initiative/creedengo-python/pull/68) Data : Add rule GCI107 Avoid Iterative Matrix Operations. Use vectorization by the usage of the built-in functions of TensorFlow, NumPy or Pandas
 
 ### Changed
