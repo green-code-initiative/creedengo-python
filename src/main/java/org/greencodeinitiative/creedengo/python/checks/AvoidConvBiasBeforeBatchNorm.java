@@ -18,6 +18,7 @@
 package org.greencodeinitiative.creedengo.python.checks;
 
 
+import org.greencodeinitiative.creedengo.python.utils.UtilsAST;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
@@ -54,7 +55,6 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.FUNCDEF;
 
 public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
 
-  public static final String RULE_KEY = "P4";
   private static final String nnModuleFullyQualifiedName = "torch.nn.Module";
   private static final String convFullyQualifiedName = "torch.nn.Conv2d";
   private static final String forwardMethodName = "forward";
@@ -71,7 +71,7 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
   }
 
   private boolean isConvWithBias(CallExpression convDefinition) {
-    RegularArgument biasArgument = Utils.nthArgumentOrKeyword(7, "bias", convDefinition.arguments());
+    RegularArgument biasArgument = UtilsAST.nthArgumentOrKeyword(7, "bias", convDefinition.arguments());
     if (biasArgument == null)
       return true;
     else {
@@ -96,12 +96,12 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
 
     for (CallExpression callInForward : visitor.callExpressions) {
       // if it is a batchNorm
-      if (batchNormsInInit.containsKey(Utils.getMethodName(callInForward))) {
+      if (batchNormsInInit.containsKey(UtilsAST.getMethodName(callInForward))) {
         int batchNormLineNo = callInForward.firstToken().line();
-        for (Argument batchNormArgument : Utils.getArgumentsFromCall(callInForward)) {
+        for (Argument batchNormArgument : UtilsAST.getArgumentsFromCall(callInForward)) {
           Expression batchNormArgumentExpression = ((RegularArgument) batchNormArgument).expression();
           if (batchNormArgumentExpression.is(CALL_EXPR)) {
-            String functionName = Utils.getMethodName((CallExpression) batchNormArgumentExpression);
+            String functionName = UtilsAST.getMethodName((CallExpression) batchNormArgumentExpression);
             if (dirtyConvInInit.containsKey(functionName)) {
               context.addIssue(dirtyConvInInit.get(functionName), MESSAGE);
             }
@@ -124,7 +124,7 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
             }
             if (lastAssignmentStatementBeforeBatchNorm != null && lastAssignmentStatementBeforeBatchNorm.assignedValue().is(CALL_EXPR)) {
               CallExpression function = (CallExpression) lastAssignmentStatementBeforeBatchNorm.assignedValue();
-              String functionName = Utils.getMethodName(function);
+              String functionName = UtilsAST.getMethodName(function);
               if (dirtyConvInInit.containsKey(functionName)) {
                 context.addIssue(dirtyConvInInit.get(functionName), MESSAGE);
               }
@@ -137,17 +137,17 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
 
   private void reportForSequentialModules(SubscriptionContext context, CallExpression sequentialCall) {
     int moduleIndex = 0;
-    int nModulesInSequential = Utils.getArgumentsFromCall(sequentialCall).size();
+    int nModulesInSequential = UtilsAST.getArgumentsFromCall(sequentialCall).size();
     while (moduleIndex < nModulesInSequential) {
-      Argument moduleInSequential = Utils.getArgumentsFromCall(sequentialCall).get(moduleIndex);
+      Argument moduleInSequential = UtilsAST.getArgumentsFromCall(sequentialCall).get(moduleIndex);
       if (moduleInSequential.is(REGULAR_ARGUMENT) && ((RegularArgument) moduleInSequential).expression().is(CALL_EXPR)) {
         CallExpression module = (CallExpression) ((RegularArgument) moduleInSequential).expression();
-        if (Utils.getQualifiedName(module).equals(convFullyQualifiedName) && isConvWithBias(module)) {
+        if (UtilsAST.getQualifiedName(module).equals(convFullyQualifiedName) && isConvWithBias(module)) {
           if (moduleIndex == nModulesInSequential - 1)
             break;
-          Argument nextModuleInSequential = Utils.getArgumentsFromCall(sequentialCall).get(moduleIndex + 1);
+          Argument nextModuleInSequential = UtilsAST.getArgumentsFromCall(sequentialCall).get(moduleIndex + 1);
           CallExpression nextModule = (CallExpression) ((RegularArgument) nextModuleInSequential).expression();
-          if (Utils.getQualifiedName(nextModule).equals(batchNormFullyQualifiedName))
+          if (UtilsAST.getQualifiedName(nextModule).equals(batchNormFullyQualifiedName))
             context.addIssue(module, MESSAGE);
         }
       }
@@ -169,7 +169,7 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
               break;
             CallExpression callExpression = (CallExpression) ((AssignmentStatement) ss).assignedValue();
             String variableName = ((QualifiedExpression) lhs).name().name();
-            String variableClass = Utils.getQualifiedName(callExpression);
+            String variableClass = UtilsAST.getQualifiedName(callExpression);
             if (variableClass.equals(sequentialModuleFullyQualifiedName)) {
               reportForSequentialModules(context, callExpression);
             } else if (convFullyQualifiedName.contains(variableClass) && isConvWithBias(callExpression)) {
