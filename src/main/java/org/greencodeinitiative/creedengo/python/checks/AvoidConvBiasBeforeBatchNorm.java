@@ -166,15 +166,15 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
             Expression lhs = ((AssignmentStatement) ss).lhsExpressions().get(0).expressions().get(0);
             // consider only calls (modules)
             if (!((AssignmentStatement) ss).assignedValue().is(CALL_EXPR))
-              break;
+              continue;
             CallExpression callExpression = (CallExpression) ((AssignmentStatement) ss).assignedValue();
             String variableName = ((QualifiedExpression) lhs).name().name();
             String variableClass = UtilsAST.getQualifiedName(callExpression);
             if (variableClass.equals(sequentialModuleFullyQualifiedName)) {
               reportForSequentialModules(context, callExpression);
-            } else if (convFullyQualifiedName.contains(variableClass) && isConvWithBias(callExpression)) {
+            } else if (convFullyQualifiedName.equals(variableClass) && isConvWithBias(callExpression)) {
               dirtyConvInInit.put(variableName, callExpression);
-            } else if (batchNormFullyQualifiedName.contains(variableClass)) {
+            } else if (batchNormFullyQualifiedName.equals(variableClass)) {
               batchNormsInInit.put(variableName, callExpression);
             }
           }

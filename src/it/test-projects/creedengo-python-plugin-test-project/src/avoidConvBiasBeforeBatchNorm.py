@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class RandomClass(Object):
+class RandomClass(object):
     def __init__(self, a):
         self.a = a
     def forward(self, x):
