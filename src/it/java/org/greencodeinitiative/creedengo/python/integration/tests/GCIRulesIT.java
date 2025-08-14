@@ -303,7 +303,6 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
     }
 
-    @Test
     void testGCI99(){
         String filePath = "src/avoidCSVFormat.py";
         String ruleId = "creedengo-python:GCI99";
@@ -333,6 +332,22 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
     
+
+    @Test
+    void testGCI101(){
+        String filePath = "src/avoidConvBiasBeforeBatchNorm.py";
+        String ruleId = "creedengo-python:GCI101";
+        String ruleMsg = "Remove bias for convolutions before batch norm layers to save time and memory.";
+        int[] startLines = new int[]{
+            49, 71, 115, 136, 156, 178
+        };
+        int[] endLines = new int[]{
+            49, 71, 115, 136, 156, 178
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
+  
     @Test
     void testGCI103(){
 
@@ -361,6 +376,7 @@ class GCIRulesIT extends GCIRulesBase {
                 7, 11, 16, 21, 45, 52, 60
         };
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+
     }
 
     @Test 
