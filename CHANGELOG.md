@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [#74](https://github.com/green-code-initiative/creedengo-python/pull/74) Add rule GCI101 Avoid Conv Bias Before Batch Normalization, a rule specific to Deeplearning
+- [#75](https://github.com/green-code-initiative/creedengo-python/pull/75) Add rule GCI102 avoid non pinned memory for dataloader. This rule is specific to PyTorch and so AI
 - [#68](https://github.com/green-code-initiative/creedengo-python/pull/68) Data : Add rule GCI107 Avoid Iterative Matrix Operations. Use vectorization by the usage of the built-in functions of TensorFlow, NumPy or Pandas
 
 ### Changed
