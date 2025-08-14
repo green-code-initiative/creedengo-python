@@ -19,7 +19,6 @@ package org.greencodeinitiative.creedengo.python.checks;
 
 
 import org.greencodeinitiative.creedengo.python.utils.UtilsAST;
-import org.sonar.check.Priority;
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
@@ -55,11 +54,11 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.FUNCDEF;
 
 public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
 
-  private static final String nnModuleFullyQualifiedName = "torch.nn.Module";
-  private static final String convFullyQualifiedName = "torch.nn.Conv2d";
-  private static final String forwardMethodName = "forward";
-  private static final String batchNormFullyQualifiedName = "torch.nn.BatchNorm2d";
-  private static final String sequentialModuleFullyQualifiedName = "torch.nn.Sequential";
+  private static final String NN_MODULE_FULLY_QUALIFIED_NAME = "torch.nn.Module";
+  private static final String CONV_FULLY_QUALIFIED_NAME = "torch.nn.Conv2d";
+  private static final String FORWARD_METHOD_NAME = "forward";
+  private static final String BATCH_NORM_FULLY_QUALIFIED_NAME = "torch.nn.BatchNorm2d";
+  private static final String SEQUENTIAL_MODULE_FULLY_QUALIFIED_NAME = "torch.nn.Sequential";
   protected static final String MESSAGE = "Remove bias for convolutions before batch norm layers to save time and memory.";
 
   @Override
@@ -76,15 +75,15 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
       return true;
     else {
       Expression expression = biasArgument.expression();
-      return expression.is(NAME) && ((Name) expression).name().equals("True");
+      return expression.is(NAME) && "True".equals(((Name) expression).name());
     }
   }
 
   private boolean isModelClass(ClassDef classDef) {
     ClassSymbol classSymbol = (ClassSymbol) classDef.name().symbol();
     if (classSymbol != null) {
-      return classSymbol.superClasses().stream().anyMatch(e -> Objects.equals(e.fullyQualifiedName(), nnModuleFullyQualifiedName))
-        && classSymbol.declaredMembers().stream().anyMatch(e -> e.name().equals(forwardMethodName));
+      return classSymbol.superClasses().stream().anyMatch(e -> Objects.equals(e.fullyQualifiedName(), NN_MODULE_FULLY_QUALIFIED_NAME))
+        && classSymbol.declaredMembers().stream().anyMatch(e -> FORWARD_METHOD_NAME.equals(e.name()));
     } else
       return false;
   }
@@ -142,12 +141,12 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
       Argument moduleInSequential = UtilsAST.getArgumentsFromCall(sequentialCall).get(moduleIndex);
       if (moduleInSequential.is(REGULAR_ARGUMENT) && ((RegularArgument) moduleInSequential).expression().is(CALL_EXPR)) {
         CallExpression module = (CallExpression) ((RegularArgument) moduleInSequential).expression();
-        if (UtilsAST.getQualifiedName(module).equals(convFullyQualifiedName) && isConvWithBias(module)) {
+        if (CONV_FULLY_QUALIFIED_NAME.equals(UtilsAST.getQualifiedName(module)) && isConvWithBias(module)) {
           if (moduleIndex == nModulesInSequential - 1)
             break;
           Argument nextModuleInSequential = UtilsAST.getArgumentsFromCall(sequentialCall).get(moduleIndex + 1);
           CallExpression nextModule = (CallExpression) ((RegularArgument) nextModuleInSequential).expression();
-          if (UtilsAST.getQualifiedName(nextModule).equals(batchNormFullyQualifiedName))
+          if (BATCH_NORM_FULLY_QUALIFIED_NAME.equals(UtilsAST.getQualifiedName(nextModule)))
             context.addIssue(module, MESSAGE);
         }
       }
@@ -160,7 +159,7 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
     Map<String, CallExpression> batchNormsInInit = new HashMap<>();
 
     for (Statement s : classDef.body().statements()) {
-      if (s.is(FUNCDEF) && ((FunctionDef) s).name().name().equals("__init__")) {
+      if (s.is(FUNCDEF) && "__init__".equals(((FunctionDef) s).name().name())) {
         for (Statement ss : ((FunctionDef) s).body().statements()) {
           if (ss.is(ASSIGNMENT_STMT)) {
             Expression lhs = ((AssignmentStatement) ss).lhsExpressions().get(0).expressions().get(0);
@@ -170,11 +169,11 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
             CallExpression callExpression = (CallExpression) ((AssignmentStatement) ss).assignedValue();
             String variableName = ((QualifiedExpression) lhs).name().name();
             String variableClass = UtilsAST.getQualifiedName(callExpression);
-            if (variableClass.equals(sequentialModuleFullyQualifiedName)) {
+            if (SEQUENTIAL_MODULE_FULLY_QUALIFIED_NAME.equals(variableClass)) {
               reportForSequentialModules(context, callExpression);
-            } else if (convFullyQualifiedName.equals(variableClass) && isConvWithBias(callExpression)) {
+            } else if (variableClass.equals(CONV_FULLY_QUALIFIED_NAME) && isConvWithBias(callExpression)) {
               dirtyConvInInit.put(variableName, callExpression);
-            } else if (batchNormFullyQualifiedName.equals(variableClass)) {
+            } else if (BATCH_NORM_FULLY_QUALIFIED_NAME.equals(variableClass)) {
               batchNormsInInit.put(variableName, callExpression);
             }
           }
@@ -182,7 +181,7 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
       }
     }
     for (Statement s : classDef.body().statements()) {
-      if (s.is(FUNCDEF) && ((FunctionDef) s).name().name().equals(forwardMethodName)) {
+      if (s.is(FUNCDEF) && FORWARD_METHOD_NAME.equals(((FunctionDef) s).name().name())) {
         FunctionDef forwardDef = (FunctionDef) s;
         reportIfBatchNormIsCalledAfterDirtyConv(context, forwardDef, dirtyConvInInit, batchNormsInInit);
       }
