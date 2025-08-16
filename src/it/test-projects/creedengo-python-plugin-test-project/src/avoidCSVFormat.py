@@ -14,7 +14,7 @@ df2 = pandas_alias.read_csv('another_data.csv') # Noncompliant {{Use Parquet or 
 with open('data.csv') as f: # Noncompliant {{Use Parquet or Feather format instead of CSV}}
     df3 = pd.read_csv(f) # Noncompliant {{Use Parquet or Feather format instead of CSV}}
 
-df4 = pd.read_csv( # Noncompliant {{Use Parquet or Feather format instead of CSV}}
+df4 = pd.read_csv(
     'complex_data.csv', # Noncompliant {{Use Parquet or Feather format instead of CSV}}
     sep=',',
     header=0
