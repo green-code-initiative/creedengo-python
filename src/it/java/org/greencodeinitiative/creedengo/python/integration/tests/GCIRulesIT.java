@@ -365,6 +365,22 @@ class GCIRulesIT extends GCIRulesBase {
             5, 8, 24, 27, 36
         };
 
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);  
+    }
+ 
+    @Test
+    void testGCI105() {
+
+        String filePath = "src/stringConcatenation.py";
+        String ruleId = "creedengo-python:GCI105";
+        String ruleMsg = "Concatenation of strings should be done using f-strings or str.join()";
+        int[] startLines = new int[]{
+            5, 8, 10, 32, 38
+        };
+        int[] endLines = new int[]{
+            5, 8, 10, 32, 38
+        };
+
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
     }
 
