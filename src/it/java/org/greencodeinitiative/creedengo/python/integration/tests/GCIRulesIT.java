@@ -349,7 +349,7 @@ class GCIRulesIT extends GCIRulesBase {
             19, 29, 38
         };
 
-        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1h);
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
 
     @Test
