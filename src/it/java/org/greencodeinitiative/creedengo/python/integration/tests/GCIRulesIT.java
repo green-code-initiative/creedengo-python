@@ -320,21 +320,6 @@ class GCIRulesIT extends GCIRulesBase {
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_50MIN);
     }
-
-    @Test
-    void testGCI102(){
-        String filePath = "src/avoidNonPinnedMemoryForDataloaders.py";
-        String ruleId = "creedengo-python:GCI102";
-        String ruleMsg = "Use pinned memory to reduce data transfer in RAM.";
-        int[] startLines = new int[]{
-                7, 8, 9, 10, 11, 12, 13, 14
-        };
-        int[] endLines = new int[]{
-                7, 8, 9, 10, 11, 12, 13, 14
-        };
-
-        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
-    }
     
     @Test 
     void testGCI100() {
@@ -366,7 +351,22 @@ class GCIRulesIT extends GCIRulesBase {
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
-  
+
+    @Test
+    void testGCI102(){
+        String filePath = "src/avoidNonPinnedMemoryForDataloaders.py";
+        String ruleId = "creedengo-python:GCI102";
+        String ruleMsg = "Use pinned memory to reduce data transfer in RAM.";
+        int[] startLines = new int[]{
+                7, 8, 9, 10, 11, 12, 13, 14
+        };
+        int[] endLines = new int[]{
+                7, 8, 9, 10, 11, 12, 13, 14
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
+
     @Test
     void testGCI103(){
 
@@ -378,6 +378,22 @@ class GCIRulesIT extends GCIRulesBase {
         };
         int[] endLines = new int[]{
             5, 8, 24, 27, 36
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);  
+    }
+ 
+    @Test
+    void testGCI105() {
+
+        String filePath = "src/stringConcatenation.py";
+        String ruleId = "creedengo-python:GCI105";
+        String ruleMsg = "Concatenation of strings should be done using f-strings or str.join()";
+        int[] startLines = new int[]{
+            5, 8, 10, 32, 38
+        };
+        int[] endLines = new int[]{
+            5, 8, 10, 32, 38
         };
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);

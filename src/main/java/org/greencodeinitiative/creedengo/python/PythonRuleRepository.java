@@ -49,7 +49,8 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
             AvoidIterativeMatrixOperations.class,
             AvoidNonPinnedMemoryForDataloaders.class,
             AvoidConvBiasBeforeBatchNorm.class,
-            DisableGradientForModelEval.class
+            DisableGradientForModelEval.class,
+            StringConcatenation.class
     );
 
     public static final String LANGUAGE = "py";
