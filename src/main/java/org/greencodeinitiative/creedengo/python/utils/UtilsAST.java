@@ -89,8 +89,10 @@ public class UtilsAST {
     }
 
     private static boolean hasKeyword(Argument argument, String keyword) {
-        return argument instanceof RegularArgument regularArgument &&
-                Optional.ofNullable(regularArgument.keywordArgument())
+        if (! (argument instanceof RegularArgument))
+            return false;
+        RegularArgument regularArgument = (RegularArgument) argument;
+        return Optional.ofNullable(regularArgument.keywordArgument())
                         .map(Name::name)
                         .filter(name -> name.equals(keyword))
                         .isPresent();
