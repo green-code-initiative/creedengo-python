@@ -4,7 +4,7 @@
 
     <groupId>org.green-code-initiative</groupId>
     <artifactId>creedengo-python-plugin</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.1.1-SNAPSHOT</version>
     <packaging>sonar-plugin</packaging>
 
     <name>creedengo - Python language</name>
@@ -36,7 +36,7 @@
 
     <properties>
 
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <!-- to prevent message: system modules path not set in conjunction with -source 11 -->
@@ -50,12 +50,12 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <!-- Minimal version of the SonarQube APIs for `creedengo-python-plugin`  -->
-         <sonarqube-plugin-api-min.version>9.9.0.65466</sonarqube-plugin-api-min.version>
+        <sonarqube-plugin-api-min.version>9.9.0.65466</sonarqube-plugin-api-min.version>
 
         <!-- Version of the SonarQube APIs used by `creedengo-java-plugin` -->
-         <sonar.plugin.api.version>11.4.0.2922</sonar.plugin.api.version>
+        <sonar.plugin.api.version>11.4.0.2922</sonar.plugin.api.version>
 
-         <sonar-analyzer-commons.version>2.17.0.3322</sonar-analyzer-commons.version>
+        <sonar-analyzer-commons.version>2.17.0.3322</sonar-analyzer-commons.version>
 
         <!-- last version that all is OK -->
         <sonarpython.version>4.6.0.12071</sonarpython.version>
@@ -66,10 +66,11 @@
 <!--        <sonarpython.version>4.22.0.16914</sonarpython.version>-->
 <!--        <sonarpython.version>5.4.0.22255</sonarpython.version>-->
 
-         <mockito.version>5.17.0</mockito.version>
+        <mockito.version>5.17.0</mockito.version>
+        <lombok.version>1.18.38</lombok.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
-        <creedengo-rules-specifications.version>2.2.2</creedengo-rules-specifications.version>
+        <creedengo-rules-specifications.version>2.5.0</creedengo-rules-specifications.version>
 
         <!-- URL of the Maven repository where sonarqube will be downloaded -->
         <test-it.orchestrator.artifactory.url>https://repo1.maven.org/maven2</test-it.orchestrator.artifactory.url>
@@ -77,7 +78,7 @@
         <test-it.sonarqube.keepRunning>false</test-it.sonarqube.keepRunning>
 
         <!-- Version of `sonarqube` used by integration tests (you can override this value to perform matrix compatibility tests) -->
-         <test-it.sonarqube.version>25.5.0.107428</test-it.sonarqube.version>
+        <test-it.sonarqube.version>25.5.0.107428</test-it.sonarqube.version>
 
         <!-- Version of `sonar-python-plugin` used by integration tests (you can override this value to perform matrix compatibility tests) -->
         <test-it.sonarpython.version>${sonarpython.version}</test-it.sonarpython.version>
@@ -176,7 +177,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.38</version>
+            <version>${lombok.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -189,6 +190,15 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.14.0</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
