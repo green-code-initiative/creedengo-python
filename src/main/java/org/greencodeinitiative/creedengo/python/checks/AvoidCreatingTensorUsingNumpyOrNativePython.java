@@ -17,7 +17,7 @@
  */
 package org.greencodeinitiative.creedengo.python.checks;
 
-import org.sonar.check.Priority;
+import org.greencodeinitiative.creedengo.python.utils.UtilsAST;
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.tree.Tree;
@@ -33,7 +33,6 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.CALL_EXPR;
 @Rule(key = "GCI104")
 public class AvoidCreatingTensorUsingNumpyOrNativePython extends PythonSubscriptionCheck {
 
-  public static final String RULE_KEY = "P5";
   private static final String dataArgumentName = "data";
   private static final int dataArgumentPosition = 0;
   private static final Map<String, String> torchOtherFunctionsMapping = Map.ofEntries(
@@ -65,19 +64,19 @@ public class AvoidCreatingTensorUsingNumpyOrNativePython extends PythonSubscript
     "torch.cuda.CharTensor", "torch.cuda.ShortTensor",
     "torch.cuda.IntTensor", "torch.cuda.LongTensor",
     "torch.cuda.BoolTensor");
-  protected static final String MESSAGE = "Directly create tensors as torch.Tensor. Use %s instead of %s.";
+  protected static final String MESSAGE = "Directly create tensors as torch.Tensor instead of using numpy functions.";
 
   @Override
   public void initialize(Context context) {
     context.registerSyntaxNodeConsumer(Tree.Kind.CALL_EXPR, ctx -> {
       CallExpression callExpression = (CallExpression) ctx.syntaxNode();
-      if (torchTensorConstructors.contains(Utils.getQualifiedName(callExpression))) {
-        RegularArgument tensorCreatorArgument = Utils.nthArgumentOrKeyword(dataArgumentPosition, dataArgumentName, callExpression.arguments());
+      if (torchTensorConstructors.contains(UtilsAST.getQualifiedName(callExpression))) {
+        RegularArgument tensorCreatorArgument = UtilsAST.nthArgumentOrKeyword(dataArgumentPosition, dataArgumentName, callExpression.arguments());
         if (tensorCreatorArgument != null) {
           if (tensorCreatorArgument.expression().is(CALL_EXPR)) {
-            String functionQualifiedName = Utils.getQualifiedName((CallExpression) tensorCreatorArgument.expression());
+            String functionQualifiedName = UtilsAST.getQualifiedName((CallExpression) tensorCreatorArgument.expression());
             if (torchOtherFunctionsMapping.containsKey(functionQualifiedName)) {
-              ctx.addIssue(callExpression, String.format(MESSAGE, torchOtherFunctionsMapping.get(functionQualifiedName), functionQualifiedName));
+              ctx.addIssue(callExpression, MESSAGE);
             }
           }
         }

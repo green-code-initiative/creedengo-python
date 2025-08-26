@@ -366,6 +366,22 @@ class GCIRulesIT extends GCIRulesBase {
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);  
     }
+
+    @Test
+    void testGCI104() {
+
+        String filePath = "src/avoidCreatingTensorUsingNumpyOrNativePython.py";
+        String ruleId = "creedengo-python:GCI104";
+        String ruleMsg = "Directly create tensors as torch.Tensor instead of using numpy functions.";
+        int[] startLines = new int[]{
+            5, 15, 19, 24
+        };
+        int[] endLines = new int[]{
+            5, 15, 19, 24
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
  
     @Test
     void testGCI105() {
