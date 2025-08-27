@@ -52,6 +52,19 @@ public class UtilsAST {
                 .orElse("");
     }
 
+    /**
+     * Retrieves the variable name from the given SubscriptionContext.
+     *
+     * This method traverses the syntax tree of the provided context to locate
+     * the nearest assignment statement. If an assignment statement is found,
+     * it extracts the name of the variable on the left-hand side of the assignment.
+     *
+     * @param context The SubscriptionContext containing the syntax node to analyze.
+     *                It may be null or contain a null syntax node, in which case
+     *                the method returns null.
+     * @return The name of the variable on the left-hand side of the assignment
+     *         statement, or null if no valid variable name can be determined.
+     */
     public static String getVariableName(SubscriptionContext context) {
 
         if (context == null || context.syntaxNode() == null) {

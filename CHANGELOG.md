@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- [#77](https://github.com/green-code-initiative/creedengo-python/pull/77) Add rule GCI104 AvoidCreatingTensorUsingNumpyOrNativePython, a rule specific to AI/ML code
 - [#70](https://github.com/green-code-initiative/creedengo-python/pull/70) Add rule GCI108 Prefer Append Left (a rule to prefer the use of `append` over `insert` for list, using deques)
 - [#78](https://github.com/green-code-initiative/creedengo-python/pull/78) Add rule GCI105 on String Concatenation. This rule may also apply to other rules
 - [#74](https://github.com/green-code-initiative/creedengo-python/pull/74) Add rule GCI101 Avoid Conv Bias Before Batch Normalization, a rule specific to Deeplearning
