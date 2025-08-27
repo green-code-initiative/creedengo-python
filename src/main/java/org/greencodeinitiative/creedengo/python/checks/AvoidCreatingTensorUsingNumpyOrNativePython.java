@@ -33,9 +33,9 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.CALL_EXPR;
 @Rule(key = "GCI104")
 public class AvoidCreatingTensorUsingNumpyOrNativePython extends PythonSubscriptionCheck {
 
-  private static final String dataArgumentName = "data";
-  private static final int dataArgumentPosition = 0;
-  private static final Map<String, String> torchOtherFunctionsMapping = Map.ofEntries(
+  private static final String DATA_ARGUMENT_NAME = "data";
+  private static final int DATA_ARGUMENT_POSITION = 0;
+  private static final Map<String, String> TORCH_OTHER_FUNCTIONS_MAPPING = Map.ofEntries(
     entry("numpy.random.rand", "torch.rand"),
     entry("numpy.random.randint", "torch.randint"),
     entry("numpy.random.randn", "torch.randn"),
@@ -52,7 +52,7 @@ public class AvoidCreatingTensorUsingNumpyOrNativePython extends PythonSubscript
     entry("numpy.identity", "torch.eye"),
     entry("numpy.tile", "torch.tile")
   );
-  private static final List<String> torchTensorConstructors = List.of(
+  private static final List<String> TORCH_TENSOR_CONSTRUCTORS = List.of(
     "torch.tensor", "torch.FloatTensor",
     "torch.DoubleTensor", "torch.HalfTensor",
     "torch.BFloat16Tensor", "torch.ByteTensor",
@@ -68,18 +68,17 @@ public class AvoidCreatingTensorUsingNumpyOrNativePython extends PythonSubscript
 
   @Override
   public void initialize(Context context) {
-    context.registerSyntaxNodeConsumer(Tree.Kind.CALL_EXPR, ctx -> {
+      context.registerSyntaxNodeConsumer(Tree.Kind.CALL_EXPR, ctx -> {
       CallExpression callExpression = (CallExpression) ctx.syntaxNode();
-      if (torchTensorConstructors.contains(UtilsAST.getQualifiedName(callExpression))) {
-        RegularArgument tensorCreatorArgument = UtilsAST.nthArgumentOrKeyword(dataArgumentPosition, dataArgumentName, callExpression.arguments());
-        if (tensorCreatorArgument != null) {
-          if (tensorCreatorArgument.expression().is(CALL_EXPR)) {
-            String functionQualifiedName = UtilsAST.getQualifiedName((CallExpression) tensorCreatorArgument.expression());
-            if (torchOtherFunctionsMapping.containsKey(functionQualifiedName)) {
-              ctx.addIssue(callExpression, MESSAGE);
-            }
+
+      if (TORCH_TENSOR_CONSTRUCTORS.contains(UtilsAST.getQualifiedName(callExpression))) {
+          RegularArgument tensorCreatorArgument = UtilsAST.nthArgumentOrKeyword(DATA_ARGUMENT_POSITION, DATA_ARGUMENT_NAME, callExpression.arguments());
+          if (tensorCreatorArgument != null && tensorCreatorArgument.expression().is(CALL_EXPR)) {
+              String functionQualifiedName = UtilsAST.getQualifiedName((CallExpression) tensorCreatorArgument.expression());
+              if (TORCH_OTHER_FUNCTIONS_MAPPING.containsKey(functionQualifiedName)) {
+                  ctx.addIssue(callExpression, MESSAGE);
+              }
           }
-        }
       }
     });
   }
