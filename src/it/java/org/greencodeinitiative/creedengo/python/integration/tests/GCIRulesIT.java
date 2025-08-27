@@ -414,4 +414,19 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
 
+    @Test
+    void testGCI108(){
+        String filePath = "src/preferAppendLeft.py";
+        String ruleId = "creedengo-python:GCI108";
+        String ruleMsg = "Use appendleft with deque instead of .insert(0, val) for modification at the beginning of a list";
+        int[] startLines = new int[]{
+            5, 8, 11, 14, 17, 20, 23, 25, 31, 35, 42
+        };
+        int[] endLines = new int[]{
+            5, 8, 11, 14, 17, 20, 23, 25, 31, 35, 42
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
+
 }
