@@ -79,7 +79,8 @@ public class DictionaryItemsUnused extends PythonSubscriptionCheck {
     }
 
     private void trackNameUsages(Tree node, ItemsLoopInfo info) {
-        if (node instanceof Name nodeName) {
+        if (node instanceof Name) {
+            Name nodeName = (Name) node;
             info.markUsage(nodeName.name());
         }
 

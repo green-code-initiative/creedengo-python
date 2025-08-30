@@ -36,7 +36,7 @@
 
     <properties>
 
-        <java.version>17</java.version>
+        <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <!-- to prevent message: system modules path not set in conjunction with -source 11 -->
@@ -78,7 +78,8 @@
         <test-it.sonarqube.keepRunning>false</test-it.sonarqube.keepRunning>
 
         <!-- Version of `sonarqube` used by integration tests (you can override this value to perform matrix compatibility tests) -->
-        <test-it.sonarqube.version>25.5.0.107428</test-it.sonarqube.version>
+<!--        <test-it.sonarqube.version>25.5.0.107428</test-it.sonarqube.version>-->
+        <test-it.sonarqube.version>9.9.8.100196</test-it.sonarqube.version>
 
         <!-- Version of `sonar-python-plugin` used by integration tests (you can override this value to perform matrix compatibility tests) -->
         <test-it.sonarpython.version>${sonarpython.version}</test-it.sonarpython.version>
@@ -325,7 +326,8 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>5.0.0</version>
+<!--                <version>5.0.0</version>-->
+                <version>3.0</version>
                 <configuration>
                     <properties>
                         <owner>Green Code Initiative</owner>
