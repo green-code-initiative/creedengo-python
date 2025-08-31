@@ -65,6 +65,7 @@
         <!-- NOT OK : version with compatibility problem : classes not found -->
 <!--        <sonarpython.version>4.22.0.16914</sonarpython.version>-->
 <!--        <sonarpython.version>5.4.0.22255</sonarpython.version>-->
+<!--        <sonarpython.version>5.8.0.24785</sonarpython.version>-->
 
         <lombok.version>1.18.38</lombok.version>
 
