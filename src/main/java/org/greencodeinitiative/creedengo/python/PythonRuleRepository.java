@@ -40,7 +40,18 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
             AvoidFullSQLRequest.class,
             AvoidListComprehensionInIterations.class,
             DetectUnoptimizedImageFormat.class,
-            AvoidMultipleIfElseStatementCheck.class
+            AvoidMultipleIfElseStatementCheck.class,
+            PandasRequireUsecolsArgument.class,
+            OptimizeSquareComputation.class,
+            AvoidSqrtInLoop.class,
+            DictionaryItemsUnused.class,
+            AvoidCSVFormat.class,
+            AvoidIterativeMatrixOperations.class,
+            AvoidNonPinnedMemoryForDataloaders.class,
+            AvoidConvBiasBeforeBatchNorm.class,
+            StringConcatenation.class,
+            PreferAppendLeft.class,
+            AvoidCreatingTensorUsingNumpyOrNativePython.class
     );
 
     public static final String LANGUAGE = "py";
