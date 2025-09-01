@@ -50,7 +50,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <!-- Minimal version of the SonarQube APIs for `creedengo-python-plugin`  -->
-        <sonarqube-plugin-api-min.version>9.9.0.65466</sonarqube-plugin-api-min.version>
+        <sonarqube-plugin-api-min.version>25.8.0.112029</sonarqube-plugin-api-min.version>
 
         <!-- Version of the SonarQube APIs used by `creedengo-java-plugin` -->
         <sonar.plugin.api.version>11.4.0.2922</sonar.plugin.api.version>
