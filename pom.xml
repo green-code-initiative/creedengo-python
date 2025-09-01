@@ -65,8 +65,8 @@
         <!-- NOT OK : version with compatibility problem : classes not found -->
 <!--        <sonarpython.version>4.22.0.16914</sonarpython.version>-->
 <!--        <sonarpython.version>5.4.0.22255</sonarpython.version>-->
+<!--        <sonarpython.version>5.8.0.24785</sonarpython.version>-->
 
-        <mockito.version>5.17.0</mockito.version>
         <lombok.version>1.18.38</lombok.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
@@ -137,7 +137,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${mockito.version}</version>
+            <version>5.19.0</version>
             <scope>test</scope>
         </dependency>
 
