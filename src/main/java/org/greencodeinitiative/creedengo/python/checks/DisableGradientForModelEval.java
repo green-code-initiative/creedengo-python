@@ -49,6 +49,9 @@ public class DisableGradientForModelEval extends PythonSubscriptionCheck {
         context.registerSyntaxNodeConsumer(Tree.Kind.CALL_EXPR, this::checkModelCall);
         
         context.registerSyntaxNodeConsumer(Tree.Kind.FUNCDEF, this::initializeContext);
+        
+        evalModelsInContext.put(null, new HashSet<>());
+        noGradScopesInContext.put(null, new HashSet<>());
     }
     
     private void initializeContext(SubscriptionContext context) {
@@ -73,12 +76,14 @@ public class DisableGradientForModelEval extends PythonSubscriptionCheck {
         
         
         if (expr.name().name().equals("eval")) {
-            String modelName = expr.qualifier().firstToken().value();
-            
-            
-            Tree enclosingContext = getEnclosingContext(expr);
-            
-            evalModelsInContext.computeIfAbsent(enclosingContext, k -> new HashSet<>()).add(modelName);
+            if (expr.qualifier() != null && expr.qualifier().firstToken() != null) {
+                String modelName = expr.qualifier().firstToken().value();
+                
+                
+                Tree enclosingContext = getEnclosingContext(expr);
+                
+                evalModelsInContext.computeIfAbsent(enclosingContext, k -> new HashSet<>()).add(modelName);
+            }
         }
     }
     
@@ -103,13 +108,26 @@ public class DisableGradientForModelEval extends PythonSubscriptionCheck {
             CallExpression callExpr = (CallExpression) expr;
             if (callExpr.callee().is(Tree.Kind.QUALIFIED_EXPR)) {
                 QualifiedExpression qualExpr = (QualifiedExpression) callExpr.callee();
-                return qualExpr.qualifier().firstToken().value().equals("torch") && 
+                return qualExpr.qualifier() != null && 
+                       qualExpr.qualifier().firstToken() != null &&
+                       qualExpr.qualifier().firstToken().value().equals("torch") && 
                        qualExpr.name().name().equals("no_grad");
             }
         }
         return false;
     }
     
+    /**
+     * Checks if a model call is made in evaluation mode without the `torch.no_grad()` context.
+     * <p>
+     * This method identifies calls to models and verifies if they are in evaluation mode
+     * (tracked by `evalModelsInContext`). If a model is in evaluation mode and the call is not
+     * within a `torch.no_grad()` context, an issue is reported.
+     * </p>
+     *
+     * @param context The subscription context containing the syntax node for the model call.
+     *                This is used to extract the call expression and its enclosing context.
+     */
     private void checkModelCall(SubscriptionContext context) { 
         CallExpression callExpr = (CallExpression) context.syntaxNode();
         
@@ -119,7 +137,12 @@ public class DisableGradientForModelEval extends PythonSubscriptionCheck {
         Expression callee = callExpr.callee();
         String modelName = null;
         
-        if (!callee.is(Tree.Kind.QUALIFIED_EXPR)) {
+        if (callee.is(Tree.Kind.QUALIFIED_EXPR)) {
+            QualifiedExpression qualExpr = (QualifiedExpression) callee;
+            if (qualExpr.qualifier() != null && qualExpr.qualifier().firstToken() != null) {
+                modelName = qualExpr.qualifier().firstToken().value();
+            }
+        } else {
             modelName = callee.firstToken().value();
         }
         
