@@ -62,7 +62,7 @@
         <sonar-packaging.version>1.23.0.740</sonar-packaging.version>
 
         <!-- last version that all is OK -->
-        <sonarpython.version>4.6.0.12071</sonarpython.version>
+        <sonarpython.version>5.9.0.25193</sonarpython.version>
         <!-- NOT OK : version with compatibility problem with mockito (even if last version of Mockito) -->
 <!--        <sonarpython.version>4.7.0.12181</sonarpython.version>-->
 <!--        <sonarpython.version>4.21.0.16473</sonarpython.version>-->
