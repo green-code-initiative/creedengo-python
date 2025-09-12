@@ -26,10 +26,8 @@ import org.sonarsource.analyzer.commons.RuleMetadataLoader;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRepository {
 
-    @SuppressWarnings("rawtypes") // not possible to make a correction because super class is like that
     static final List<Class<?>> ANNOTATED_RULE_CLASSES = Arrays.asList(
             AvoidGettersAndSetters.class,
             AvoidGlobalVariableInFunctionCheck.class,
@@ -70,7 +68,7 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
     public void define(Context context) {
         NewRepository repository = context.createRepository(REPOSITORY_KEY, LANGUAGE).setName(NAME);
         RuleMetadataLoader ruleMetadataLoader = new RuleMetadataLoader(RESOURCE_BASE_PATH, sonarRuntime);
-        ruleMetadataLoader.addRulesByAnnotatedClass(repository, (List) checkClasses());
+        ruleMetadataLoader.addRulesByAnnotatedClass(repository, checkClasses());
         repository.done();
     }
 
@@ -79,7 +77,6 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
         return REPOSITORY_KEY;
     }
 
-    @SuppressWarnings("rawtypes") // not possible to make a correction because super class is like that
     @Override
     public List<Class<?>> checkClasses() {
         return ANNOTATED_RULE_CLASSES;
