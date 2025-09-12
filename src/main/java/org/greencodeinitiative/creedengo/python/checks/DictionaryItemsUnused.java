@@ -30,7 +30,6 @@ import org.sonar.plugins.python.api.tree.Name;
 import org.sonar.plugins.python.api.tree.QualifiedExpression;
 import org.sonar.plugins.python.api.tree.Tree;
 
-
 @Rule(key = "GCI103")
 public class DictionaryItemsUnused extends PythonSubscriptionCheck {
 

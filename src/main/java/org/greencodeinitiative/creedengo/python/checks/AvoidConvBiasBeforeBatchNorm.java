@@ -51,7 +51,6 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.REGULAR_ARGUMENT;
 import static org.sonar.plugins.python.api.tree.Tree.Kind.FUNCDEF;
 
 @Rule(key="GCI101")
-
 public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
 
   private static final String NN_MODULE_FULLY_QUALIFIED_NAME = "torch.nn.Module";

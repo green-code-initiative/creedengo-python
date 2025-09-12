@@ -30,7 +30,7 @@ import java.util.List;
 public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRepository {
 
     @SuppressWarnings("rawtypes") // not possible to make a correction because super class is like that
-    static final List<Class> ANNOTATED_RULE_CLASSES = Arrays.asList(
+    static final List<Class<?>> ANNOTATED_RULE_CLASSES = Arrays.asList(
             AvoidGettersAndSetters.class,
             AvoidGlobalVariableInFunctionCheck.class,
             AvoidSQLRequestInLoop.class,
@@ -81,7 +81,8 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
 
     @SuppressWarnings("rawtypes") // not possible to make a correction because super class is like that
     @Override
-    public List<Class> checkClasses() {
+    public List<Class<?>> checkClasses() {
         return ANNOTATED_RULE_CLASSES;
     }
+
 }
