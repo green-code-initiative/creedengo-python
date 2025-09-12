@@ -33,7 +33,6 @@ import org.sonar.plugins.python.api.tree.AssignmentStatement;
 import java.util.List;
 
 @Rule(key = "GCI107")
-
 public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
 
     private static final System.Logger LOGGER = System.getLogger(AvoidIterativeMatrixOperations.class.getName());

@@ -20,10 +20,10 @@ package org.greencodeinitiative.creedengo.python.checks;
 import org.junit.jupiter.api.Test;
 import org.sonar.python.checks.utils.PythonCheckVerifier;
 
-public class PandasRequireUsecolsArgumentTest {
+public class DisableGradientForModelEvalTest {
 
     @Test
     public void test() {
-        PythonCheckVerifier.verify("src/test/resources/checks/pandasRequireUsecolsArgument.py", new PandasRequireUsecolsArgument());
+        PythonCheckVerifier.verify("src/test/resources/checks/disableGradientForModelEval.py", new DisableGradientForModelEval());
     }
 }
