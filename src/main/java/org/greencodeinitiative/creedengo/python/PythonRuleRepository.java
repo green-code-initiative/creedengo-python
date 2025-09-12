@@ -26,7 +26,7 @@ import org.sonarsource.analyzer.commons.RuleMetadataLoader;
 import java.util.Arrays;
 import java.util.List;
 
-public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRepository {
+public record PythonRuleRepository(SonarRuntime sonarRuntime) implements RulesDefinition, PythonCustomRuleRepository {
 
     static final List<Class<?>> ANNOTATED_RULE_CLASSES = Arrays.asList(
             AvoidGettersAndSetters.class,
@@ -57,12 +57,6 @@ public class PythonRuleRepository implements RulesDefinition, PythonCustomRuleRe
     public static final String NAME = "creedengo";
     public static final String RESOURCE_BASE_PATH = "org/green-code-initiative/rules/python";
     public static final String REPOSITORY_KEY = "creedengo-python";
-
-    private final SonarRuntime sonarRuntime;
-
-    public PythonRuleRepository(SonarRuntime sonarRuntime) {
-        this.sonarRuntime = sonarRuntime;
-    }
 
     @Override
     public void define(Context context) {
