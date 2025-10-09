@@ -462,4 +462,19 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
 
+    @Test
+    void testGCI110(){
+        String filePath = "src/avoidWildcardImports.py";
+        String ruleId = "creedengo-python:GCI110";
+        String ruleMsg = "Avoid wildcard imports";
+        int[] startLines = new int[]{
+            4, 5, 6, 16, 21, 28, 29
+        };
+        int[] endLines = new int[]{
+            4, 5, 6, 16, 21, 28, 29
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+    }
+
 }
