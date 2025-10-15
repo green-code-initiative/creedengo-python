@@ -10,7 +10,7 @@ try:
 except IndexError:  # Noncompliant {{Avoid using exceptions for control flow}}
     item = None
 
-# using AttribteError for control flow
+# using AttributeError for control flow
 try:
     value = obj.attribute
 except AttributeError:  # Noncompliant {{Avoid using exceptions for control flow}}
@@ -28,6 +28,24 @@ for key in keys:
         values.append(my_dict[key])
     except KeyError:  # Noncompliant {{Avoid using exceptions for control flow}}
         values.append(default)
+
+# multiple exceptions in tuple 
+try:
+    value = my_dict[key]
+except (KeyError, ValueError):  # Noncompliant {{Avoid using exceptions for control flow}}
+    value = None
+
+# multiple control flow exceptions in tuple
+try:
+    item = my_list[index]
+except (IndexError, KeyError):  # Noncompliant {{Avoid using exceptions for control flow}}
+    item = None
+
+# AttributeError with other exceptions in tuple
+try:
+    value = obj.attribute
+except (AttributeError, TypeError):  # Noncompliant {{Avoid using exceptions for control flow}}
+    value = None
 
 
 

@@ -24,6 +24,7 @@ import org.sonar.plugins.python.api.tree.ExceptClause;
 import org.sonar.plugins.python.api.tree.Expression;
 import org.sonar.plugins.python.api.tree.Tree;
 import org.sonar.plugins.python.api.tree.TryStatement;
+import org.sonar.plugins.python.api.tree.Tuple;
 
 import java.util.Arrays;
 import java.util.List;
@@ -62,6 +63,16 @@ public class AvoidExceptionsForControlFlowCheck extends PythonSubscriptionCheck 
     }
 
     private boolean isControlFlowException(Expression exception) {
+        if (exception.is(Tree.Kind.TUPLE)) {
+            Tuple tuple = (Tuple) exception;
+            for (Expression element : tuple.elements()) {
+                if (isControlFlowException(element)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         String exceptionName = exception.firstToken().value();
         return CONTROL_FLOW_EXCEPTIONS.contains(exceptionName);
     }
