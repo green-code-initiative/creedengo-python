@@ -45,6 +45,7 @@ class GCIRulesBase extends BuildProjectEngine {
     protected static final Common.Severity SEVERITY_MAJOR = MAJOR;
     protected static final Common.RuleType TYPE = CODE_SMELL;
     protected static final String EFFORT_1MIN = "1min";
+    protected static final String EFFORT_2MIN = "2min";
     protected static final String EFFORT_5MIN = "5min";
     protected static final String EFFORT_10MIN = "10min";
     protected static final String EFFORT_15MIN = "15min";

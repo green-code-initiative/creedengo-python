@@ -468,13 +468,13 @@ class GCIRulesIT extends GCIRulesBase {
         String ruleId = "creedengo-python:GCI110";
         String ruleMsg = "Avoid wildcard imports";
         int[] startLines = new int[]{
-            2, 3, 5, 8
+            2, 3, 4, 5, 7, 9, 10, 12
         };
         int[] endLines = new int[]{
-            2, 3, 5, 8
+            2, 3, 4, 5, 7, 9, 10, 12
         };
 
-        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_2MIN);
     }
 
 }
