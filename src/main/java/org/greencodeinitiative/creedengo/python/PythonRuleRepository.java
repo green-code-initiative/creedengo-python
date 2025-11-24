@@ -51,7 +51,8 @@ public record PythonRuleRepository(SonarRuntime sonarRuntime) implements RulesDe
             StringConcatenation.class,
             PreferAppendLeft.class,
             AvoidCreatingTensorUsingNumpyOrNativePython.class,
-            AvoidWildcardImportsCheck.class
+            AvoidWildcardImportsCheck.class,
+            AvoidExceptionsForControlFlowCheck.class
     );
 
     public static final String LANGUAGE = "py";

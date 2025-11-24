@@ -463,6 +463,20 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     @Test
+    void testGCI109(){
+        String filePath = "src/avoidExceptionsForControlFlow.py";
+        String ruleId = "creedengo-python:GCI109";
+        String ruleMsg = "Avoid using exceptions for control flow";
+        int[] startLines = new int[]{
+            4, 10, 16, 22, 29
+        };
+        int[] endLines = new int[]{
+            4, 10, 16, 22, 29
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY_MAJOR, TYPE, EFFORT_5MIN);
+
+    @Test
     void testGCI110(){
         String filePath = "src/avoidWildcardImports.py";
         String ruleId = "creedengo-python:GCI110";
