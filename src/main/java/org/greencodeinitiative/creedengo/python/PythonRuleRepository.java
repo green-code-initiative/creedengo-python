@@ -50,7 +50,8 @@ public record PythonRuleRepository(SonarRuntime sonarRuntime) implements RulesDe
             DisableGradientForModelEval.class,
             StringConcatenation.class,
             PreferAppendLeft.class,
-            AvoidCreatingTensorUsingNumpyOrNativePython.class
+            AvoidCreatingTensorUsingNumpyOrNativePython.class,
+            AvoidWildcardImportsCheck.class
     );
 
     public static final String LANGUAGE = "py";
