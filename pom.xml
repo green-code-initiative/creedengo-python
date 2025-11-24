@@ -76,7 +76,9 @@
         <!--        <test-it.sonarqube.version>9.9.0.65466</test-it.sonarqube.version>-->
         <!--        <test-it.sonarqube.version>9.9.8.100196</test-it.sonarqube.version>-->
         <!--        <test-it.sonarqube.version>25.5.0.107428</test-it.sonarqube.version>-->
-        <test-it.sonarqube.version>25.9.0.112764</test-it.sonarqube.version>
+<!--        <test-it.sonarqube.version>25.9.0.112764</test-it.sonarqube.version>-->
+<!--        <test-it.sonarqube.version>25.10.0.114319</test-it.sonarqube.version>-->
+        <test-it.sonarqube.version>25.11.0.114957</test-it.sonarqube.version>
 
         <!-- Version of `sonar-python-plugin` used by integration tests (you can override this value to perform matrix compatibility tests) -->
         <test-it.sonarpython.version>${sonarpython.version}</test-it.sonarpython.version>
@@ -95,11 +97,17 @@
             com.google.protobuf.RuntimeVersion$ProtobufRuntimeVersionException: Detected incompatible Protobuf
             Gencode/Runtime versions when loading org.sonarqube.ws.Common$Severity:
             gencode 4.32.0, runtime 4.29.0. Runtime version cannot be older than the linked gencode version.
+
+            Upgrade protobuf-java to 4.33.0 to fix the next problem.
+            NEXT error occured with sonar 25.11 :
+            com.google.protobuf.RuntimeVersion$ProtobufRuntimeVersionException: Detected incompatible Protobuf
+            Gencode/Runtime versions when loading org.sonarqube.ws.Common$Severity:
+            gencode 4.33.0, runtime 4.32.0. Runtime version cannot be older than the linked gencode version.
          -->
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>4.32.1</version>
+            <version>4.33.1</version>
             <scope>test</scope>
         </dependency>
 

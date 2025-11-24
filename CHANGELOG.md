@@ -11,8 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- compatibility updates for SonarQube 25.9.0
+- compatibility updates for SonarQube 25.11.0
 - upgrade libraries versions
+- [#109](https://github.com/green-code-initiative/creedengo-python/pull/109) Add rule GCI110 Avoid wildcard imports
 
 ### Deleted
 
