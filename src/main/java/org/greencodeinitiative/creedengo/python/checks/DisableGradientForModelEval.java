@@ -17,7 +17,6 @@
  */
 package org.greencodeinitiative.creedengo.python.checks;
 
-
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;

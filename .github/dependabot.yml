@@ -8,4 +8,9 @@ updates:
   - package-ecosystem: "maven" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+    ignore:
+      # Ignore all versions : cf pom.xml comments
+      - dependency-name: "org.sonarsource.java:sonar-java-plugin"
+      # Ignore all versions : cf pom.xml comments
+      - dependency-name: "com.mycila:license-maven-plugin"

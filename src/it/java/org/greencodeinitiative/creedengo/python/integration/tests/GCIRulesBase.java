@@ -27,8 +27,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.sonarqube.ws.Common.RuleType.CODE_SMELL;
-import static org.sonarqube.ws.Common.Severity.MAJOR;
-import static org.sonarqube.ws.Common.Severity.MINOR;
+import static org.sonarqube.ws.Common.Severity.*;
 
 class GCIRulesBase extends BuildProjectEngine {
 
@@ -42,9 +41,11 @@ class GCIRulesBase extends BuildProjectEngine {
             "effort"
     };
     protected static final Common.Severity SEVERITY = MINOR;
+    protected static final Common.Severity SEVERITY_INFO = INFO;
     protected static final Common.Severity SEVERITY_MAJOR = MAJOR;
     protected static final Common.RuleType TYPE = CODE_SMELL;
     protected static final String EFFORT_1MIN = "1min";
+    protected static final String EFFORT_2MIN = "2min";
     protected static final String EFFORT_5MIN = "5min";
     protected static final String EFFORT_10MIN = "10min";
     protected static final String EFFORT_15MIN = "15min";

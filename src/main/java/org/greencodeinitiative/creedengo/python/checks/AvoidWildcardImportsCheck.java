@@ -17,13 +17,28 @@
  */
 package org.greencodeinitiative.creedengo.python.checks;
 
-import org.junit.jupiter.api.Test;
-import org.sonar.python.checks.utils.PythonCheckVerifier;
+import org.sonar.check.Rule;
+import org.sonar.plugins.python.api.PythonSubscriptionCheck;
+import org.sonar.plugins.python.api.SubscriptionContext;
+import org.sonar.plugins.python.api.tree.ImportFrom;
+import org.sonar.plugins.python.api.tree.Tree;
 
-public class DisableGradientForModelEvalTest {
+@Rule(key = "GCI110")
+public class AvoidWildcardImportsCheck extends PythonSubscriptionCheck {
 
-    @Test
-    public void test() {
-        PythonCheckVerifier.verify("src/test/resources/checks/disableGradientForModelEval.py", new DisableGradientForModelEval());
+    public static final String DESCRIPTION = "Avoid wildcard imports";
+
+    @Override
+    public void initialize(Context context) {
+        context.registerSyntaxNodeConsumer(Tree.Kind.IMPORT_FROM, this::visitImportFrom);
+    }
+
+    private void visitImportFrom(SubscriptionContext context) {
+        ImportFrom importFrom = (ImportFrom) context.syntaxNode();
+        
+        if (importFrom.isWildcardImport()) {
+            context.addIssue(importFrom, DESCRIPTION);
+        }
     }
 }
+

@@ -20,10 +20,11 @@ package org.greencodeinitiative.creedengo.python.checks;
 import org.junit.jupiter.api.Test;
 import org.sonar.python.checks.utils.PythonCheckVerifier;
 
-public class DisableGradientForModelEvalTest {
+public class AvoidWildcardImportsCheckTest {
 
     @Test
     public void test() {
-        PythonCheckVerifier.verify("src/test/resources/checks/disableGradientForModelEval.py", new DisableGradientForModelEval());
+        PythonCheckVerifier.verify("src/test/resources/checks/avoidWildcardImports.py", new AvoidWildcardImportsCheck());
     }
 }
+
