@@ -42,9 +42,9 @@
         <!-- to prevent message: system modules path not set in conjunction with -source 11 -->
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
-        <encoding>UTF-8</encoding>
-        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+<!--        <encoding>UTF-8</encoding>-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <sonar.organization>green-code-initiative</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -62,10 +62,8 @@
         <!-- last version that all is OK -->
         <sonarpython.version>5.9.0.25193</sonarpython.version>
 
-        <lombok.version>1.18.42</lombok.version>
-
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
-        <creedengo-rules-specifications.version>2.6.0</creedengo-rules-specifications.version>
+        <creedengo-rules-specifications.version>2.6.7</creedengo-rules-specifications.version>
 
         <!-- URL of the Maven repository where sonarqube will be downloaded -->
         <test-it.orchestrator.artifactory.url>https://repo1.maven.org/maven2</test-it.orchestrator.artifactory.url>
@@ -77,7 +75,8 @@
         <!--        <test-it.sonarqube.version>9.9.8.100196</test-it.sonarqube.version>-->
         <!--        <test-it.sonarqube.version>25.5.0.107428</test-it.sonarqube.version>-->
 <!--        <test-it.sonarqube.version>25.9.0.112764</test-it.sonarqube.version>-->
-        <test-it.sonarqube.version>25.11.0.114957</test-it.sonarqube.version>
+<!--        <test-it.sonarqube.version>25.11.0.114957</test-it.sonarqube.version>-->
+        <test-it.sonarqube.version>25.12.0.117093</test-it.sonarqube.version>
 
         <!-- Version of `sonar-python-plugin` used by integration tests (you can override this value to perform matrix compatibility tests) -->
         <test-it.sonarpython.version>${sonarpython.version}</test-it.sonarpython.version>
@@ -106,7 +105,7 @@
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>4.33.1</version>
+            <version>4.33.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -155,6 +154,13 @@
             <scope>test</scope>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter</artifactId>-->
+<!--            <version>5.13.4</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
@@ -171,33 +177,9 @@
 
         <!-- Dependencies used by integration tests -->
         <dependency>
-            <groupId>org.sonarsource.orchestrator</groupId>
-            <artifactId>sonar-orchestrator-junit5</artifactId>
-            <version>5.6.2.2625</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.sonarsource.java</groupId>
-            <artifactId>test-classpath-reader</artifactId>
-            <version>8.18.0.40025</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.sonarsource.sonarqube</groupId>
-            <artifactId>sonar-ws</artifactId>
-            <version>${test-it.sonarqube.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.jycr</groupId>
-            <artifactId>java-data-url-handler</artifactId>
-            <version>0.0.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <groupId>org.green-code-initiative</groupId>
+            <artifactId>creedengo-integration-test</artifactId>
+            <version>0.2.1</version> <!-- use the latest version -->
             <scope>test</scope>
         </dependency>
 
@@ -210,15 +192,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.14.0</version>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

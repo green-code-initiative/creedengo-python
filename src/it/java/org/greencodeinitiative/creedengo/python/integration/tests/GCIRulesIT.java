@@ -23,11 +23,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Map;
 
+import org.greencodeinitiative.creedengo.integration.tests.GCIRulesBase;
 import org.junit.jupiter.api.Test;
+import org.sonarqube.ws.Common;
 import org.sonarqube.ws.Issues;
 import org.sonarqube.ws.Measures;
 
 class GCIRulesIT extends GCIRulesBase {
+
+    // TODO: to move to creedengo-integration-test
+    private static final Common.Severity SEVERITY_INFO = Common.Severity.INFO;
+    private static final Common.Severity SEVERITY_MAJOR = Common.Severity.MAJOR;
+    private static final String EFFORT_2MIN = "2min";
+    private static final String EFFORT_1H = "1h";
 
     @Test
     void testMeasuresAndIssues() {
@@ -231,7 +239,7 @@ class GCIRulesIT extends GCIRulesBase {
         int[] startLines = new int[]{2, 3, 4, 5};
         int[] endLines = new int[]{2, 3, 4, 5};
 
-        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1h);
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1H);
 
     }
 
@@ -256,7 +264,7 @@ class GCIRulesIT extends GCIRulesBase {
                 34, 35
         };
 
-        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1h);
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1H);
 
     }
 
@@ -269,7 +277,7 @@ class GCIRulesIT extends GCIRulesBase {
         int[] startLines = new int[]{};
         int[] endLines = new int[]{};
 
-        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1h);
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1H);
 
     }
 

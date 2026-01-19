@@ -14,8 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- compatibility updates for SonarQube 25.11.0
+- compatibility updates for SonarQube 25.12.0
 - upgrade libraries versions
+- update integration tests system to use the new component "creedengo-integration-test"
 
 ### Deleted
 
