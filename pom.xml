@@ -179,7 +179,7 @@
         <dependency>
             <groupId>org.green-code-initiative</groupId>
             <artifactId>creedengo-integration-test</artifactId>
-            <version>0.2.1</version> <!-- use the latest version -->
+            <version>0.2.2</version> <!-- use the latest version -->
             <scope>test</scope>
         </dependency>
 

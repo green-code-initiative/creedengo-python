@@ -31,11 +31,10 @@ import org.sonarqube.ws.Measures;
 
 class GCIRulesIT extends GCIRulesBase {
 
-    // TODO: to move to creedengo-integration-test
-    private static final Common.Severity SEVERITY_INFO = Common.Severity.INFO;
-    private static final Common.Severity SEVERITY_MAJOR = Common.Severity.MAJOR;
-    private static final String EFFORT_2MIN = "2min";
-    private static final String EFFORT_1H = "1h";
+//    private static final Common.Severity SEVERITY_INFO = Common.Severity.INFO;
+//    private static final Common.Severity SEVERITY_MAJOR = Common.Severity.MAJOR;
+//    private static final String EFFORT_2MIN = "2min";
+//    private static final String EFFORT_1H = "1h";
 
     @Test
     void testMeasuresAndIssues() {
