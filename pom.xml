@@ -58,7 +58,7 @@
 
         <sonar-analyzer-commons.version>2.18.0.3393</sonar-analyzer-commons.version>
 
-        <sonar-packaging.version>1.24.0.2621</sonar-packaging.version>
+        <sonar-packaging.version>1.25.1.3002</sonar-packaging.version>
 
         <!-- last version that all is OK -->
         <sonarpython.version>5.9.0.25193</sonarpython.version>
