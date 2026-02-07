@@ -37,6 +37,7 @@ public record PythonRuleRepository(SonarRuntime sonarRuntime) implements RulesDe
             AvoidUnoptimizedVectorImagesCheck.class,
             AvoidFullSQLRequest.class,
             AvoidListComprehensionInIterations.class,
+            DetectBadLoggingFormatInterpolation.class,
             DetectUnoptimizedImageFormat.class,
             AvoidMultipleIfElseStatementCheck.class,
             PandasRequireUsecolsArgument.class,

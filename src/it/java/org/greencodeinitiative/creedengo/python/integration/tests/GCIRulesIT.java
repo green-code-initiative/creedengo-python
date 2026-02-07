@@ -499,4 +499,66 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_2MIN);
     }
 
+    @Test
+    void testGCI111_logging_nonCompliant() {
+        String filePath = "src/detectBadLoggingFormatInterpolationLoggingNonCompliant.py";
+        String ruleId = "creedengo-python:GCI111";
+        String ruleMsg = "For logging format, prefer using %s with kwargs instead of builtin formatter \"\".format() or f\"\"";
+        int[] startLines = new int[]{
+            9, 10, 11, 12, 13, 14, 15, 16, 17,      // logging direct methods
+            21, 22, 23, 24, 25, 26, 27,             // logger via getLogger
+            31,                                     // log via getLogger imported
+            35,                                     // LOGGER via Logger class
+            38, 39                                  // f-strings
+        };
+        int[] endLines = new int[]{
+            9, 10, 11, 12, 13, 14, 15, 16, 17,      // logging direct methods
+            21, 22, 23, 24, 25, 26, 27,             // logger via getLogger
+            31,                                     // log via getLogger imported
+            35,                                     // LOGGER via Logger class
+            38, 39                                  // f-strings
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+    }
+
+    @Test
+    void testGCI111_logging_compliant() {
+        String filePath = "src/detectBadLoggingFormatInterpolationLoggingCompliant.py";
+        String ruleId = "creedengo-python:GCI111";
+        String ruleMsg = "For logging format, prefer using %s with kwargs instead of builtin formatter \"\".format() or f\"\"";
+        int[] startLines = new int[]{};
+        int[] endLines = new int[]{};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+    }
+
+    @Test
+    void testGCI111_loguru_nonCompliant() {
+        String filePath = "src/detectBadLoggingFormatInterpolationLoguruNonCompliant.py";
+        String ruleId = "creedengo-python:GCI111";
+        String ruleMsg = "For logging format, prefer using %s with kwargs instead of builtin formatter \"\".format() or f\"\"";
+        int[] startLines = new int[]{
+            9, 10, 11, 12, 13, 14, 15,              // loguru methods with .format()
+            18, 19                                  // loguru with f-strings
+        };
+        int[] endLines = new int[]{
+            9, 10, 11, 12, 13, 14, 15,              // loguru methods with .format()
+            18, 19                                  // loguru with f-strings
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+    }
+
+    @Test
+    void testGCI111_loguru_compliant() {
+        String filePath = "src/detectBadLoggingFormatInterpolationLoguruCompliant.py";
+        String ruleId = "creedengo-python:GCI111";
+        String ruleMsg = "For logging format, prefer using %s with kwargs instead of builtin formatter \"\".format() or f\"\"";
+        int[] startLines = new int[]{};
+        int[] endLines = new int[]{};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+    }
+
 }

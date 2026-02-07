@@ -1,14 +1,51 @@
+/*
+ * creedengo - Python language - Provides rules to reduce the environmental footprint of your Python programs
+ * Copyright © 2024 Green Code Initiative (https://green-code-initiative.org)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.greencodeinitiative.creedengo.python.checks;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.python.checks.utils.PythonCheckVerifier;
 
-public class DetectBadLoggingFormatInterpolationTest {
+class DetectBadLoggingFormatInterpolationTest {
 
     @Test
-    public void test_bad_logging_format_interpolation() {
-        PythonCheckVerifier.verify("src/test/resources/checks/detectBadLoggingFormatInterpolationNonCompliant.py", new DetectBadLoggingFormatInterpolation());
-        PythonCheckVerifier.verifyNoIssue("src/test/resources/checks/detectBadLoggingFormatInterpolationCompliant.py", new DetectBadLoggingFormatInterpolation());
+    void test_logging_bad_format_interpolation() {
+        // Test standard logging library
+        PythonCheckVerifier.verify(
+            "src/test/resources/checks/detectBadLoggingFormatInterpolation/logging/loggingNonCompliant.py",
+            new DetectBadLoggingFormatInterpolation()
+        );
+        PythonCheckVerifier.verifyNoIssue(
+            "src/test/resources/checks/detectBadLoggingFormatInterpolation/logging/loggingCompliant.py",
+            new DetectBadLoggingFormatInterpolation()
+        );
+    }
+
+    @Test
+    void test_loguru_bad_format_interpolation() {
+        // Test loguru framework
+        PythonCheckVerifier.verify(
+            "src/test/resources/checks/detectBadLoggingFormatInterpolation/loguru/loguruNonCompliant.py",
+            new DetectBadLoggingFormatInterpolation()
+        );
+        PythonCheckVerifier.verifyNoIssue(
+            "src/test/resources/checks/detectBadLoggingFormatInterpolation/loguru/loguruCompliant.py",
+            new DetectBadLoggingFormatInterpolation()
+        );
     }
 
 }
