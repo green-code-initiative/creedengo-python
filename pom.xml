@@ -62,7 +62,7 @@
         <sonarpython.version>5.9.0.25193</sonarpython.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
-        <creedengo-rules-specifications.version>2.7.0</creedengo-rules-specifications.version>
+        <creedengo-rules-specifications.version>2.7.1</creedengo-rules-specifications.version>
 
         <!-- URL of the Maven repository where sonarqube will be downloaded -->
         <test-it.orchestrator.artifactory.url>https://repo1.maven.org/maven2</test-it.orchestrator.artifactory.url>
@@ -185,7 +185,7 @@
         <dependency>
             <groupId>org.green-code-initiative</groupId>
             <artifactId>creedengo-integration-test</artifactId>
-            <version>0.2.2</version> <!-- use the latest version -->
+            <version>0.2.3</version> <!-- use the latest version -->
             <scope>test</scope>
         </dependency>
 
