@@ -52,4 +52,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -e -B sonar:sonar -Dsonar.projectKey=green-code-initiative_creedengo-python
+        run: ./mvnw -e -B sonar:sonar -Dsonar.projectKey=green-code-initiative_creedengo-python
