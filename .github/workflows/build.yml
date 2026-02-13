@@ -29,6 +29,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
+          cache: maven # enable maven cache shared by all github actions builds
 
       # to be able to use "sonar:sonar" instead of "org.sonarsource.scanner.maven:sonar-maven-plugin:sonar"
       # inside this build but also when the test project analysis is launched with sonar:sonar
