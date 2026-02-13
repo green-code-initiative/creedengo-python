@@ -5,13 +5,12 @@ on:
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
 
-permissions:
-  contents: read
-
 jobs:
   checks:
     name: Requirements
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Check user permissions
         uses: 74th/workflow-permission-action@1.0.0
