@@ -1,5 +1,4 @@
-creedengo-python
-===========
+# creedengo-python
 
 _creedengo_ is a collective project aiming to reduce environmental footprint of software at the code level. The goal of
 the project is to provide a list of static code analyzers to highlight code structures that may have a negative
@@ -16,15 +15,13 @@ SonarQube plugin then implements these catalogs as rules for scanning your Pytho
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/green-code-initiative/creedengo-common/blob/main/doc/CODE_OF_CONDUCT.md)
 
-🌿 SonarQube Plugins
--------------------
+## 🌿 SonarQube Plugins
 
 This plugin is part of the creedengo project.\
 You can find a list of all our other plugins in
 the [creedengo repository](https://github.com/green-code-initiative/creedengo#-sonarqube-plugins)
 
-🚀 Getting Started
-------------------
+## 🚀 Getting Started
 
 You can give a try with a one command docker :
 
@@ -53,16 +50,14 @@ To install other `creedengo` plugins, you can also :
 
 Then you can use Python test project repository to test the environment : see README.md of [Python test project](https://github.com/green-code-initiative/creedengo-python-test-project)
 
-🛒 Distribution
-------------------
+## 🛒 Distribution
 
 Ready to use binaries are available [from GitHub](https://github.com/green-code-initiative/creedengo-python/releases).
 
-🧩 Compatibility
-------------------
+## 🧩 Compatibility
 
 | Plugin version | SonarQube version     | Java version |
-|----------------|-----------------------|--------------|
+| -------------- | --------------------- | ------------ |
 | 1.4.+          | 9.4.+ LTS to 10.4.1   | 11 / 17      |
 | 1.5.+          | 9.9.+ LTS to 10.7.0   | 11 / 17      |
 | 2.+            | 10.1.+ LTS to 25.1.+  | 17           |
@@ -72,17 +67,14 @@ Ready to use binaries are available [from GitHub](https://github.com/green-code-
 > Compatibility table of versions lower than 1.4.+ are available from the
 > main [creedengo repository](https://github.com/green-code-initiative/creedengo-rules-specifications#-plugins-version-compatibility).
 
-🤝 Contribution
----------------
+## 🤝 Contribution
 
 check [creedengo repository](https://github.com/green-code-initiative/creedengo-rules-specifications#-contribution)
 
-🤓 Main contributors
---------------------
+## 🤓 Main contributors
 
 check [creedengo repository](https://github.com/green-code-initiative/creedengo-rules-specifications#-main-contributors)
 
-Links
------
+## Links
 
 - https://docs.sonarqube.org/latest/analysis/overview/
