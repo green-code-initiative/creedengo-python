@@ -19,7 +19,7 @@ SonarQube plugin then implements these catalogs as rules for scanning your Pytho
 
 This plugin is part of the creedengo project.\
 You can find a list of all our other plugins in
-the [creedengo repository](https://github.com/green-code-initiative/creedengo#-sonarqube-plugins)
+the [creedengo repository](https://github.com/search?q=topic%3Asonarqube-plugin+org%3Agreen-code-initiative&type=Repositories)
 
 ## 🚀 Getting Started
 
@@ -47,8 +47,6 @@ To install other `creedengo` plugins, you can also :
 
 - download each plugin separatly and copy the plugin (jar file) to `$SONAR_INSTALL_DIR/extensions/plugins` and restart SonarQube.
 - install different creedengo plugins with Marketplace (inside admin panel of SonarQube)
-
-Then you can use Python test project repository to test the environment : see README.md of [Python test project](https://github.com/green-code-initiative/creedengo-python-test-project)
 
 ## 🛒 Distribution
 
