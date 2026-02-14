@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- [#82](https://github.com/green-code-initiative/creedengo-python/pull/82) Add rule GCI112 @dataclass(slots=True) should be declared on data classes
+- [#108](https://github.com/green-code-initiative/creedengo-python/pull/108) Add rule GCI109 Avoid using exceptions for control flow
+- [#109](https://github.com/green-code-initiative/creedengo-python/pull/109) Add rule GCI110 Avoid wildcard imports
+- [#122](https://github.com/green-code-initiative/creedengo-python/pull/122) Add rule GCI111 Logging format, prefer using %s
+
+### Changed
+
+- compatibility updates for SonarQube 25.12.0
+- upgrade libraries versions
+- update integration tests system to use the new component "creedengo-integration-test"
+
+### Deleted
+
+## [2.2.0] - 2025-09-01
+
+### Added
 
 - [#73](https://github.com/green-code-initiative/creedengo-python/pull/73) Add rule GCI100 Disable Gradient For model eval, a rule specific to PyTorch and AI/ML
 - [#77](https://github.com/green-code-initiative/creedengo-python/pull/77) Add rule GCI104 AvoidCreatingTensorUsingNumpyOrNativePython, a rule specific to AI/ML code
@@ -16,10 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#74](https://github.com/green-code-initiative/creedengo-python/pull/74) Add rule GCI101 Avoid Conv Bias Before Batch Normalization, a rule specific to Deeplearning
 - [#75](https://github.com/green-code-initiative/creedengo-python/pull/75) Add rule GCI102 avoid non pinned memory for dataloader. This rule is specific to PyTorch and so AI
 - [#68](https://github.com/green-code-initiative/creedengo-python/pull/68) Data : Add rule GCI107 Avoid Iterative Matrix Operations. Use vectorization by the usage of the built-in functions of TensorFlow, NumPy or Pandas
-
-### Changed
-
-### Deleted
 
 ## [2.1.0] - 2025-08-02
 
@@ -140,7 +152,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Comparison list
 
-[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.1.0...HEAD)
+[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.2.0...HEAD)
+[2.2.0](https://github.com/green-code-initiative/creedengo-python/compare/2.1.0...2.2.0)
 [2.1.0](https://github.com/green-code-initiative/creedengo-python/compare/2.0.1...2.1.0)
 [2.0.1](https://github.com/green-code-initiative/creedengo-python/compare/2.0.0...2.0.1)
 [2.0.0](https://github.com/green-code-initiative/creedengo-python/compare/1.4.4...2.0.0)

@@ -33,10 +33,9 @@ import org.sonar.plugins.python.api.tree.AssignmentStatement;
 import java.util.List;
 
 @Rule(key = "GCI107")
-
 public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
 
-    private static final System.Logger LOGGER = System.getLogger(AvoidIterativeMatrixOperations.class.getName());
+//    private static final System.Logger LOGGER = System.getLogger(AvoidIterativeMatrixOperations.class.getName());
 
     private static final String DESCRIPTION = "Avoid iterative matrix operations, use numpy dot or outer function instead";
 
@@ -61,7 +60,7 @@ public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
                 if (assign.compoundAssignmentToken().value().equals("+=")
                     && isMultiplicationOfIndexedElements(assign.rhsExpression(),false)
                     && !isDoubleSubscription(lhsExpression)) {
-                    LOGGER.log(System.Logger.Level.INFO, "Dot product found");
+//                    LOGGER.log(System.Logger.Level.INFO, "Dot product found");
                     return true;
                 }
             }
@@ -77,7 +76,7 @@ public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
                 List<Statement> innerStatements = innerForStatement.body().statements();
                 for (Statement innermostStatement : innerStatements) {
                     if (isOuterProductOperation(innermostStatement)) {
-                        LOGGER.log(System.Logger.Level.INFO, "Outer product found");
+//                        LOGGER.log(System.Logger.Level.INFO, "Outer product found");
                         return true;
                     }
                 }
@@ -125,7 +124,7 @@ public class AvoidIterativeMatrixOperations extends PythonSubscriptionCheck {
                         List<Statement> innerStatements = innerForStatement.body().statements();
                         for (Statement innermostStatement : innerStatements) {
                             if (isMatrixDotProductOperation(innermostStatement)) {
-                                LOGGER.log(System.Logger.Level.INFO, "Matrix dot product found");
+//                                LOGGER.log(System.Logger.Level.INFO, "Matrix dot product found");
                                 return true;
                             }
                         }
