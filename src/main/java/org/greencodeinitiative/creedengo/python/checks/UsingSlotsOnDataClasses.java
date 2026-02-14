@@ -48,7 +48,7 @@ public class UsingSlotsOnDataClasses extends PythonSubscriptionCheck {
         if (decorator.arguments() != null
                 && decorator.arguments().arguments() != null
                 && decorator.arguments().arguments().stream()
-                .anyMatch(argument -> isSlotsTrue(argument))) {
+                .anyMatch(this::isSlotsTrue)) {
             return;
         }
 
@@ -59,14 +59,12 @@ public class UsingSlotsOnDataClasses extends PythonSubscriptionCheck {
         // Check if argument is "slots=True" or positional "slots"
         if (argument.is(Tree.Kind.REGULAR_ARGUMENT)) {
             RegularArgument regArg = (RegularArgument) argument;
-            if (regArg.keywordArgument() != null
-                    && SLOTS_ARG.equals(regArg.keywordArgument().name())
-                    && regArg.expression() != null) {
-                // Check if the value is True (not False)
-                if (regArg.expression().is(Tree.Kind.NAME)) {
+        if (regArg.keywordArgument() != null
+                && SLOTS_ARG.equals(regArg.keywordArgument().name())
+                && regArg.expression() != null
+                && regArg.expression().is(Tree.Kind.NAME)) {
                     Name value = (Name) regArg.expression();
                     return "True".equals(value.name());
-                }
             }
         }
         return false;
