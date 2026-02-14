@@ -561,4 +561,30 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
     }
 
+    @Test
+    void testGCIGCI1442_compliant() {
+
+        String filePath = "src/usingSlotsOnDataClassesCompliant.py";
+        String ruleId = "creedengo-python:GCI1442";
+        String ruleMsg = "Reduce memory footprint by using @dataclass(slots=True)";
+        int[] startLines = new int[]{};
+        int[] endLines = new int[]{};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
+
+    }
+
+    @Test
+    void testGCIGCI1442_nonCompliant() {
+
+        String filePath = "src/usingSlotsOnDataClassesNonCompliant.py";
+        String ruleId = "creedengo-python:GCI1442";
+        String ruleMsg = "Reduce memory footprint by using @dataclass(slots=True)";
+        int[] startLines = new int[]{1, 7, 13};
+        int[] endLines = new int[]{1, 7, 13};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
+
+    }
+
 }
