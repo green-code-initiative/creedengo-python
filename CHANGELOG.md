@@ -10,14 +10,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - [#32](https://github.com/green-code-initiative/creedengo-challenge/issues/32) [EC1442] @dataclass(slots=True) shoud be declared on data classes
 
+- [#108](https://github.com/green-code-initiative/creedengo-python/pull/108) Add rule GCI109 Avoid using exceptions for control flow
+- [#109](https://github.com/green-code-initiative/creedengo-python/pull/109) Add rule GCI110 Avoid wildcard imports
+- [#122](https://github.com/green-code-initiative/creedengo-python/pull/122) Add rule GCI111 Logging format, prefer using %s
+
+### Changed
+
+- compatibility updates for SonarQube 25.12.0
+- upgrade libraries versions
+- update integration tests system to use the new component "creedengo-integration-test"
+
+### Deleted
+
+## [2.2.0] - 2025-09-01
+
+### Added
+
+- [#73](https://github.com/green-code-initiative/creedengo-python/pull/73) Add rule GCI100 Disable Gradient For model eval, a rule specific to PyTorch and AI/ML
+- [#77](https://github.com/green-code-initiative/creedengo-python/pull/77) Add rule GCI104 AvoidCreatingTensorUsingNumpyOrNativePython, a rule specific to AI/ML code
+- [#70](https://github.com/green-code-initiative/creedengo-python/pull/70) Add rule GCI108 Prefer Append Left (a rule to prefer the use of `append` over `insert` for list, using deques)
+- [#78](https://github.com/green-code-initiative/creedengo-python/pull/78) Add rule GCI105 on String Concatenation. This rule may also apply to other rules
+- [#74](https://github.com/green-code-initiative/creedengo-python/pull/74) Add rule GCI101 Avoid Conv Bias Before Batch Normalization, a rule specific to Deeplearning
+- [#75](https://github.com/green-code-initiative/creedengo-python/pull/75) Add rule GCI102 avoid non pinned memory for dataloader. This rule is specific to PyTorch and so AI
+- [#68](https://github.com/green-code-initiative/creedengo-python/pull/68) Data : Add rule GCI107 Avoid Iterative Matrix Operations. Use vectorization by the usage of the built-in functions of TensorFlow, NumPy or Pandas
+
+## [2.1.0] - 2025-08-02
+
+### Added
+
+- [#69](https://github.com/green-code-initiative/creedengo-python/pull/69) Data : Add rule GCI99 Avoid CSV Format
+- [#76](https://github.com/green-code-initiative/creedengo-python/pull/76) Add rule GCI103 Dictionary Items Unused. A rule specifying that dictionary iteration should consider the pertinence of the element used.
+- [#79](https://github.com/green-code-initiative/creedengo-python/pull/79) Add rule GCI106 Avoid SQRT in a loop
+- [#71](https://github.com/green-code-initiative/creedengo-python/pull/71) Data / AI : Add rule GCI96 Require Usecols Argument in Pandas Read Functions
+- [#72](https://github.com/green-code-initiative/creedengo-python/pull/72) Add rule GCI97 Optimize square computation (scalar vs vectorized method)
+
 ### Changed
 
 - compatibility updates for SonarQube 25.5.0
 - upgrade libraries versions
 - correction of technical problem with Integration tests (because of Maven format in technical answer to "sonar-orchestrator-junit5" library)
 - update from jdk 11 to 17
-
-### Deleted
+- Add Lombok annotation processing inside `maven-compiler` plugin, to fix compile error on Arm64 architecture
 
 ## [2.0.1] - 2025-03-14
 
@@ -120,7 +153,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Comparison list
 
-[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.0.1...HEAD)
+[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.2.0...HEAD)
+[2.2.0](https://github.com/green-code-initiative/creedengo-python/compare/2.1.0...2.2.0)
+[2.1.0](https://github.com/green-code-initiative/creedengo-python/compare/2.0.1...2.1.0)
 [2.0.1](https://github.com/green-code-initiative/creedengo-python/compare/2.0.0...2.0.1)
 [2.0.0](https://github.com/green-code-initiative/creedengo-python/compare/1.4.4...2.0.0)
 [1.5.0](https://github.com/green-code-initiative/creedengo-python/compare/1.4.4...1.5.0)

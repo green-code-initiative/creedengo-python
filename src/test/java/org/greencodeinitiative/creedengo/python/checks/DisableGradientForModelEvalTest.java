@@ -15,43 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.greencodeinitiative.creedengo.python.integration.tests.profile;
+package org.greencodeinitiative.creedengo.python.checks;
 
-public class RuleMetadata {
-	private String key;
-	private String type;
-	private String defaultSeverity;
+import org.junit.jupiter.api.Test;
+import org.sonar.python.checks.utils.PythonCheckVerifier;
 
-	public String getKey() {
-		return key;
-	}
+public class DisableGradientForModelEvalTest {
 
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getDefaultSeverity() {
-		return defaultSeverity;
-	}
-
-	public void setDefaultSeverity(String defaultSeverity) {
-		this.defaultSeverity = defaultSeverity;
-	}
-
-	@Override
-	public String toString() {
-		return "RuleMetadata{" +
-				"key='" + key + '\'' +
-				", type='" + type + '\'' +
-				", defaultSeverity='" + defaultSeverity + '\'' +
-				'}';
-	}
+    @Test
+    public void test() {
+        PythonCheckVerifier.verify("src/test/resources/checks/disableGradientForModelEval.py", new DisableGradientForModelEval());
+    }
 }
