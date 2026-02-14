@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- [#110](https://github.com/green-code-initiative/creedengo-python/issues/110) Correction of NullPointerException in GCI2 rule
 - [#82](https://github.com/green-code-initiative/creedengo-python/pull/82) Add rule GCI112 @dataclass(slots=True) should be declared on data classes
 - [#108](https://github.com/green-code-initiative/creedengo-python/pull/108) Add rule GCI109 Avoid using exceptions for control flow
 - [#109](https://github.com/green-code-initiative/creedengo-python/pull/109) Add rule GCI110 Avoid wildcard imports
