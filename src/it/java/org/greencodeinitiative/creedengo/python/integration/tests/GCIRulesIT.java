@@ -25,16 +25,10 @@ import java.util.Map;
 
 import org.greencodeinitiative.creedengo.integration.tests.GCIRulesBase;
 import org.junit.jupiter.api.Test;
-import org.sonarqube.ws.Common;
 import org.sonarqube.ws.Issues;
 import org.sonarqube.ws.Measures;
 
 class GCIRulesIT extends GCIRulesBase {
-
-//    private static final Common.Severity SEVERITY_INFO = Common.Severity.INFO;
-//    private static final Common.Severity SEVERITY_MAJOR = Common.Severity.MAJOR;
-//    private static final String EFFORT_2MIN = "2min";
-//    private static final String EFFORT_1H = "1h";
 
     @Test
     void testMeasuresAndIssues() {
@@ -562,11 +556,11 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     @Test
-    void testGCIGCI1442_compliant() {
+    void testGCI112_compliant() {
 
         String filePath = "src/usingSlotsOnDataClassesCompliant.py";
-        String ruleId = "creedengo-python:GCI1442";
-        String ruleMsg = "Reduce memory footprint by using @dataclass(slots=True)";
+        String ruleId = "creedengo-python:GCI112";
+        String ruleMsg = "From python >= 3.10, reduce memory footprint by using @dataclass(slots=True)";
         int[] startLines = new int[]{};
         int[] endLines = new int[]{};
 
@@ -575,13 +569,13 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     @Test
-    void testGCIGCI1442_nonCompliant() {
+    void testGCI112_nonCompliant() {
 
         String filePath = "src/usingSlotsOnDataClassesNonCompliant.py";
-        String ruleId = "creedengo-python:GCI1442";
-        String ruleMsg = "Reduce memory footprint by using @dataclass(slots=True)";
-        int[] startLines = new int[]{1, 7, 13};
-        int[] endLines = new int[]{1, 7, 13};
+        String ruleId = "creedengo-python:GCI112";
+        String ruleMsg = "From python >= 3.10, reduce memory footprint by using @dataclass(slots=True)";
+        int[] startLines = new int[]{1, 7, 13, 19};
+        int[] endLines = new int[]{1, 7, 13, 19};
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_1MIN);
 

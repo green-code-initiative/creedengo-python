@@ -8,8 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- [#32](https://github.com/green-code-initiative/creedengo-challenge/issues/32) [EC1442] @dataclass(slots=True) shoud be declared on data classes
-
+- [#82](https://github.com/green-code-initiative/creedengo-python/pull/82) Add rule GCI112 @dataclass(slots=True) should be declared on data classes
 - [#108](https://github.com/green-code-initiative/creedengo-python/pull/108) Add rule GCI109 Avoid using exceptions for control flow
 - [#109](https://github.com/green-code-initiative/creedengo-python/pull/109) Add rule GCI110 Avoid wildcard imports
 - [#122](https://github.com/green-code-initiative/creedengo-python/pull/122) Add rule GCI111 Logging format, prefer using %s

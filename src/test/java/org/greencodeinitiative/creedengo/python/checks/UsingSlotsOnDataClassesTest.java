@@ -17,24 +17,24 @@
  */
 package org.greencodeinitiative.creedengo.python.checks;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.plugins.python.api.ProjectPythonVersion;
 import org.sonar.plugins.python.api.PythonVersionUtils;
 import org.sonar.python.checks.utils.PythonCheckVerifier;
 
 import java.util.Set;
 
-public class UsingSlotsOnDataClassesTest {
+class UsingSlotsOnDataClassesTest {
 
     @Test
-    public void test_using_slots_on_data_classes() {
+    void test_using_slots_on_data_classes() {
         ProjectPythonVersion.setCurrentVersions(PythonVersionUtils.allVersions());
         PythonCheckVerifier.verify("src/test/resources/checks/usingSlotsOnDataClassesNonCompliant.py", new UsingSlotsOnDataClasses());
         PythonCheckVerifier.verifyNoIssue("src/test/resources/checks/usingSlotsOnDataClassesCompliant.py", new UsingSlotsOnDataClasses());
      }
 
     @Test
-    public void test_using_slots_on_data_classes_python_less_than_310() {
+    void test_using_slots_on_data_classes_python_less_than_310() {
         ProjectPythonVersion.setCurrentVersions(Set.of(PythonVersionUtils.Version.V_39));
         PythonCheckVerifier.verifyNoIssue("src/test/resources/checks/usingSlotsOnDataClassesCompliantV39.py", new UsingSlotsOnDataClasses());
     }

@@ -23,13 +23,13 @@ import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
 import org.sonar.plugins.python.api.tree.*;
 
-@Rule(key = "GCI1442")
+@Rule(key = "GCI112")
 public class UsingSlotsOnDataClasses extends PythonSubscriptionCheck {
 
     private static final String DECORATOR_DATA_CLASS = "dataclass";
     private static final String SLOTS_ARG = "slots";
 
-    public static final String DESCRIPTION = "Reduce memory footprint by using @dataclass(slots=True)";
+    public static final String DESCRIPTION = "From python >= 3.10, reduce memory footprint by using @dataclass(slots=True)";
 
     @Override
     public void initialize(Context context) {
@@ -48,11 +48,28 @@ public class UsingSlotsOnDataClasses extends PythonSubscriptionCheck {
         if (decorator.arguments() != null
                 && decorator.arguments().arguments() != null
                 && decorator.arguments().arguments().stream()
-                .anyMatch(argument -> argument.firstToken().value().equals(SLOTS_ARG))) {
+                .anyMatch(argument -> isSlotsTrue(argument))) {
             return;
         }
 
         ctx.addIssue(decorator, DESCRIPTION);
+    }
+
+    private boolean isSlotsTrue(Argument argument) {
+        // Check if argument is "slots=True" or positional "slots"
+        if (argument.is(Tree.Kind.REGULAR_ARGUMENT)) {
+            RegularArgument regArg = (RegularArgument) argument;
+            if (regArg.keywordArgument() != null
+                    && SLOTS_ARG.equals(regArg.keywordArgument().name())
+                    && regArg.expression() != null) {
+                // Check if the value is True (not False)
+                if (regArg.expression().is(Tree.Kind.NAME)) {
+                    Name value = (Name) regArg.expression();
+                    return "True".equals(value.name());
+                }
+            }
+        }
+        return false;
     }
 
     private boolean isDecoratorDataClass(Decorator decorator) {

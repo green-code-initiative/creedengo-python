@@ -5,13 +5,13 @@ class MyClass:
     c: int
 
 @dataclass()
-class MyClass:
+class MyClass2:
     a: int
     b: int
     c: int
 
 @dataclass(frozen=True)
-class MyClass:
+class MyClass3:
     a: int
     b: int
     c: int
