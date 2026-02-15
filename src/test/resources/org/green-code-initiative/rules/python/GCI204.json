@@ -1,0 +1,11 @@
+{
+  "title": "Return type and parameter of a method should not be the same",
+  "type": "Bug",
+  "status": "ready",
+  "tags": [
+    "bugs",
+    "gandalf",
+    "magic"
+  ],
+  "defaultSeverity": "Critical"
+}
