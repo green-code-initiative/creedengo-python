@@ -160,6 +160,16 @@
         </dependency>
 
     <!-- TEST sources dependencies -->
+
+        <!-- Dependencies used by integration tests -->
+        <!-- in first place (before python-checks-testkit) to get last version of assertj-core -->
+        <dependency>
+            <groupId>org.green-code-initiative</groupId>
+            <artifactId>creedengo-integration-test</artifactId>
+            <version>0.2.4</version> <!-- use the latest version -->
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.sonarsource.python</groupId>
             <artifactId>python-checks-testkit</artifactId>
@@ -178,14 +188,6 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.10.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Dependencies used by integration tests -->
-        <dependency>
-            <groupId>org.green-code-initiative</groupId>
-            <artifactId>creedengo-integration-test</artifactId>
-            <version>0.2.4</version> <!-- use the latest version -->
             <scope>test</scope>
         </dependency>
 
