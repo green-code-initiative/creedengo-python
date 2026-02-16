@@ -59,7 +59,7 @@
         <sonar-packaging.version>1.25.1.3002</sonar-packaging.version>
 
         <!-- last version that all is OK -->
-        <sonarpython.version>5.9.0.25193</sonarpython.version>
+        <sonarpython.version>5.17.0.31229</sonarpython.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
         <creedengo-rules-specifications.version>2.7.1</creedengo-rules-specifications.version>
