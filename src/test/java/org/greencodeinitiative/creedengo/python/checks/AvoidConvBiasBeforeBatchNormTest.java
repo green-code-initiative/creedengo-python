@@ -20,13 +20,10 @@ package org.greencodeinitiative.creedengo.python.checks;
 import org.junit.jupiter.api.Test;
 import org.sonar.python.checks.utils.PythonCheckVerifier;
 
-public class AvoidConvBiasBeforeBatchNormTest {
+class AvoidConvBiasBeforeBatchNormTest {
 
-    // FIXME: Test disabled because no issues are detected since last libraries upgrade.
-    // See https://github.com/GreenCodeInitiative/creedengo/issues/123 for details.
-    // Investigate whether the rule or the test needs updating, or if the test should be re-enabled.
-//  @Test
-//  public void test() {
-//      PythonCheckVerifier.verify("src/test/resources/checks/avoidConvBiasBeforeBatchNorm.py", new AvoidConvBiasBeforeBatchNorm());
-//  }
+  @Test
+  void test() {
+      PythonCheckVerifier.verify("src/test/resources/checks/avoidConvBiasBeforeBatchNorm.py", new AvoidConvBiasBeforeBatchNorm());
+  }
 }

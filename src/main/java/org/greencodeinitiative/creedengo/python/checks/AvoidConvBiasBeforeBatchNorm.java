@@ -17,7 +17,6 @@
  */
 package org.greencodeinitiative.creedengo.python.checks;
 
-
 import org.greencodeinitiative.creedengo.python.utils.UtilsAST;
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
@@ -81,10 +80,43 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
   private boolean isModelClass(ClassDef classDef) {
     ClassSymbol classSymbol = (ClassSymbol) classDef.name().symbol();
     if (classSymbol != null) {
-      return classSymbol.superClasses().stream().anyMatch(e -> Objects.equals(e.fullyQualifiedName(), NN_MODULE_FULLY_QUALIFIED_NAME))
-        && classSymbol.declaredMembers().stream().anyMatch(e -> FORWARD_METHOD_NAME.equals(e.name()));
-    } else
+      boolean hasTorchNNModuleParent = classSymbol.superClasses().stream()
+        .anyMatch(e -> Objects.equals(e.fullyQualifiedName(), NN_MODULE_FULLY_QUALIFIED_NAME)
+                    || "Module".equals(e.name()));
+      boolean hasForwardMethod = classSymbol.declaredMembers().stream()
+        .anyMatch(e -> FORWARD_METHOD_NAME.equals(e.name()));
+      return hasTorchNNModuleParent && hasForwardMethod;
+    } else {
+      // Fallback: check if class inherits from nn.Module by looking at the arguments list directly
+      return isModelClassByArguments(classDef);
+    }
+  }
+
+  private boolean isModelClassByArguments(ClassDef classDef) {
+    if (classDef.args() == null || classDef.args().arguments().isEmpty()) {
       return false;
+    }
+    // Check if any parent class name contains "Module"
+    boolean hasModuleParent = classDef.args().arguments().stream()
+      .filter(arg -> arg.is(Tree.Kind.REGULAR_ARGUMENT))
+      .map(arg -> ((RegularArgument) arg).expression())
+      .anyMatch(expr -> {
+        if (expr.is(Tree.Kind.QUALIFIED_EXPR)) {
+          QualifiedExpression qe = (QualifiedExpression) expr;
+          return "Module".equals(qe.name().name());
+        } else if (expr.is(Tree.Kind.NAME)) {
+          return "Module".equals(((Name) expr).name());
+        }
+        return false;
+      });
+
+    // Check if class has forward method
+    boolean hasForwardMethod = classDef.body().statements().stream()
+      .filter(stmt -> stmt.is(Tree.Kind.FUNCDEF))
+      .map(stmt -> (FunctionDef) stmt)
+      .anyMatch(func -> FORWARD_METHOD_NAME.equals(func.name().name()));
+
+    return hasModuleParent && hasForwardMethod;
   }
 
   private void reportIfBatchNormIsCalledAfterDirtyConv(SubscriptionContext context, FunctionDef forwardDef, Map<String, CallExpression> dirtyConvInInit,

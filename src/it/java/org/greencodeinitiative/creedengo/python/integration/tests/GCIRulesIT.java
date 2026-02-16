@@ -339,20 +339,20 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     // FIXME: no issues are detected since last libraries upgrade (12/09/2025)
-//    @Test
-//    void testGCI101(){
-//        String filePath = "src/avoidConvBiasBeforeBatchNorm.py";
-//        String ruleId = "creedengo-python:GCI101";
-//        String ruleMsg = "Remove bias for convolutions before batch norm layers to save time and memory.";
-//        int[] startLines = new int[]{
-//            49, 71, 115, 136, 156, 178
-//        };
-//        int[] endLines = new int[]{
-//            49, 71, 115, 136, 156, 178
-//        };
-//
-//        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
-//    }
+    @Test
+    void testGCI101(){
+        String filePath = "src/avoidConvBiasBeforeBatchNorm.py";
+        String ruleId = "creedengo-python:GCI101";
+        String ruleMsg = "Remove bias for convolutions before batch norm layers to save time and memory.";
+        int[] startLines = new int[]{
+            49, 71, 115, 136, 156, 178
+        };
+        int[] endLines = new int[]{
+            49, 71, 115, 136, 156, 178
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
 
     @Test
     void testGCI102(){
