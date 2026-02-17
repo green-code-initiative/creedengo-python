@@ -84,9 +84,22 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     @Test
-    void testGCI4() {
+    void testGCI4_compliant() {
 
-        String filePath = "src/avoidGlobalVariableInFunction.py";
+        String filePath = "src/avoidGlobalVariableInFunctionCompliant.py";
+        String ruleId = "creedengo-python:GCI4";
+        String ruleMsg = "Use local variable (function/class scope) instead of global variable (application scope)";
+        int[] startLines = new int[]{};
+        int[] endLines = new int[]{};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+
+    }
+
+    @Test
+    void testGCI4_nonCompliant() {
+
+        String filePath = "src/avoidGlobalVariableInFunctionNonCompliant.py";
         String ruleId = "creedengo-python:GCI4";
         String ruleMsg = "Use local variable (function/class scope) instead of global variable (application scope)";
         int[] startLines = new int[]{4, 5, 6, 7, 9, 11};
