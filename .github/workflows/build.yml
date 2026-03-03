@@ -49,8 +49,8 @@ jobs:
         run: ./mvnw -e -B verify
 
       - name: SonarQube Scan
-        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && secrets.SONAR_TOKEN != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./mvnw -e -B sonar:sonar -Dsonar.projectKey=green-code-initiative_creedengo-python
+        run: ./mvnw -e -B sonar:sonar -Dsonar.projectKey=green-code-initiative_creedengo-python -Dsonar.organization=green-code-initiative
