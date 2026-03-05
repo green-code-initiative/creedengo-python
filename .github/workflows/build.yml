@@ -49,8 +49,13 @@ jobs:
         run: ./mvnw -e -B verify
 
       - name: SonarQube Scan
-        if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && secrets.SONAR_TOKEN != ''
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./mvnw -e -B sonar:sonar -Dsonar.projectKey=green-code-initiative_creedengo-python -Dsonar.organization=green-code-initiative
+        run: |
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "⚠️ SONAR_TOKEN is not set (Dependabot PR or external fork). Skipping SonarQube scan."
+          else
+            ./mvnw -e -B sonar:sonar -Dsonar.projectKey=green-code-initiative_creedengo-python -Dsonar.organization=green-code-initiative
+          fi
