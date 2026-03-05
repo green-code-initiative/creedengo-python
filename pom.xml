@@ -59,11 +59,14 @@
         <sonar-packaging.version>1.25.1.3002</sonar-packaging.version>
 
         <!-- last version that all is OK -->
-<!--        <sonarpython.version>5.9.0.25193</sonarpython.version>-->
-        <sonarpython.version>5.17.0.31229</sonarpython.version>
+        <sonarpython.version>5.18.0.31561</sonarpython.version>
+
+        <!-- version explicitly set for security raised by github -->
+        <!-- to delete when sonarpython will provide this version at minimum -->
+        <jackson-core.version>2.21.1</jackson-core.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
-        <creedengo-rules-specifications.version>2.7.1</creedengo-rules-specifications.version>
+        <creedengo-rules-specifications.version>3.0.0</creedengo-rules-specifications.version>
 
         <!-- URL of the Maven repository where sonarqube will be downloaded -->
         <test-it.orchestrator.artifactory.url>https://repo1.maven.org/maven2</test-it.orchestrator.artifactory.url>
@@ -139,6 +142,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.sonarsource.api.plugin</groupId>
             <artifactId>sonar-plugin-api</artifactId>
             <version>${sonar.plugin.api.version}</version>
@@ -167,7 +176,7 @@
         <dependency>
             <groupId>org.green-code-initiative</groupId>
             <artifactId>creedengo-integration-test</artifactId>
-            <version>0.2.4</version> <!-- use the latest version -->
+            <version>0.3.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -297,6 +306,12 @@
                                 </filter>
                                 <filter>
                                     <artifact>org.green-code-initiative:creedengo-rules-specifications:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/**</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>com.fasterxml.jackson.core:jackson-core:*</artifact>
                                     <excludes>
                                         <exclude>META-INF/**</exclude>
                                     </excludes>
