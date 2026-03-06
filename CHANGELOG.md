@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deleted
+
+## [2.3.0] - 2026-03-06
+
+### Added
 - [#110](https://github.com/green-code-initiative/creedengo-python/issues/110) Correction of NullPointerException in GCI2 rule
 - [#82](https://github.com/green-code-initiative/creedengo-python/pull/82) Add rule GCI112 @dataclass(slots=True) should be declared on data classes
 - [#108](https://github.com/green-code-initiative/creedengo-python/pull/108) Add rule GCI109 Avoid using exceptions for control flow
@@ -22,8 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - update integration tests system to use the new component "creedengo-integration-test"
 - optimization of GCI101 rule implementation + correction of TI
 - technical optimization for dynamic versionning in maven (for next releases)
-
-### Deleted
 
 ## [2.2.0] - 2025-09-01
 
@@ -156,7 +162,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Comparison list
 
-[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.2.0...HEAD)
+[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.3.0...HEAD)
+[2.3.0](https://github.com/green-code-initiative/creedengo-python/compare/2.2.0...2.3.0)
 [2.2.0](https://github.com/green-code-initiative/creedengo-python/compare/2.1.0...2.2.0)
 [2.1.0](https://github.com/green-code-initiative/creedengo-python/compare/2.0.1...2.1.0)
 [2.0.1](https://github.com/green-code-initiative/creedengo-python/compare/2.0.0...2.0.1)
