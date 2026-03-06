@@ -52,7 +52,7 @@
         <sonarqube-plugin-api-min.version>9.9.0.65466</sonarqube-plugin-api-min.version>
 
         <!-- Version of the SonarQube APIs used by `creedengo-java-plugin` -->
-        <sonar.plugin.api.version>13.4.3.4290</sonar.plugin.api.version>
+        <sonar.plugin.api.version>13.5.0.4319</sonar.plugin.api.version>
 
         <sonar-analyzer-commons.version>2.21.0.4626</sonar-analyzer-commons.version>
 
