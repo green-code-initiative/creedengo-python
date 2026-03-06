@@ -29,6 +29,8 @@ jobs:
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
       release_tag: ${{ steps.resolve_tag.outputs.release_tag }}
+      jar_path: ${{ steps.resolve_jar.outputs.jar_path }}
+      jar_name: ${{ steps.resolve_jar.outputs.jar_name }}
     permissions:
       contents: write
     steps:
@@ -60,7 +62,20 @@ jobs:
         id: extract-release-notes
         uses: ffurrer2/extract-release-notes@v1
       - name: Build project
-        run: mvn -e -B clean package -DskipTests
+        run: mvn -e -B clean package -DskipTests -Drevision=${{ steps.resolve_tag.outputs.release_tag }}
+
+      - name: Resolve JAR filename
+        id: resolve_jar
+        run: |
+          JAR_FILE=$(ls target/creedengo-python-plugin-*.jar | grep -v original | head -n 1)
+          if [ -z "$JAR_FILE" ]; then
+            echo "Aucun JAR trouvé dans target/"
+            exit 1
+          fi
+          echo "JAR trouvé : $JAR_FILE"
+          echo "jar_path=$JAR_FILE" >> $GITHUB_OUTPUT
+          echo "jar_name=$(basename $JAR_FILE)" >> $GITHUB_OUTPUT
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -78,9 +93,12 @@ jobs:
         with:
           name: creedengo-plugins
           path: target
-      - name: Export UPLOAD_URL
+      - name: Export UPLOAD_URL and JAR info
         id: export_upload_url
-        run: echo "upload_url=${{ steps.create_release.outputs.upload_url }}" >> $GITHUB_OUTPUT
+        run: |
+          echo "upload_url=${{ steps.create_release.outputs.upload_url }}" >> $GITHUB_OUTPUT
+          echo "jar_path=${{ steps.resolve_jar.outputs.jar_path }}" >> $GITHUB_OUTPUT
+          echo "jar_name=${{ steps.resolve_jar.outputs.jar_name }}" >> $GITHUB_OUTPUT
 
   upload:
     name: Upload Python Plugin
@@ -102,6 +120,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.build.outputs.upload_url }}
-          asset_path: target/creedengo-python-plugin-${{ needs.build.outputs.release_tag }}.jar
-          asset_name: creedengo-python-plugin-${{ needs.build.outputs.release_tag }}.jar
+          asset_path: ${{ needs.build.outputs.jar_path }}
+          asset_name: ${{ needs.build.outputs.jar_name }}
           asset_content_type: application/zip
