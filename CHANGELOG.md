@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - upgrade libraries versions
 - update integration tests system to use the new component "creedengo-integration-test"
 - optimization of GCI101 rule implementation + correction of TI
+- technical optimization for dynamic versionning in maven (for next releases)
 
 ### Deleted
 
