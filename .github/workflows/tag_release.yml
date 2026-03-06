@@ -58,6 +58,89 @@ jobs:
         id: extract-release-notes
         uses: ffurrer2/extract-release-notes@v1
 
+      - name: Collect contributors
+        id: contributors
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Trouver le tag précédent (avant le tag courant)
+          PREV_TAG=$(git tag --sort=-version:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | grep -A1 "^${{ env.release_tag }}$" | tail -n 1)
+
+          if [ -z "$PREV_TAG" ] || [ "$PREV_TAG" = "${{ env.release_tag }}" ]; then
+            echo "Pas de tag précédent trouvé, analyse de tout l'historique."
+            RANGE="${{ env.release_tag }}"
+          else
+            echo "Analyse des commits entre $PREV_TAG et ${{ env.release_tag }}"
+            RANGE="$PREV_TAG..${{ env.release_tag }}"
+          fi
+
+          # Récupérer les SHA des commits de la plage
+          COMMIT_SHAS=$(git log "$RANGE" --format="%H")
+
+          CONTRIBUTORS_MD=""
+          declare -A SEEN_LOGINS
+
+          for SHA in $COMMIT_SHAS; do
+            # Appel API GitHub pour résoudre le login à partir du SHA
+            RESPONSE=$(gh api repos/${{ github.repository }}/commits/$SHA 2>/dev/null)
+            LOGIN=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); a=d.get('author'); print(a['login'] if a else '')" 2>/dev/null)
+            AVATAR=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); a=d.get('author'); print(a['avatar_url'] if a else '')" 2>/dev/null)
+
+            # Ignorer les bots et les doublons
+            if [ -z "$LOGIN" ] || [[ "$LOGIN" == *"[bot]"* ]] || [ "${SEEN_LOGINS[$LOGIN]+_}" ]; then
+              continue
+            fi
+            SEEN_LOGINS[$LOGIN]=1
+
+            CONTRIBUTORS_MD="${CONTRIBUTORS_MD}- [![${LOGIN}](${AVATAR}&s=20)](https://github.com/${LOGIN}) [@${LOGIN}](https://github.com/${LOGIN})\n"
+          done
+
+          if [ -z "$CONTRIBUTORS_MD" ]; then
+            CONTRIBUTORS_MD="- Aucun contributeur trouvé"
+          fi
+
+          echo "Contributeurs trouvés :"
+          printf "%b\n" "$CONTRIBUTORS_MD"
+
+          # Écrire dans un fichier multilignes pour éviter les problèmes d'échappement
+          {
+            echo "contributors<<EOF"
+            printf "%b\n" "$CONTRIBUTORS_MD"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Build release body
+        id: release_body
+        env:
+          RELEASE_NOTES: ${{ steps.extract-release-notes.outputs.release_notes }}
+          CONTRIBUTORS: ${{ steps.contributors.outputs.contributors }}
+        run: |
+          python3 - <<'PYEOF'
+          import os
+
+          release_notes = os.environ.get("RELEASE_NOTES", "")
+          contributors = os.environ.get("CONTRIBUTORS", "")
+
+          body = f"""{release_notes}
+
+          ## 👥 Contributeurs
+
+          {contributors}
+          """
+
+          # Supprimer l'indentation du heredoc Python
+          lines = body.split("\n")
+          cleaned = "\n".join(line.lstrip("          ") for line in lines)
+
+          with open("/tmp/release_body.md", "w") as f:
+              f.write(cleaned)
+
+          print("Corps de la release généré :")
+          print(cleaned)
+          PYEOF
+
+          echo "body_path=/tmp/release_body.md" >> $GITHUB_OUTPUT
+
       - name: Build project
         run: mvn -e -B clean package -DskipTests -Drevision=${{ env.release_tag }}
 
@@ -77,7 +160,7 @@ jobs:
         with:
           tag_name: ${{ env.release_tag }}
           name: Release ${{ env.release_tag }}
-          body: ${{ steps.extract-release-notes.outputs.release_notes }}
+          body_path: ${{ steps.release_body.outputs.body_path }}
           draft: false
           prerelease: false
           files: ${{ env.jar_path }}
