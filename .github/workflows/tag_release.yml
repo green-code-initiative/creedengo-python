@@ -1,9 +1,18 @@
 name: Tag Release
 
 on:
-  push:
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+  #push:
+  #  tags:
+  #    - '[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag de la release à déployer (ex: 2.3.0)'
+        required: true
+        type: string
+
+env:
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
 
 jobs:
   checks:
@@ -25,10 +34,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout tag "${{ github.ref_name }}"
+      - name: Checkout tag "${{ env.RELEASE_TAG }}"
         uses: actions/checkout@v3
         with:
-          ref: ${{  github.ref_name }}
+          ref: ${{ env.RELEASE_TAG }}
       - name: Extract release notes
         id: extract-release-notes
         uses: ffurrer2/extract-release-notes@v1
@@ -40,8 +49,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
+          tag_name: ${{ env.RELEASE_TAG }}
+          release_name: Release ${{ env.RELEASE_TAG }}
           draft: false
           prerelease: false
           body: ${{ steps.extract-release-notes.outputs.release_notes }}
@@ -74,7 +83,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{needs.build.outputs.upload_url}}
-          asset_path: target/creedengo-python-plugin-${{ github.ref_name }}.jar
-          asset_name: creedengo-python-plugin-${{ github.ref_name }}.jar
+          upload_url: ${{ needs.build.outputs.upload_url }}
+          asset_path: target/creedengo-python-plugin-${{ env.RELEASE_TAG }}.jar
+          asset_name: creedengo-python-plugin-${{ env.RELEASE_TAG }}.jar
           asset_content_type: application/zip
