@@ -1,4 +1,4 @@
-name: Build and Tests
+name: Build
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build job
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read # allows SonarCloud to decorate PRs with analysis results
@@ -24,7 +24,7 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -53,4 +53,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./mvnw -e -B sonar:sonar -Dsonar.projectKey=green-code-initiative_creedengo-python
+        run: |
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "⚠️ SONAR_TOKEN is not set (Dependabot PR or external fork). Skipping SonarQube scan."
+          else
+            ./mvnw -e -B sonar:sonar -Dsonar.projectKey=green-code-initiative_creedengo-python -Dsonar.organization=green-code-initiative
+          fi
