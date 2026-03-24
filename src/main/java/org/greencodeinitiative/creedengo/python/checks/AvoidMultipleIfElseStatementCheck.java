@@ -332,7 +332,9 @@ public class AvoidMultipleIfElseStatementCheck extends PythonSubscriptionCheck {
             Integer nbParentUsed = null;
             for (int i = pLevel; i >= 0 && nbParentUsed == null; i--) {
                 Map<String, Integer> variablesParentLevelMap = pDataMap.get(i);
-                nbParentUsed = variablesParentLevelMap.get(variableName);
+                if (variablesParentLevelMap != null) {
+                    nbParentUsed = variablesParentLevelMap.get(variableName);
+                }
             }
 
             return nbParentUsed;

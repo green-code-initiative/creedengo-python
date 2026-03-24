@@ -8,18 +8,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+- upgrade internal libraries versions
+
+### Deleted
+
+## [2.3.0] - 2026-03-06
+
+### Added
+- [#110](https://github.com/green-code-initiative/creedengo-python/issues/110) Correction of NullPointerException in GCI2 rule
 - [#82](https://github.com/green-code-initiative/creedengo-python/pull/82) Add rule GCI112 @dataclass(slots=True) should be declared on data classes
 - [#108](https://github.com/green-code-initiative/creedengo-python/pull/108) Add rule GCI109 Avoid using exceptions for control flow
 - [#109](https://github.com/green-code-initiative/creedengo-python/pull/109) Add rule GCI110 Avoid wildcard imports
 - [#122](https://github.com/green-code-initiative/creedengo-python/pull/122) Add rule GCI111 Logging format, prefer using %s
+- [#23](https://github.com/green-code-initiative/creedengo-python/issues/23) Correction of false positive in GCI4 with TypeVar
 
 ### Changed
 
 - compatibility updates for SonarQube 25.12.0
 - upgrade libraries versions
 - update integration tests system to use the new component "creedengo-integration-test"
-
-### Deleted
+- optimization of GCI101 rule implementation + correction of TI
+- technical optimization for dynamic versionning in maven (for next releases)
 
 ## [2.2.0] - 2025-09-01
 
@@ -152,7 +164,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Comparison list
 
-[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.2.0...HEAD)
+[unreleased](https://github.com/green-code-initiative/creedengo-python/compare/2.3.0...HEAD)
+[2.3.0](https://github.com/green-code-initiative/creedengo-python/compare/2.2.0...2.3.0)
 [2.2.0](https://github.com/green-code-initiative/creedengo-python/compare/2.1.0...2.2.0)
 [2.1.0](https://github.com/green-code-initiative/creedengo-python/compare/2.0.1...2.1.0)
 [2.0.1](https://github.com/green-code-initiative/creedengo-python/compare/2.0.0...2.0.1)

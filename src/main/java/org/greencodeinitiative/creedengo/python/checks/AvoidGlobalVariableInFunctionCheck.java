@@ -17,16 +17,16 @@
  */
 package org.greencodeinitiative.creedengo.python.checks;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
-import org.sonar.plugins.python.api.symbols.Symbol;
 import org.sonar.plugins.python.api.tree.AnnotatedAssignment;
 import org.sonar.plugins.python.api.tree.ArgList;
 import org.sonar.plugins.python.api.tree.AssertStatement;
@@ -60,6 +60,7 @@ import org.sonar.plugins.python.api.tree.Parameter;
 import org.sonar.plugins.python.api.tree.ParameterList;
 import org.sonar.plugins.python.api.tree.ParenthesizedExpression;
 import org.sonar.plugins.python.api.tree.PrintStatement;
+import org.sonar.plugins.python.api.tree.QualifiedExpression;
 import org.sonar.plugins.python.api.tree.RaiseStatement;
 import org.sonar.plugins.python.api.tree.RegularArgument;
 import org.sonar.plugins.python.api.tree.ReprExpression;
@@ -85,24 +86,95 @@ public class AvoidGlobalVariableInFunctionCheck extends PythonSubscriptionCheck 
 
     public static final String DESCRIPTION = "Use local variable (function/class scope) instead of global variable (application scope)";
 
-    private List<String> globalVariables;
-    private List<String> definedLocalVariables;
+    private static final Set<String> TYPING_CONSTRUCTS = new HashSet<>(Arrays.asList("TypeVar", "TypeVarTuple", "ParamSpec", "NewType"));
+
+    private Set<String> globalVariables;
+    private Set<String> definedLocalVariables;
     private Map<Tree, String> usedLocalVariables;
 
     @Override
     public void initialize(SubscriptionCheck.Context context) {
-        globalVariables = new ArrayList<>();
+        globalVariables = new HashSet<>();
         context.registerSyntaxNodeConsumer(Tree.Kind.FILE_INPUT, this::visitFileInput);
         context.registerSyntaxNodeConsumer(Tree.Kind.FUNCDEF, this::visitFuncDef);
     }
 
     public void visitFileInput(SubscriptionContext ctx) {
         FileInput fileInput = (FileInput) ctx.syntaxNode();
-        fileInput.globalVariables().stream().filter(v -> v.is(Symbol.Kind.OTHER)).forEach(v -> this.globalVariables.add(v.name()));
+
+        // Add all module-level assignments except TypeVar and similar typing constructs
+        StatementList statements = fileInput.statements();
+        if (statements != null) {
+            statements.statements().forEach(this::extractGlobalVariablesFromStatement);
+        }
+    }
+
+    private void extractGlobalVariablesFromStatement(Tree statement) {
+        if (statement == null) {
+            return;
+        }
+
+        switch (statement.getKind()) {
+            case ASSIGNMENT_STMT:
+                AssignmentStatement assignmentStatement = (AssignmentStatement) statement;
+                if (isTypingConstruct(assignmentStatement.assignedValue())) {
+                    return; // Skip TypeVar and similar typing constructs
+                }
+                assignmentStatement.lhsExpressions().forEach(this::extractNamesFromExpression);
+                break;
+            case ANNOTATED_ASSIGNMENT:
+                AnnotatedAssignment annotatedAssignment = (AnnotatedAssignment) statement;
+                if (annotatedAssignment.assignedValue() != null && isTypingConstruct(annotatedAssignment.assignedValue())) {
+                    return;
+                }
+                if (annotatedAssignment.variable().is(Tree.Kind.NAME)) {
+                    this.globalVariables.add(((Name) annotatedAssignment.variable()).name());
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void extractNamesFromExpression(Tree expression) {
+        if (expression.is(Tree.Kind.EXPRESSION_LIST)) {
+            ((ExpressionList) expression).expressions().forEach(expr -> {
+                if (expr.is(Tree.Kind.NAME)) {
+                    this.globalVariables.add(((Name) expr).name());
+                }
+            });
+        } else if (expression.is(Tree.Kind.NAME)) {
+            this.globalVariables.add(((Name) expression).name());
+        }
+    }
+
+    private boolean isTypingConstruct(Tree tree) {
+        if (tree == null || !tree.is(Tree.Kind.CALL_EXPR)) {
+            return false;
+        }
+        CallExpression callExpr = (CallExpression) tree;
+        Tree callee = callExpr.callee();
+
+        // Handle direct call: TypeVar(...)
+        if (callee.is(Tree.Kind.NAME)) {
+            String calleeName = ((Name) callee).name();
+            return TYPING_CONSTRUCTS.contains(calleeName);
+        }
+
+        // Handle qualified call: typing.TypeVar(...)
+        if (callee.is(Tree.Kind.QUALIFIED_EXPR)) {
+            QualifiedExpression qualifiedExpr = (QualifiedExpression) callee;
+            if (qualifiedExpr.name().is(Tree.Kind.NAME)) {
+                String methodName = ((Name) qualifiedExpr.name()).name();
+                return TYPING_CONSTRUCTS.contains(methodName);
+            }
+        }
+
+        return false;
     }
 
     void visitFuncDef(SubscriptionContext ctx) {
-        this.definedLocalVariables = new ArrayList<>();
+        this.definedLocalVariables = new HashSet<>();
         this.usedLocalVariables = new HashMap<>();
 
         FunctionDef functionDef = (FunctionDef) ctx.syntaxNode();

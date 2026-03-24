@@ -152,3 +152,15 @@ def compliant_the_same_variable_is_used_more_than_twice_but_inside_functions():
     else:
         nb2 = 4
     return nb2
+
+
+def compliant_NPE_use_case(revision_string):
+    """convert a revision number or branch number into a tuple of integers"""
+    if revision_string:
+        t = map(int, string.split(revision_string, '.'))
+        l = len(t)
+        if l == 1:
+            l = 2
+            return ()
+        return tuple(t)
+    return ()

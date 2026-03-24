@@ -18,19 +18,17 @@
 package org.greencodeinitiative.creedengo.python.checks;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
 import org.sonar.plugins.python.api.SubscriptionContext;
-import org.sonar.plugins.python.api.symbols.Symbol;
 import org.sonar.plugins.python.api.tree.AliasedName;
 import org.sonar.plugins.python.api.tree.BaseTreeVisitor;
 import org.sonar.plugins.python.api.tree.CallExpression;
 import org.sonar.plugins.python.api.tree.FileInput;
+import org.sonar.plugins.python.api.tree.ImportFrom;
+import org.sonar.plugins.python.api.tree.ImportName;
 import org.sonar.plugins.python.api.tree.Name;
 import org.sonar.plugins.python.api.tree.QualifiedExpression;
 import org.sonar.plugins.python.api.tree.Tree;
@@ -56,26 +54,44 @@ public class AvoidSQLRequestInLoop extends PythonSubscriptionCheck {
 
     private void visitFile(SubscriptionContext ctx) {
         FileInput tree = (FileInput) ctx.syntaxNode();
-        SymbolsFromImport visitor = new SymbolsFromImport();
+        SqlLibraryImportVisitor visitor = new SqlLibraryImportVisitor();
         tree.accept(visitor);
-        visitor.symbols.stream()
-                .filter(Objects::nonNull)
-                .map(Symbol::fullyQualifiedName)
-                .filter(Objects::nonNull)
-                .forEach(qualifiedName -> {
-                    if (SQL_LIBS.contains(qualifiedName)) {
-                        isUsingSqlLib = true;
-                    }
-                });
+        isUsingSqlLib = visitor.isUsingSqlLib;
     }
 
-    private static class SymbolsFromImport extends BaseTreeVisitor {
-        private final Set<Symbol> symbols = new HashSet<>();
+    private static class SqlLibraryImportVisitor extends BaseTreeVisitor {
+        private boolean isUsingSqlLib = false;
 
         @Override
-        public void visitAliasedName(AliasedName aliasedName) {
-            List<Name> names = aliasedName.dottedName().names();
-            symbols.add(names.get(names.size() - 1).symbol());
+        public void visitImportName(ImportName importName) {
+            for (AliasedName aliasedName : importName.modules()) {
+                String fullModuleName = getFullModuleName(aliasedName.dottedName().names());
+                if (SQL_LIBS.contains(fullModuleName)) {
+                    isUsingSqlLib = true;
+                }
+            }
+            super.visitImportName(importName);
+        }
+
+        @Override
+        public void visitImportFrom(ImportFrom importFrom) {
+            if (importFrom.module() != null) {
+                String fullModuleName = getFullModuleName(importFrom.module().names());
+                if (SQL_LIBS.contains(fullModuleName)) {
+                    isUsingSqlLib = true;
+                }
+            }
+            super.visitImportFrom(importFrom);
+        }
+
+        private String getFullModuleName(List<Name> names) {
+            if (names == null || names.isEmpty()) {
+                return "";
+            }
+            return names.stream()
+                    .map(Name::name)
+                    .reduce((a, b) -> a + "." + b)
+                    .orElse("");
         }
     }
 

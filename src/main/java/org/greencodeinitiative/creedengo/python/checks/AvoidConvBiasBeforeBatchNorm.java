@@ -17,7 +17,6 @@
  */
 package org.greencodeinitiative.creedengo.python.checks;
 
-
 import org.greencodeinitiative.creedengo.python.utils.UtilsAST;
 import org.sonar.check.Rule;
 import org.sonar.plugins.python.api.PythonSubscriptionCheck;
@@ -54,11 +53,34 @@ import static org.sonar.plugins.python.api.tree.Tree.Kind.FUNCDEF;
 public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
 
   private static final String NN_MODULE_FULLY_QUALIFIED_NAME = "torch.nn.Module";
+  private static final String NN_MODULE_FULLY_QUALIFIED_NAME_DETAILED = "torch.nn.modules.module.Module";  // New in sonar-python 5.17+
   private static final String CONV_FULLY_QUALIFIED_NAME = "torch.nn.Conv2d";
   private static final String FORWARD_METHOD_NAME = "forward";
   private static final String BATCH_NORM_FULLY_QUALIFIED_NAME = "torch.nn.BatchNorm2d";
   private static final String SEQUENTIAL_MODULE_FULLY_QUALIFIED_NAME = "torch.nn.Sequential";
   protected static final String MESSAGE = "Remove bias for convolutions before batch norm layers to save time and memory.";
+
+  /**
+   * Check if a fully qualified name matches the expected name.
+   * Handles both old format (torch.nn.Conv2d) and new format (torch.nn.modules.conv.Conv2d).
+   *
+   * @param actualName The actual fully qualified name from the API
+   * @param expectedShortName The expected short format name (e.g., "torch.nn.Conv2d")
+   * @return true if it matches
+   */
+  private static boolean matchesQualifiedName(String actualName, String expectedShortName) {
+    if (actualName == null || expectedShortName == null) {
+      return false;
+    }
+    // Direct match (old API format)
+    if (actualName.equals(expectedShortName)) {
+      return true;
+    }
+    // Check if it ends with the class name (new API format)
+    // e.g., "torch.nn.modules.conv.Conv2d" should match "torch.nn.Conv2d"
+    String className = expectedShortName.substring(expectedShortName.lastIndexOf('.') + 1);
+    return actualName.endsWith("." + className) && actualName.startsWith("torch.nn");
+  }
 
   @Override
   public void initialize(Context context) {
@@ -81,10 +103,44 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
   private boolean isModelClass(ClassDef classDef) {
     ClassSymbol classSymbol = (ClassSymbol) classDef.name().symbol();
     if (classSymbol != null) {
-      return classSymbol.superClasses().stream().anyMatch(e -> Objects.equals(e.fullyQualifiedName(), NN_MODULE_FULLY_QUALIFIED_NAME))
-        && classSymbol.declaredMembers().stream().anyMatch(e -> FORWARD_METHOD_NAME.equals(e.name()));
-    } else
+      boolean hasTorchNNModuleParent = classSymbol.superClasses().stream()
+        .anyMatch(e -> Objects.equals(e.fullyQualifiedName(), NN_MODULE_FULLY_QUALIFIED_NAME)
+                    || Objects.equals(e.fullyQualifiedName(), NN_MODULE_FULLY_QUALIFIED_NAME_DETAILED)
+                    || "Module".equals(e.name()));
+      boolean hasForwardMethod = classSymbol.declaredMembers().stream()
+        .anyMatch(e -> FORWARD_METHOD_NAME.equals(e.name()));
+      return hasTorchNNModuleParent && hasForwardMethod;
+    } else {
+      // Fallback: check if class inherits from nn.Module by looking at the arguments list directly
+      return isModelClassByArguments(classDef);
+    }
+  }
+
+  private boolean isModelClassByArguments(ClassDef classDef) {
+    if (classDef.args() == null || classDef.args().arguments().isEmpty()) {
       return false;
+    }
+    // Check if any parent class name contains "Module"
+    boolean hasModuleParent = classDef.args().arguments().stream()
+      .filter(arg -> arg.is(Tree.Kind.REGULAR_ARGUMENT))
+      .map(arg -> ((RegularArgument) arg).expression())
+      .anyMatch(expr -> {
+        if (expr.is(Tree.Kind.QUALIFIED_EXPR)) {
+          QualifiedExpression qe = (QualifiedExpression) expr;
+          return "Module".equals(qe.name().name());
+        } else if (expr.is(Tree.Kind.NAME)) {
+          return "Module".equals(((Name) expr).name());
+        }
+        return false;
+      });
+
+    // Check if class has forward method
+    boolean hasForwardMethod = classDef.body().statements().stream()
+      .filter(stmt -> stmt.is(Tree.Kind.FUNCDEF))
+      .map(stmt -> (FunctionDef) stmt)
+      .anyMatch(func -> FORWARD_METHOD_NAME.equals(func.name().name()));
+
+    return hasModuleParent && hasForwardMethod;
   }
 
   private void reportIfBatchNormIsCalledAfterDirtyConv(SubscriptionContext context, FunctionDef forwardDef, Map<String, CallExpression> dirtyConvInInit,
@@ -140,12 +196,12 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
       Argument moduleInSequential = UtilsAST.getArgumentsFromCall(sequentialCall).get(moduleIndex);
       if (moduleInSequential.is(REGULAR_ARGUMENT) && ((RegularArgument) moduleInSequential).expression().is(CALL_EXPR)) {
         CallExpression module = (CallExpression) ((RegularArgument) moduleInSequential).expression();
-        if (CONV_FULLY_QUALIFIED_NAME.equals(UtilsAST.getQualifiedName(module)) && isConvWithBias(module)) {
+        if (matchesQualifiedName(UtilsAST.getQualifiedName(module), CONV_FULLY_QUALIFIED_NAME) && isConvWithBias(module)) {
           if (moduleIndex == nModulesInSequential - 1)
             break;
           Argument nextModuleInSequential = UtilsAST.getArgumentsFromCall(sequentialCall).get(moduleIndex + 1);
           CallExpression nextModule = (CallExpression) ((RegularArgument) nextModuleInSequential).expression();
-          if (BATCH_NORM_FULLY_QUALIFIED_NAME.equals(UtilsAST.getQualifiedName(nextModule)))
+          if (matchesQualifiedName(UtilsAST.getQualifiedName(nextModule), BATCH_NORM_FULLY_QUALIFIED_NAME))
             context.addIssue(module, MESSAGE);
         }
       }
@@ -168,11 +224,11 @@ public class AvoidConvBiasBeforeBatchNorm extends PythonSubscriptionCheck {
             CallExpression callExpression = (CallExpression) ((AssignmentStatement) ss).assignedValue();
             String variableName = ((QualifiedExpression) lhs).name().name();
             String variableClass = UtilsAST.getQualifiedName(callExpression);
-            if (SEQUENTIAL_MODULE_FULLY_QUALIFIED_NAME.equals(variableClass)) {
+            if (matchesQualifiedName(variableClass, SEQUENTIAL_MODULE_FULLY_QUALIFIED_NAME)) {
               reportForSequentialModules(context, callExpression);
-            } else if (variableClass.equals(CONV_FULLY_QUALIFIED_NAME) && isConvWithBias(callExpression)) {
+            } else if (matchesQualifiedName(variableClass, CONV_FULLY_QUALIFIED_NAME) && isConvWithBias(callExpression)) {
               dirtyConvInInit.put(variableName, callExpression);
-            } else if (BATCH_NORM_FULLY_QUALIFIED_NAME.equals(variableClass)) {
+            } else if (matchesQualifiedName(variableClass, BATCH_NORM_FULLY_QUALIFIED_NAME)) {
               batchNormsInInit.put(variableName, callExpression);
             }
           }
