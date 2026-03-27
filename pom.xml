@@ -74,7 +74,7 @@
 
         <!-- version explicitly set for security raised by github -->
         <!-- to delete when sonarpython will provide this version at minimum -->
-        <jackson-core.version>2.21.1</jackson-core.version>
+        <jackson-core.version>2.21.2</jackson-core.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
         <creedengo-rules-specifications.version>3.0.0</creedengo-rules-specifications.version>
