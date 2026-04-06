@@ -70,11 +70,11 @@
         <sonar-packaging.version>1.25.1.3002</sonar-packaging.version>
 
         <!-- last version that all is OK -->
-        <sonarpython.version>5.19.0.32098</sonarpython.version>
+        <sonarpython.version>5.20.0.32295</sonarpython.version>
 
         <!-- version explicitly set for security raised by github -->
         <!-- to delete when sonarpython will provide this version at minimum -->
-        <jackson-core.version>2.21.1</jackson-core.version>
+        <jackson-core.version>2.21.2</jackson-core.version>
 
         <!-- temporary version waiting for a real automatic release in creedengo repository -->
         <creedengo-rules-specifications.version>3.0.0</creedengo-rules-specifications.version>
@@ -133,7 +133,7 @@
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>4.33.5</version>
+            <version>4.34.1</version>
             <scope>test</scope>
         </dependency>
 
