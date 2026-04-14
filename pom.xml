@@ -70,7 +70,7 @@
         <sonar-packaging.version>1.25.1.3002</sonar-packaging.version>
 
         <!-- last version that all is OK -->
-        <sonarpython.version>5.20.0.32295</sonarpython.version>
+        <sonarpython.version>5.21.0.32726</sonarpython.version>
 
         <!-- version explicitly set for security raised by github -->
         <!-- to delete when sonarpython will provide this version at minimum -->
