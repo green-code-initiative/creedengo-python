@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Add rule GCI24: Returned SQL results should be limited (avoid SELECT...FROM without LIMIT)
 
 ### Changed
 

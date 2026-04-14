@@ -58,6 +58,19 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     @Test
+    void testGCI24() {
+
+        String filePath = "src/avoidUnlimitedSQLRequest.py";
+        String ruleId = "creedengo-python:GCI24";
+        String ruleMsg = "Don't use the query SELECT _ FROM _ WHERE _ without a limit";
+        int[] startLines = new int[]{4, 7};
+        int[] endLines = new int[]{4, 7};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY_MAJOR, TYPE, EFFORT_15MIN);
+
+    }
+
+    @Test
     void testGCI7_compliant() {
 
         String filePath = "src/avoidGettersAndSettersCompliant.py";

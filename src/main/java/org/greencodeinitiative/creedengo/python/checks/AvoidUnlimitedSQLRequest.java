@@ -15,21 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.greencodeinitiative.creedengo.python.checks;
 
 import org.sonar.check.Rule;
-import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
 
 import java.util.regex.Pattern;
 
-@Rule(key = "GCI74")
-@DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC74")
-@DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "S74")
-public class AvoidFullSQLRequest extends AbstractSQLPatternCheck {
+@Rule(key = "GCI24")
+public class AvoidUnlimitedSQLRequest extends AbstractSQLPatternCheck {
 
-    private static final String MESSAGE_RULE = "Don't use the query SELECT * FROM";
+    private static final String MESSAGE_RULE = "Don't use the query SELECT _ FROM _ WHERE _ without a limit";
 
-    private static final Pattern PATTERN = Pattern.compile("(?i).*select.*\\*.*from.*");
+    private static final Pattern PATTERN = Pattern.compile("(?i).*select.*from(?!.*\\blimit\\b).*");
 
     @Override
     protected String getMessageRule() {

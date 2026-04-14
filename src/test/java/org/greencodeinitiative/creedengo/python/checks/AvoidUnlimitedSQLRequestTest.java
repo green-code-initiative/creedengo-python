@@ -15,29 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.greencodeinitiative.creedengo.python.checks;
 
-import org.sonar.check.Rule;
-import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
+import org.junit.jupiter.api.Test;
+import org.sonar.python.checks.utils.PythonCheckVerifier;
 
-import java.util.regex.Pattern;
-
-@Rule(key = "GCI74")
-@DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC74")
-@DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "S74")
-public class AvoidFullSQLRequest extends AbstractSQLPatternCheck {
-
-    private static final String MESSAGE_RULE = "Don't use the query SELECT * FROM";
-
-    private static final Pattern PATTERN = Pattern.compile("(?i).*select.*\\*.*from.*");
-
-    @Override
-    protected String getMessageRule() {
-        return MESSAGE_RULE;
-    }
-
-    @Override
-    protected Pattern getPattern() {
-        return PATTERN;
+public class AvoidUnlimitedSQLRequestTest {
+    @Test
+    public void test() {
+        PythonCheckVerifier.verify("src/test/resources/checks/avoidUnlimitedSQLRequest.py", new AvoidUnlimitedSQLRequest());
     }
 }

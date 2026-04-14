@@ -34,6 +34,7 @@ public record PythonRuleRepository(SonarRuntime sonarRuntime) implements RulesDe
             AvoidSQLRequestInLoop.class,
             AvoidTryCatchWithFileOpenedCheck.class,
             AvoidUnlimitedCache.class,
+            AvoidUnlimitedSQLRequest.class,
             AvoidUnoptimizedVectorImagesCheck.class,
             AvoidFullSQLRequest.class,
             AvoidListComprehensionInIterations.class,
