@@ -54,7 +54,8 @@ public record PythonRuleRepository(SonarRuntime sonarRuntime) implements RulesDe
             AvoidCreatingTensorUsingNumpyOrNativePython.class,
             AvoidWildcardImportsCheck.class,
             AvoidExceptionsForControlFlowCheck.class,
-            UsingSlotsOnDataClasses.class
+            UsingSlotsOnDataClasses.class,
+            AvoidUseOfMethodForBasicOperations.class
     );
 
     public static final String LANGUAGE = "py";

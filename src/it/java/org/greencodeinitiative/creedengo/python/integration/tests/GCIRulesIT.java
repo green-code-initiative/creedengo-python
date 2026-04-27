@@ -594,4 +594,17 @@ class GCIRulesIT extends GCIRulesBase {
 
     }
 
+    @Test
+    void testGCI22() {
+        String filePath = "src/avoidUseOfMethodForBasicOperations.py";
+        String ruleId  = "creedengo-python:GCI22";
+        String ruleMsg = "Avoid using methods for simple basic operations.";
+        int[] startLines = new int[]{9, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 22, 26, 30, 35, 36, 41, 42, 44, 45, 46, 47, 48, 51, 52, 57, 58, 59, 65, 70, 73, 76, 79, 82, 85
+        };
+        int[] endLines = new int[]{9, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 22, 26, 30, 35, 36, 41, 42, 44, 45, 46, 47, 48, 51, 52, 57, 58, 59, 65, 70, 73, 76, 79, 82, 85
+        };
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+    }
+
 }
