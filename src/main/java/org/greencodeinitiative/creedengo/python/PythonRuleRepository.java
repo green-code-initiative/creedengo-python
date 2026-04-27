@@ -57,6 +57,7 @@ public record PythonRuleRepository(SonarRuntime sonarRuntime) implements RulesDe
             GCI110AvoidWildcardImportsCheck.class,
             GCI109AvoidExceptionsForControlFlowCheck.class,
             GCI112UsingSlotsOnDataClasses.class
+            AvoidUseOfMethodForBasicOperations.class
     );
 
     public static final String LANGUAGE = "py";
