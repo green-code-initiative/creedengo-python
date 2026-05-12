@@ -27,7 +27,7 @@ public class AvoidUnlimitedSQLRequest extends AbstractSQLPatternCheck {
 
     private static final String MESSAGE_RULE = "Don't use a SELECT _ FROM _ query without a limit";
 
-    private static final Pattern PATTERN = Pattern.compile("(?i).*\\bselect\\b.*\\bfrom\\b(?!.*\\blimit\\b).*");
+    private static final Pattern PATTERN = Pattern.compile("(?si).*\\bselect\\b.*\\bfrom\\b(?!.*\\blimit\\b).*");
 
     @Override
     protected String getMessageRule() {

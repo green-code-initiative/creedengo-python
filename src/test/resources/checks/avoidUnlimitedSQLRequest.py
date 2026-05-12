@@ -4,7 +4,8 @@ def display_message(argument1):
 display_message('   sElEcT user fRoM myTable WhErE id > 0') # Noncompliant {{Don't use a SELECT _ FROM _ query without a limit}}
 display_message('   sElEcT user fRoM myTable WhErE id > 0 LiMiT 10')
 
-display_message(""" # Noncompliant {{Don't use a SELECT _ FROM _ query without a limit}}
+# Noncompliant@+1 {{Don't use a SELECT _ FROM _ query without a limit}}
+display_message("""
     SELECT user
     FROM myTable
 """)
