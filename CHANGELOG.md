@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add rule GCI24: Returned SQL results should be limited (avoid SELECT...FROM without LIMIT)
+
 ### Changed
 
 - upgrade internal libraries versions
@@ -18,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.3.0] - 2026-03-06
 
 ### Added
+
 - [#110](https://github.com/green-code-initiative/creedengo-python/issues/110) Correction of NullPointerException in GCI2 rule
 - [#82](https://github.com/green-code-initiative/creedengo-python/pull/82) Add rule GCI112 @dataclass(slots=True) should be declared on data classes
 - [#108](https://github.com/green-code-initiative/creedengo-python/pull/108) Add rule GCI109 Avoid using exceptions for control flow
