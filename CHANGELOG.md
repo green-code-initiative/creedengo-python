@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - upgrade internal libraries versions
+- [#151](https://github.com/green-code-initiative/creedengo-python/issues/151)refacto to have all the test files in the same place (for UT and IT), to avoid maintaining 2 test directories
+- [#151](https://github.com/green-code-initiative/creedengo-python/issues/151)refacto all test files to add sub-directories for each rule, to be more clear and to be able to add more tests for each rule in the future
 
 ### Deleted
 
