@@ -1,0 +1,410 @@
+/*
+ * creedengo - Python language - Provides rules to reduce the environmental footprint of your Python programs
+ * Copyright © 2024 Green Code Initiative (https://green-code-initiative.org)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.greencodeinitiative.creedengo.python.checks;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.sonar.check.Rule;
+import org.sonar.plugins.python.api.PythonSubscriptionCheck;
+import org.sonar.plugins.python.api.SubscriptionCheck;
+import org.sonar.plugins.python.api.SubscriptionContext;
+import org.sonar.plugins.python.api.tree.AnnotatedAssignment;
+import org.sonar.plugins.python.api.tree.ArgList;
+import org.sonar.plugins.python.api.tree.AssertStatement;
+import org.sonar.plugins.python.api.tree.AssignmentExpression;
+import org.sonar.plugins.python.api.tree.AssignmentStatement;
+import org.sonar.plugins.python.api.tree.AwaitExpression;
+import org.sonar.plugins.python.api.tree.BinaryExpression;
+import org.sonar.plugins.python.api.tree.CallExpression;
+import org.sonar.plugins.python.api.tree.CompoundAssignmentStatement;
+import org.sonar.plugins.python.api.tree.ComprehensionExpression;
+import org.sonar.plugins.python.api.tree.ComprehensionFor;
+import org.sonar.plugins.python.api.tree.ComprehensionIf;
+import org.sonar.plugins.python.api.tree.ConditionalExpression;
+import org.sonar.plugins.python.api.tree.DictCompExpression;
+import org.sonar.plugins.python.api.tree.DictionaryLiteral;
+import org.sonar.plugins.python.api.tree.ElseClause;
+import org.sonar.plugins.python.api.tree.ExceptClause;
+import org.sonar.plugins.python.api.tree.ExecStatement;
+import org.sonar.plugins.python.api.tree.ExpressionList;
+import org.sonar.plugins.python.api.tree.ExpressionStatement;
+import org.sonar.plugins.python.api.tree.FileInput;
+import org.sonar.plugins.python.api.tree.FinallyClause;
+import org.sonar.plugins.python.api.tree.ForStatement;
+import org.sonar.plugins.python.api.tree.FunctionDef;
+import org.sonar.plugins.python.api.tree.IfStatement;
+import org.sonar.plugins.python.api.tree.KeyValuePair;
+import org.sonar.plugins.python.api.tree.LambdaExpression;
+import org.sonar.plugins.python.api.tree.ListLiteral;
+import org.sonar.plugins.python.api.tree.Name;
+import org.sonar.plugins.python.api.tree.Parameter;
+import org.sonar.plugins.python.api.tree.ParameterList;
+import org.sonar.plugins.python.api.tree.ParenthesizedExpression;
+import org.sonar.plugins.python.api.tree.PrintStatement;
+import org.sonar.plugins.python.api.tree.QualifiedExpression;
+import org.sonar.plugins.python.api.tree.RaiseStatement;
+import org.sonar.plugins.python.api.tree.RegularArgument;
+import org.sonar.plugins.python.api.tree.ReprExpression;
+import org.sonar.plugins.python.api.tree.ReturnStatement;
+import org.sonar.plugins.python.api.tree.SetLiteral;
+import org.sonar.plugins.python.api.tree.StatementList;
+import org.sonar.plugins.python.api.tree.SubscriptionExpression;
+import org.sonar.plugins.python.api.tree.Tree;
+import org.sonar.plugins.python.api.tree.TryStatement;
+import org.sonar.plugins.python.api.tree.Tuple;
+import org.sonar.plugins.python.api.tree.TupleParameter;
+import org.sonar.plugins.python.api.tree.UnaryExpression;
+import org.sonar.plugins.python.api.tree.UnpackingExpression;
+import org.sonar.plugins.python.api.tree.WhileStatement;
+import org.sonar.plugins.python.api.tree.YieldExpression;
+import org.sonar.plugins.python.api.tree.YieldStatement;
+import org.sonarsource.analyzer.commons.annotations.DeprecatedRuleKey;
+
+@Rule(key = "GCI4")
+@DeprecatedRuleKey(repositoryKey = "ecocode-python", ruleKey = "EC4")
+@DeprecatedRuleKey(repositoryKey = "gci-python", ruleKey = "D4")
+public class GCI4AvoidGlobalVariableInFunctionCheck extends PythonSubscriptionCheck {
+
+    public static final String DESCRIPTION = "Use local variable (function/class scope) instead of global variable (application scope)";
+
+    private static final Set<String> TYPING_CONSTRUCTS = new HashSet<>(Arrays.asList("TypeVar", "TypeVarTuple", "ParamSpec", "NewType"));
+
+    private Set<String> globalVariables;
+    private Set<String> definedLocalVariables;
+    private Map<Tree, String> usedLocalVariables;
+
+    @Override
+    public void initialize(SubscriptionCheck.Context context) {
+        globalVariables = new HashSet<>();
+        context.registerSyntaxNodeConsumer(Tree.Kind.FILE_INPUT, this::visitFileInput);
+        context.registerSyntaxNodeConsumer(Tree.Kind.FUNCDEF, this::visitFuncDef);
+    }
+
+    public void visitFileInput(SubscriptionContext ctx) {
+        FileInput fileInput = (FileInput) ctx.syntaxNode();
+
+        // Add all module-level assignments except TypeVar and similar typing constructs
+        StatementList statements = fileInput.statements();
+        if (statements != null) {
+            statements.statements().forEach(this::extractGlobalVariablesFromStatement);
+        }
+    }
+
+    private void extractGlobalVariablesFromStatement(Tree statement) {
+        if (statement == null) {
+            return;
+        }
+
+        switch (statement.getKind()) {
+            case ASSIGNMENT_STMT:
+                AssignmentStatement assignmentStatement = (AssignmentStatement) statement;
+                if (isTypingConstruct(assignmentStatement.assignedValue())) {
+                    return; // Skip TypeVar and similar typing constructs
+                }
+                assignmentStatement.lhsExpressions().forEach(this::extractNamesFromExpression);
+                break;
+            case ANNOTATED_ASSIGNMENT:
+                AnnotatedAssignment annotatedAssignment = (AnnotatedAssignment) statement;
+                if (annotatedAssignment.assignedValue() != null && isTypingConstruct(annotatedAssignment.assignedValue())) {
+                    return;
+                }
+                if (annotatedAssignment.variable().is(Tree.Kind.NAME)) {
+                    this.globalVariables.add(((Name) annotatedAssignment.variable()).name());
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void extractNamesFromExpression(Tree expression) {
+        if (expression.is(Tree.Kind.EXPRESSION_LIST)) {
+            ((ExpressionList) expression).expressions().forEach(expr -> {
+                if (expr.is(Tree.Kind.NAME)) {
+                    this.globalVariables.add(((Name) expr).name());
+                }
+            });
+        } else if (expression.is(Tree.Kind.NAME)) {
+            this.globalVariables.add(((Name) expression).name());
+        }
+    }
+
+    private boolean isTypingConstruct(Tree tree) {
+        if (tree == null || !tree.is(Tree.Kind.CALL_EXPR)) {
+            return false;
+        }
+        CallExpression callExpr = (CallExpression) tree;
+        Tree callee = callExpr.callee();
+
+        // Handle direct call: TypeVar(...)
+        if (callee.is(Tree.Kind.NAME)) {
+            String calleeName = ((Name) callee).name();
+            return TYPING_CONSTRUCTS.contains(calleeName);
+        }
+
+        // Handle qualified call: typing.TypeVar(...)
+        if (callee.is(Tree.Kind.QUALIFIED_EXPR)) {
+            QualifiedExpression qualifiedExpr = (QualifiedExpression) callee;
+            if (qualifiedExpr.name().is(Tree.Kind.NAME)) {
+                String methodName = ((Name) qualifiedExpr.name()).name();
+                return TYPING_CONSTRUCTS.contains(methodName);
+            }
+        }
+
+        return false;
+    }
+
+    void visitFuncDef(SubscriptionContext ctx) {
+        this.definedLocalVariables = new HashSet<>();
+        this.usedLocalVariables = new HashMap<>();
+
+        FunctionDef functionDef = (FunctionDef) ctx.syntaxNode();
+
+        ParameterList parameterList = functionDef.parameters();
+        if (parameterList != null) {
+            parameterList.nonTuple().forEach(p -> extractVariablesFromExpression(p, true));
+        }
+
+        functionDef.body().statements()
+                .forEach(s -> extractVariablesFromExpression(s, false));
+
+        this.usedLocalVariables.entrySet().stream()
+                .filter(e -> !this.definedLocalVariables.contains(e.getValue()) && this.globalVariables.contains(e.getValue()))
+                .forEach(e -> ctx.addIssue(e.getKey(), DESCRIPTION));
+    }
+
+    void extractVariablesFromExpression(Tree element, boolean isAssigned) {
+        if (element == null) {
+            return;
+        }
+
+        switch (element.getKind()) {
+            case REGULAR_ARGUMENT:
+                extractVariablesFromExpression(((RegularArgument) element).expression(), isAssigned);
+                break;
+            case ARG_LIST:
+                ((ArgList) element).arguments().forEach(a -> extractVariablesFromExpression(a, isAssigned));
+                break;
+            case ANNOTATED_ASSIGNMENT:
+                AnnotatedAssignment annotatedAssignment = (AnnotatedAssignment) element;
+                extractVariablesFromExpression(annotatedAssignment.variable(), true);
+                extractVariablesFromExpression(annotatedAssignment.assignedValue(), false);
+                break;
+            case ASSERT_STMT:
+                AssertStatement assertStatement = (AssertStatement) element;
+                extractVariablesFromExpression(assertStatement.condition(), false);
+                extractVariablesFromExpression(assertStatement.message(), false);
+                break;
+            case ASSIGNMENT_STMT:
+                AssignmentStatement assignmentStatement = (AssignmentStatement) element;
+                assignmentStatement.lhsExpressions().forEach(e -> extractVariablesFromExpression(e, true));
+                extractVariablesFromExpression(assignmentStatement.assignedValue(), false);
+                break;
+            case CALL_EXPR:
+                extractVariablesFromExpression(((CallExpression) element).argumentList(), isAssigned);
+                break;
+            case CONDITIONAL_EXPR:
+                ConditionalExpression conditionalExpression = (ConditionalExpression) element;
+                extractVariablesFromExpression(conditionalExpression.trueExpression(), isAssigned);
+                extractVariablesFromExpression(conditionalExpression.falseExpression(), false);
+                extractVariablesFromExpression(conditionalExpression.condition(), isAssigned);
+                break;
+            case COMPOUND_ASSIGNMENT:
+                CompoundAssignmentStatement compoundAssignmentStatement = (CompoundAssignmentStatement) element;
+                extractVariablesFromExpression(compoundAssignmentStatement.lhsExpression(), true);
+                extractVariablesFromExpression(compoundAssignmentStatement.rhsExpression(), false);
+                break;
+            case DICTIONARY_LITERAL:
+                ((DictionaryLiteral) element).elements().forEach(e -> extractVariablesFromExpression(e, false));
+                break;
+            case ELSE_CLAUSE:
+                extractVariablesFromExpression(((ElseClause) element).body(), isAssigned);
+                break;
+            case EXCEPT_CLAUSE:
+                extractVariablesFromExpression(((ExceptClause) element).body(), isAssigned);
+                break;
+            case EXEC_STMT:
+                ExecStatement execStatement = (ExecStatement) element;
+                extractVariablesFromExpression(execStatement.expression(), isAssigned);
+                extractVariablesFromExpression(execStatement.globalsExpression(), isAssigned);
+                extractVariablesFromExpression(execStatement.localsExpression(), isAssigned);
+                break;
+            case EXPRESSION_LIST:
+                ((ExpressionList) element).expressions().forEach(e -> extractVariablesFromExpression(e, isAssigned));
+                break;
+            case EXPRESSION_STMT:
+                ((ExpressionStatement) element).expressions().forEach(e -> extractVariablesFromExpression(e, isAssigned));
+                break;
+            case FILE_INPUT:
+                extractVariablesFromExpression(((FileInput) element).statements(), isAssigned);
+                break;
+            case FINALLY_CLAUSE:
+                extractVariablesFromExpression(((FinallyClause) element).body(), isAssigned);
+                break;
+            case FOR_STMT:
+                ForStatement forStatement = ((ForStatement) element);
+                forStatement.expressions().forEach(e -> extractVariablesFromExpression(e, true));
+                forStatement.testExpressions().forEach(e -> extractVariablesFromExpression(e, false));
+                extractVariablesFromExpression(forStatement.body(), isAssigned);
+                extractVariablesFromExpression(forStatement.elseClause(), isAssigned);
+                break;
+            case IF_STMT:
+                IfStatement ifStatement = (IfStatement) element;
+                extractVariablesFromExpression(ifStatement.condition(), false);
+                extractVariablesFromExpression(ifStatement.body(), isAssigned);
+                extractVariablesFromExpression(ifStatement.elseBranch(), isAssigned);
+                ifStatement.elifBranches().forEach(b -> extractVariablesFromExpression(b, isAssigned));
+                break;
+            case LAMBDA:
+                extractVariablesFromExpression(((LambdaExpression) element).expression(), isAssigned);
+                break;
+            case LIST_LITERAL:
+                extractVariablesFromExpression(((ListLiteral) element).elements(), false);
+                break;
+            case NAME:
+                if (isAssigned) {
+                    this.definedLocalVariables.add(((Name) element).name());
+                } else {
+                    this.usedLocalVariables.put(element, ((Name) element).name());
+                }
+                break;
+            case PRINT_STMT:
+                ((PrintStatement) element).expressions().forEach(e -> extractVariablesFromExpression(e, false));
+                break;
+            case RAISE_STMT:
+                RaiseStatement raiseStatement = (RaiseStatement) element;
+                extractVariablesFromExpression(raiseStatement.fromExpression(), false);
+                raiseStatement.expressions().forEach(e -> extractVariablesFromExpression(e, false));
+                break;
+            case REPR:
+                extractVariablesFromExpression(((ReprExpression) element).expressionList(), isAssigned);
+                break;
+            case RETURN_STMT:
+                ((ReturnStatement) element).expressions().forEach(e -> extractVariablesFromExpression(e, false));
+                break;
+            case SET_LITERAL:
+                ((SetLiteral) element).elements().forEach(e -> extractVariablesFromExpression(e, false));
+                break;
+            case STATEMENT_LIST:
+                ((StatementList) element).statements().forEach(s -> extractVariablesFromExpression(s, isAssigned));
+                break;
+            case TRY_STMT:
+                TryStatement tryStatement = (TryStatement) element;
+                extractVariablesFromExpression(tryStatement.body(), isAssigned);
+                tryStatement.exceptClauses().forEach(c -> extractVariablesFromExpression(c, isAssigned));
+                extractVariablesFromExpression(tryStatement.elseClause(), isAssigned);
+                extractVariablesFromExpression(tryStatement.finallyClause(), isAssigned);
+                break;
+            case PARAMETER:
+                Parameter parameter = (Parameter) element;
+                extractVariablesFromExpression(parameter.name(), true);
+                extractVariablesFromExpression(parameter.defaultValue(), false);
+                break;
+            case TUPLE_PARAMETER:
+                ((TupleParameter) element).parameters().forEach(p -> extractVariablesFromExpression(p, isAssigned));
+                break;
+            case PARAMETER_LIST:
+                ((ParameterList) element).all().forEach(a -> extractVariablesFromExpression(a, true));
+                break;
+            case WHILE_STMT:
+                WhileStatement whileStatement = (WhileStatement) element;
+                extractVariablesFromExpression(whileStatement.condition(), false);
+                extractVariablesFromExpression(whileStatement.body(), isAssigned);
+                extractVariablesFromExpression(whileStatement.elseClause(), isAssigned);
+                break;
+            case YIELD_EXPR:
+                ((YieldExpression) element).expressions().forEach(e -> extractVariablesFromExpression(e, isAssigned));
+                break;
+            case YIELD_STMT:
+                extractVariablesFromExpression(((YieldStatement) element).yieldExpression(), isAssigned);
+                break;
+            case PARENTHESIZED:
+                extractVariablesFromExpression(((ParenthesizedExpression) element).expression(), isAssigned);
+                break;
+            case UNPACKING_EXPR:
+                extractVariablesFromExpression(((UnpackingExpression) element).expression(), isAssigned);
+                break;
+            case AWAIT:
+                extractVariablesFromExpression(((AwaitExpression) element).expression(), false);
+                break;
+            case TUPLE:
+                ((Tuple) element).elements().forEach(e -> extractVariablesFromExpression(e, isAssigned));
+                break;
+            case DICT_COMPREHENSION:
+                extractVariablesFromExpression(((DictCompExpression) element).comprehensionFor(), false);
+                break;
+            case LIST_COMPREHENSION:
+            case SET_COMPREHENSION:
+            case GENERATOR_EXPR:
+                extractVariablesFromExpression(((ComprehensionExpression) element).resultExpression(), false);
+                extractVariablesFromExpression(((ComprehensionExpression) element).comprehensionFor(), true);
+                break;
+            case COMP_FOR:
+                extractVariablesFromExpression(((ComprehensionFor) element).loopExpression(), true);
+                extractVariablesFromExpression(((ComprehensionFor) element).iterable(), false);
+                break;
+            case COMP_IF:
+                extractVariablesFromExpression(((ComprehensionIf) element).condition(), false);
+                break;
+            case SUBSCRIPTION:
+                extractVariablesFromExpression(((SubscriptionExpression) element).object(), false);
+                extractVariablesFromExpression(((SubscriptionExpression) element).subscripts(), false);
+                break;
+            case PLUS:
+            case MINUS:
+            case MULTIPLICATION:
+            case DIVISION:
+            case FLOOR_DIVISION:
+            case MODULO:
+            case MATRIX_MULTIPLICATION:
+            case SHIFT_EXPR:
+            case BITWISE_AND:
+            case BITWISE_OR:
+            case BITWISE_XOR:
+            case AND:
+            case OR:
+            case COMPARISON:
+            case POWER:
+                BinaryExpression binaryExpression = (BinaryExpression) element;
+                extractVariablesFromExpression(binaryExpression.leftOperand(), false);
+                extractVariablesFromExpression(binaryExpression.rightOperand(), false);
+                break;
+            case UNARY_PLUS:
+            case UNARY_MINUS:
+            case BITWISE_COMPLEMENT:
+            case NOT:
+                extractVariablesFromExpression(((UnaryExpression) element).expression(), false);
+                break;
+            case ASSIGNMENT_EXPRESSION:
+                AssignmentExpression assignmentExpression = (AssignmentExpression) element;
+                extractVariablesFromExpression(assignmentExpression.lhsName(), true);
+                extractVariablesFromExpression(assignmentExpression.expression(), false);
+                break;
+            case KEY_VALUE_PAIR:
+                KeyValuePair keyValuePair = (KeyValuePair) element;
+                extractVariablesFromExpression(keyValuePair.key(), true);
+                extractVariablesFromExpression(keyValuePair.value(), false);
+                break;
+            default:
+        }
+    }
+}

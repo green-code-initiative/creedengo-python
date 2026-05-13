@@ -18,6 +18,7 @@
 package org.greencodeinitiative.creedengo.python;
 
 import org.greencodeinitiative.creedengo.python.checks.*;
+import org.greencodeinitiative.creedengo.python.checks.GCI2AvoidMultipleIfElseStatementCheck;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.plugins.python.api.PythonCustomRuleRepository;
@@ -29,32 +30,33 @@ import java.util.List;
 public record PythonRuleRepository(SonarRuntime sonarRuntime) implements RulesDefinition, PythonCustomRuleRepository {
 
     static final List<Class<?>> ANNOTATED_RULE_CLASSES = Arrays.asList(
-            AvoidGettersAndSetters.class,
-            AvoidGlobalVariableInFunctionCheck.class,
-            AvoidSQLRequestInLoop.class,
-            AvoidTryCatchWithFileOpenedCheck.class,
-            AvoidUnlimitedCache.class,
-            AvoidUnoptimizedVectorImagesCheck.class,
-            AvoidFullSQLRequest.class,
-            AvoidListComprehensionInIterations.class,
-            DetectBadLoggingFormatInterpolation.class,
-            DetectUnoptimizedImageFormat.class,
-            AvoidMultipleIfElseStatementCheck.class,
-            PandasRequireUsecolsArgument.class,
-            OptimizeSquareComputation.class,
-            AvoidSqrtInLoop.class,
-            DictionaryItemsUnused.class,
-            AvoidCSVFormat.class,
-            AvoidIterativeMatrixOperations.class,
-            AvoidNonPinnedMemoryForDataloaders.class,
-            AvoidConvBiasBeforeBatchNorm.class,
-            DisableGradientForModelEval.class,
-            StringConcatenation.class,
-            PreferAppendLeft.class,
-            AvoidCreatingTensorUsingNumpyOrNativePython.class,
-            AvoidWildcardImportsCheck.class,
-            AvoidExceptionsForControlFlowCheck.class,
-            UsingSlotsOnDataClasses.class
+            GCI2AvoidMultipleIfElseStatementCheck.class,
+            GCI7AvoidGettersAndSetters.class,
+            GCI4AvoidGlobalVariableInFunctionCheck.class,
+            GCI72AvoidSQLRequestInLoop.class,
+            GCI35AvoidTryCatchWithFileOpenedCheck.class,
+            GCI89AvoidUnlimitedCache.class,
+            GCI24AvoidUnlimitedSQLRequest.class,
+            GCI10AvoidUnoptimizedVectorImagesCheck.class,
+            GCI74AvoidFullSQLRequest.class,
+            GCI404AvoidListComprehensionInIterations.class,
+            GCI111DetectBadLoggingFormatInterpolation.class,
+            GCI203DetectUnoptimizedImageFormat.class,
+            GCI96PandasRequireUsecolsArgument.class,
+            GCI97OptimizeSquareComputation.class,
+            GCI106AvoidSqrtInLoop.class,
+            GCI103DictionaryItemsUnused.class,
+            GCI99AvoidCSVFormat.class,
+            GCI107AvoidIterativeMatrixOperations.class,
+            GCI102AvoidNonPinnedMemoryForDataloaders.class,
+            GCI101AvoidConvBiasBeforeBatchNorm.class,
+            GCI100DisableGradientForModelEval.class,
+            GCI105StringConcatenation.class,
+            GCI108PreferAppendLeft.class,
+            GCI104AvoidCreatingTensorUsingNumpyOrNativePython.class,
+            GCI110AvoidWildcardImportsCheck.class,
+            GCI109AvoidExceptionsForControlFlowCheck.class,
+            GCI112UsingSlotsOnDataClasses.class
     );
 
     public static final String LANGUAGE = "py";
