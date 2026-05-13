@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add rule GCI24: Returned SQL results should be limited (avoid SELECT...FROM without LIMIT)
+- [#146](https://github.com/green-code-initiative/creedengo-python/pull/146) Add rule GCI24: Returned SQL results should be limited (avoid SELECT...FROM without LIMIT)
 
 ### Changed
 
