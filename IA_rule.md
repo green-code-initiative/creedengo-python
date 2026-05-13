@@ -12,9 +12,9 @@ Use the TDD (Test-Driven Development) methodology to implement a rule in an effi
   - Compliant code
   - Non-compliant code
   - Code with elements that should not be analyzed
-- Location of test resource files:
-    - Files for unit tests: in "test/resources/checks" or subdirectories
-    - Files for integration tests: in "src/it/test-projects" or subdirectories
+- Location of test resource files in a common place for all unit tests and integration tests :
+  - main directory : "src/it/test-projects"
+  - on subdirecroy for each rule ("GCI" pattern)
 - Create the rule implementation class in the package "org.greencodeinitiative.creedengo.python.checks"
     - Add the "Rule" annotation with the correct rule id (the rule is previously defined in another maven component named "creedengo-rules-specifications")
     - Extend the "PythonSubscriptionCheck" class

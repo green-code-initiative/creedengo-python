@@ -52,8 +52,9 @@ Each unit test class checking rule implementation class has the same template of
   - usage of "PythonCheckVerifier.verifyNoIssues" to check there is no issues raised
 - each call to "PythonCheckVerifier" needs a test resource file : this one is the resource code file for the simulated analysis
 
-each test resource file is in the "test/resources/checks" directory (or sub-directories).
-each test resource file contains compliuant code or / and non compliant code.
+Each test resource file is in the "it/test-porject/creedengo-python-plugin-test-project/src" directory (and one sub-directory for each rule).
+These resource files are used for both unit tests and integration tests.
+Each test resource file contains compliant code or / and non compliant code.
 If there is no compliant code on which Sonarqube analysis should raise an issue, the line with the issue has a comment at the end of the line with the following template : 
 "# Noncompliant {{ERROR_MESSAGE_TO_DISPLAY}}"
     - the "ERROR_MESSAGE_TO_DISPLAY" in the previous template is replaced by the real error message.
