@@ -30,18 +30,18 @@ import org.sonarqube.ws.Measures;
 
 class GCIRulesIT extends GCIRulesBase {
 
-//    @Test
-//    void testMeasuresAndIssues() {
-//        String projectKey = analyzedProjects.get(0).getProjectKey();
-//
-//        Map<String, Measures.Measure> measures = getMeasures(projectKey);
-//
-//        assertThat(ofNullable(measures.get("code_smells")).map(Measures.Measure::getValue).map(Integer::parseInt).orElse(0))
-//                .isGreaterThan(1);
-//
-//        List<Issues.Issue> projectIssues = searchIssuesForComponent(projectKey, null).getIssuesList();
-//        assertThat(projectIssues).isNotEmpty();
-//    }
+    @Test
+    void testMeasuresAndIssues() {
+        String projectKey = analyzedProjects.get(0).getProjectKey();
+
+        Map<String, Measures.Measure> measures = getMeasures(projectKey);
+
+        assertThat(ofNullable(measures.get("code_smells")).map(Measures.Measure::getValue).map(Integer::parseInt).orElse(0))
+                .isGreaterThan(1);
+
+        List<Issues.Issue> projectIssues = searchIssuesForComponent(projectKey, null).getIssuesList();
+        assertThat(projectIssues).isNotEmpty();
+    }
 
     @Test
     void testGCI2_compliant() {
@@ -279,7 +279,6 @@ class GCIRulesIT extends GCIRulesBase {
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
     }
 
-    // FIXME: no issues are detected since last libraries upgrade (12/09/2025)
     @Test
     void testGCI101(){
         String filePath = "src/GCI101/avoidConvBiasBeforeBatchNorm.py";
