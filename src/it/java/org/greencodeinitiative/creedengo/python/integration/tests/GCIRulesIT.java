@@ -91,8 +91,8 @@ class GCIRulesIT extends GCIRulesBase {
         String filePath = "src/GCI4/avoidGlobalVariableInFunctionNonCompliant.py";
         String ruleId = "creedengo-python:GCI4";
         String ruleMsg = "Use local variable (function/class scope) instead of global variable (application scope)";
-        int[] startLines = new int[]{4, 5, 6, 7, 9, 11};
-        int[] endLines = new int[]{4, 5, 6, 7, 9, 11};
+        int[] startLines = new int[]{4, 5, 6, 7, 9, 11, 17, 19, 21, 23, 25, 26, 28, 29};
+        int[] endLines = new int[]{4, 5, 6, 7, 9, 11, 17, 19, 21, 23, 25, 26, 28, 29};
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
     }
@@ -254,10 +254,10 @@ class GCIRulesIT extends GCIRulesBase {
         String ruleId = "creedengo-python:GCI99";
         String ruleMsg = "Use Parquet or Feather format instead of CSV";
         int[] startLines = new int[]{
-                4, 6, 10, 12, 14, 15, 18, 23, 39, 47, 48
+                4, 6, 10, 12, 14, 15, 17, 18, 23, 39, 47, 48
         };
         int[] endLines = new int[]{
-                4, 6, 10, 12, 14, 15, 18, 23, 39, 47, 48
+                4, 6, 10, 12, 14, 15, 17, 18, 23, 39, 47, 48
         };
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_50MIN);
@@ -553,8 +553,8 @@ class GCIRulesIT extends GCIRulesBase {
         String filePath = "src/GCI404/avoidListComprehensionInIterations.py";
         String ruleId = "creedengo-python:GCI404";
         String ruleMsg = "Use generator comprehension instead of list comprehension in for loop declaration";
-        int[] startLines = new int[]{2, 6, 10};
-        int[] endLines = new int[]{2, 6, 10};
+        int[] startLines = new int[]{2, 6, 10, 10, 14};
+        int[] endLines = new int[]{2, 6, 10, 10, 14};
 
         checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_15MIN);
     }
