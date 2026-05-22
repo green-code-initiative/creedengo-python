@@ -112,7 +112,7 @@ my_list = [1, 2, 3, 4, 5]
 size = len(my_list)              # Compliant {{use of len().}}
 
 words = ["This", "is", "a", "test"]
-found = "test" in words      # Compliant {{Native operator.}}
+found = "test" in words      # Compliant {{use of in.}}
 
 first = "Hello"
 last  = "World"

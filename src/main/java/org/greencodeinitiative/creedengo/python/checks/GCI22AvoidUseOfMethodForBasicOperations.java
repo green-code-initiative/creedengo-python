@@ -29,7 +29,7 @@ import java.util.Set;
 import org.sonar.plugins.python.api.tree.BinaryExpression;
 
 @Rule(key = "GCI22")
-public class AvoidUseOfMethodForBasicOperations extends PythonSubscriptionCheck {
+public class GCI22AvoidUseOfMethodForBasicOperations extends PythonSubscriptionCheck {
 
     static final String MESSAGE =
             "Avoid using methods for simple basic operations.";

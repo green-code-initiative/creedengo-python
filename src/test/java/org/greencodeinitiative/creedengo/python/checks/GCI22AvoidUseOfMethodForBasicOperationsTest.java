@@ -20,9 +20,9 @@ package org.greencodeinitiative.creedengo.python.checks;
 import org.junit.jupiter.api.Test;
 import org.sonar.python.checks.utils.PythonCheckVerifier;
 
-public class AvoidUseOfMethodForBasicOperationsTest {
+public class GCI22AvoidUseOfMethodForBasicOperationsTest {
     @Test
     public void test() {
-        PythonCheckVerifier.verify("src/test/resources/checks/avoidUseOfMethodForBasicOperations.py", new AvoidUseOfMethodForBasicOperations());
+        PythonCheckVerifier.verify(System.getProperty("testfiles.path") + "/GCI22/avoidUseOfMethodForBasicOperations.py", new GCI22AvoidUseOfMethodForBasicOperations());
     }
 }
