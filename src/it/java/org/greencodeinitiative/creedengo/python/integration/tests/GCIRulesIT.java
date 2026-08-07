@@ -549,6 +549,28 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     @Test
+    void testGCI116_compliant() {
+        String filePath = "src/GCI116/preferEnumerateOverRangeLenCompliant.py";
+        String ruleId = "creedengo-python:GCI116";
+        String ruleMsg = "Avoid range(len()) pattern, prefer direct iteration or enumerate() which avoids costly index-based access";
+        int[] startLines = new int[]{};
+        int[] endLines = new int[]{};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+    }
+
+    @Test
+    void testGCI116_nonCompliant() {
+        String filePath = "src/GCI116/preferEnumerateOverRangeLenNonCompliant.py";
+        String ruleId = "creedengo-python:GCI116";
+        String ruleMsg = "Avoid range(len()) pattern, prefer direct iteration or enumerate() which avoids costly index-based access";
+        int[] startLines = new int[]{3, 7, 12, 16, 20, 21, 24, 26, 28};
+        int[] endLines = new int[]{3, 7, 12, 16, 20, 21, 24, 26, 28};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_5MIN);
+    }
+
+    @Test
     void testGCI404() {
         String filePath = "src/GCI404/avoidListComprehensionInIterations.py";
         String ruleId = "creedengo-python:GCI404";
