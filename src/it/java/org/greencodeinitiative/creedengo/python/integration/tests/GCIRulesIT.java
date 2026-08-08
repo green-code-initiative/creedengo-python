@@ -549,6 +549,28 @@ class GCIRulesIT extends GCIRulesBase {
     }
 
     @Test
+    void testGCI113_nonCompliant() {
+        String filePath = "src/GCI113/preferXGBoostOverRandomForestNonCompliant.py";
+        String ruleId = "creedengo-python:GCI113";
+        String ruleMsg = "Prefer XGBoost over RandomForest for better energy efficiency";
+        int[] startLines = new int[]{1, 2, 5, 8, 11};
+        int[] endLines = new int[]{1, 2, 5, 8, 11};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
+
+    @Test
+    void testGCI113_compliant() {
+        String filePath = "src/GCI113/preferXGBoostOverRandomForestCompliant.py";
+        String ruleId = "creedengo-python:GCI113";
+        String ruleMsg = "Prefer XGBoost over RandomForest for better energy efficiency";
+        int[] startLines = new int[]{};
+        int[] endLines = new int[]{};
+
+        checkIssuesForFile(filePath, ruleId, ruleMsg, startLines, endLines, SEVERITY, TYPE, EFFORT_10MIN);
+    }
+
+    @Test
     void testGCI404() {
         String filePath = "src/GCI404/avoidListComprehensionInIterations.py";
         String ruleId = "creedengo-python:GCI404";
