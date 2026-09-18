@@ -9,6 +9,6 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-    ignore:
-      # Ignore all versions : cf pom.xml comments
-      - dependency-name: "com.mycila:license-maven-plugin"
+    # ignore:
+      # # Ignore all versions : cf pom.xml comments
+      # - dependency-name: "com.mycila:license-maven-plugin"
