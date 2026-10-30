@@ -1,0 +1,46 @@
+name: Dependency Submission
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+  workflow_dispatch:
+
+jobs:
+  dependency-submission:
+    name: Submit Maven dependencies
+    runs-on: ubuntu-latest
+    # Fork and Dependabot pull requests have read-only tokens.
+    if: github.event_name != 'pull_request' || (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]')
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: 'temurin'
+          java-version: 21
+          cache: maven
+
+      # The submission action invokes "mvn", not "./mvnw".
+      # Maven 3.10 removed maven-shared-utils (MessageUtils), still required by
+      # maven-git-versioning-extension 9.12.1. Use the exact wrapper distribution
+      # until the extension supports Maven 3.10 (TECH_DEBT.md, TD-1).
+      - name: Use wrapper Maven for dependency submission
+        run: |
+          MVN_HOME="$(./mvnw -B -v | sed -n 's/^Maven home: //p')"
+          test -x "$MVN_HOME/bin/mvn"
+          echo "$MVN_HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Check Maven version
+        run: mvn -v
+
+      - name: Submit dependencies
+        uses: advanced-security/maven-dependency-submission-action@b275d12641ac2d2108b2cbb7598b154ad2f2cee8 # v5.0.0
