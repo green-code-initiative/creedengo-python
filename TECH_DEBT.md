@@ -25,7 +25,7 @@ dependency-submission workflow.
 | Release packaging | `.github/workflows/tag_release.yml` | Build with `./mvnw` instead of runner `mvn`. |
 | Dependency submission | `.github/workflows/dependency-submission.yml` | Run an explicit workflow with the same wrapper-derived `PATH`, JDK 21 and Maven cache. Grant `contents: write` only to its job; skip fork and Dependabot pull requests with read-only tokens. |
 | Independent analysis project | `src/it/test-projects/creedengo-python-plugin-test-project/.mvn/maven.config` | Comments only: the `.mvn` directory establishes a separate Maven root without adding arguments or loading the repository extension. |
-| Tracking the test configuration | `.gitignore` | Allow only that test project's `.mvn` directory through the dotfile ignore rule. |
+| Tracking Maven configuration | `.gitignore` | Allow `.mvn` directories through the dotfile ignore rule with `!.mvn/`. |
 | Local development | `CONTRIBUTING.md` | Document wrapper-derived `PATH` for integration tests and scanner prefix configuration. |
 
 ### Repository setting after integration
@@ -51,9 +51,9 @@ this patch.
 3. Remove the temporary wrapper-derived `PATH` steps and associated comments
    once direct `mvn` invocations are proven compatible. Keeping `./mvnw` for
    reproducible main/release builds is still recommended.
-4. Remove the test project's comment-only `.mvn/maven.config` and the targeted
-   `.gitignore` exception if root isolation is no longer needed. Recheck nested
-   analysis after removal.
+4. Remove the test project's comment-only `.mvn/maven.config` if root isolation
+   is no longer needed. Keep the generic `!.mvn/` exception in `.gitignore` for
+   repository Maven configuration. Recheck nested analysis after removal.
 5. Decide whether to retain controlled, explicit dependency submission or restore
    GitHub automatic submission. If restoring automatic submission, verify it
    succeeds before removing the explicit workflow; do not keep both active.

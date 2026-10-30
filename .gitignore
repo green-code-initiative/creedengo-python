@@ -4,7 +4,7 @@
 !.gitattributes
 !.github/
 !.default.docker.env
-!src/it/test-projects/creedengo-python-plugin-test-project/.mvn/
+!.mvn/
 
 # Ignore generated files
 target
