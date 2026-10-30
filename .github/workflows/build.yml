@@ -31,6 +31,19 @@ jobs:
           java-version: 21
           cache: maven # enable maven cache shared by all github actions builds
 
+      # Maven 3.10 no longer provides maven-shared-utils, required by
+      # maven-git-versioning-extension 9.12.1 (MessageUtils).
+      # Integration tests invoke "mvn" directly: use the exact wrapper distribution.
+      # Remove once the extension supports Maven 3.10 (TECH_DEBT.md, TD-1).
+      - name: Use wrapper Maven for integration tests
+        run: |
+          MVN_HOME="$(./mvnw -B -v | sed -n 's/^Maven home: //p')"
+          test -x "$MVN_HOME/bin/mvn"
+          echo "$MVN_HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Check Maven version
+        run: mvn -v
+
       # to be able to use "sonar:sonar" instead of "org.sonarsource.scanner.maven:sonar-maven-plugin:sonar"
       # inside this build but also when the test project analysis is launched with sonar:sonar
       - name: Configure Maven for Sonar
