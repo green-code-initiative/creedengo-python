@@ -439,6 +439,18 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
+                            <!--
+                                The Python analyzer is installed in SonarQube via test-it.plugins,
+                                not needed in the Failsafe JVM. Its bundled dependencies can mask
+                                sonar-orchestrator dependencies, notably when upgrading to
+                                creedengo-integration-test >= 0.7.0: commons-lang3
+                                ObjectUtils.getIfNull(Object, Object) requires >= 3.18.
+                                Keep unit-test dependencies unchanged. This isolation is independent
+                                of Maven 3.10 (TECH_DEBT.md, TD-2).
+                            -->
+                            <classpathDependencyExcludes>
+                                <classpathDependencyExclude>org.sonarsource.python:sonar-python-plugin</classpathDependencyExclude>
+                            </classpathDependencyExcludes>
                             <systemPropertyVariables>
                                 <test-it.sonarqube.keepRunning>${test-it.sonarqube.keepRunning}</test-it.sonarqube.keepRunning>
                                 <test-it.orchestrator.artifactory.url>${test-it.orchestrator.artifactory.url}</test-it.orchestrator.artifactory.url>
