@@ -4,6 +4,7 @@
 !.gitattributes
 !.github/
 !.default.docker.env
+!.mvn/
 
 # Ignore generated files
 target
