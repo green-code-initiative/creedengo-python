@@ -24,7 +24,7 @@ public class PythonPlugin implements Plugin {
     @Override
     public void define(Context context) {
             context.addExtension(PythonRuleRepository.class);
-            context.addExtension(PythonCreedengoWayProfile.class);
+            // context.addExtension(PythonCreedengoWayProfile.class);
     }
 
 }
